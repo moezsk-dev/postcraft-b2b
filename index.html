@@ -38,6 +38,10 @@
 
             <!-- Crédits & Bouton Passer Pro -->
             <div class="flex items-center gap-2 sm:gap-3">
+                <button onclick="openAgentModal()" class="flex items-center gap-1.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition shadow-sm">
+                    <i data-lucide="bot" class="w-4 h-4"></i>
+                    <span>Agent IA Gratuit</span>
+                </button>
                 <button onclick="toggleHistoryDrawer()" class="flex items-center gap-1.5 bg-white hover:bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-medium text-slate-700 transition shadow-sm">
                     <i data-lucide="history" class="w-4 h-4 text-[#0A66C2]"></i>
                     <span class="hidden md:inline">Historique</span>
@@ -229,6 +233,77 @@
         </div>
     </main>
 
+    <!-- MODALE AGENT IA AUTONOME & GRATUIT -->
+    <div id="agentModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-2xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-slate-200 relative my-8">
+            <button onclick="closeAgentModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-1.5 rounded-lg hover:bg-slate-100">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-10 h-10 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center">
+                    <i data-lucide="bot" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-slate-900">Agent IA de Promotion Autonome</h3>
+                    <p class="text-xs text-slate-500">Générez instantanément vos messages de prospection et posts de lancement 100% gratuits.</p>
+                </div>
+            </div>
+
+            <!-- Onglets de l'agent -->
+            <div class="grid grid-cols-2 gap-2 mb-6 bg-slate-100 p-1 rounded-xl">
+                <button onclick="switchAgentTab('prospect')" id="agentTabProspect" class="py-2.5 px-3 rounded-lg text-xs font-semibold bg-white text-slate-900 shadow-sm transition flex items-center justify-center gap-2">
+                    <i data-lucide="message-square" class="w-4 h-4 text-purple-600"></i>
+                    <span>Message de prospection (Cadeau)</span>
+                </button>
+                <button onclick="switchAgentTab('launch')" id="agentTabLaunch" class="py-2.5 px-3 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-2">
+                    <i data-lucide="rocket" class="w-4 h-4 text-indigo-600"></i>
+                    <span>Post LinkedIn "Build in Public"</span>
+                </button>
+            </div>
+
+            <!-- Contenu Prospection -->
+            <div id="agentProspectContent" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Nom ou Prénom du prospect cible (ex: Thomas, consultant)</label>
+                    <input type="text" id="agentProspectName" placeholder="Thomas" class="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-600">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Sujet de son dernier article / vidéo</label>
+                    <input type="text" id="agentProspectTopic" placeholder="sa gestion de la prospection B2B" class="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-600">
+                </div>
+                <button onclick="generateAgentMessage('prospect')" class="w-full py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-xl text-sm transition flex items-center justify-center gap-2">
+                    <i data-lucide="sparkles" class="w-4 h-4"></i>
+                    <span>Générer le message ultra-personnalisé</span>
+                </button>
+            </div>
+
+            <!-- Contenu Lancement -->
+            <div id="agentLaunchContent" class="hidden space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Votre domaine d'expertise principal</label>
+                    <input type="text" id="agentLaunchNiche" placeholder="Consultant en stratégie / Solopreneur" class="w-full px-3.5 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-600">
+                </div>
+                <button onclick="generateAgentMessage('launch')" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl text-sm transition flex items-center justify-center gap-2">
+                    <i data-lucide="sparkles" class="w-4 h-4"></i>
+                    <span>Générer le post de lancement viral</span>
+                </button>
+            </div>
+
+            <!-- Résultat généré par l'agent -->
+            <div id="agentResultBox" class="hidden mt-6 pt-6 border-t border-slate-200 space-y-3">
+                <div class="flex items-center justify-between">
+                    <span class="text-xs font-bold text-slate-700 uppercase tracking-wider">Résultat prêt à copier</span>
+                    <button onclick="copyAgentResult()" class="text-xs font-semibold text-purple-600 hover:underline flex items-center gap-1">
+                        <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                        <span>Copier le texte</span>
+                    </button>
+                </div>
+                <div id="agentResultText" class="p-4 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-800 whitespace-pre-wrap leading-relaxed max-h-60 overflow-y-auto"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- PIED DE PAGE LÉGAL (Requis pour validation Dodo Payments) -->
     <footer class="bg-white border-t border-slate-200 mt-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
@@ -322,4 +397,93 @@
         const STRIPE_PAYMENT_LINK = "https://test.checkout.dodopayments.com/buy/pdt_0Ns917FNfILvPTkMQh2pO?quantity=1"; // Votre lien de paiement Dodo Payments intégré
 
         // État global de l'application
-// ... existing code ... -->
+        const state = {
+            activeTab: 'text',
+            objective: 'Éducatif & Conseils',
+            tone: 'Professionnel & Expert',
+            language: 'Français',
+            credits: 5,
+            isPro: false,
+            history: JSON.parse(localStorage.getItem('postcraft_history') || '[]')
+        };
+
+        // Gestion des onglets de l'agent IA
+        function openAgentModal() {
+            document.getElementById('agentModal').classList.remove('hidden');
+        }
+
+        function closeAgentModal() {
+            document.getElementById('agentModal').classList.add('hidden');
+        }
+
+        function switchAgentTab(tab) {
+            const tabProspect = document.getElementById('agentTabProspect');
+            const tabLaunch = document.getElementById('agentTabLaunch');
+            const contentProspect = document.getElementById('agentProspectContent');
+            const contentLaunch = document.getElementById('agentLaunchContent');
+
+            if (tab === 'prospect') {
+                tabProspect.className = "py-2.5 px-3 rounded-lg text-xs font-semibold bg-white text-slate-900 shadow-sm transition flex items-center justify-center gap-2";
+                tabLaunch.className = "py-2.5 px-3 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-2";
+                contentProspect.classList.remove('hidden');
+                contentLaunch.classList.add('hidden');
+            } else {
+                tabLaunch.className = "py-2.5 px-3 rounded-lg text-xs font-semibold bg-white text-slate-900 shadow-sm transition flex items-center justify-center gap-2";
+                tabProspect.className = "py-2.5 px-3 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-2";
+                contentLaunch.classList.remove('hidden');
+                contentProspect.classList.add('hidden');
+            }
+        }
+
+        function generateAgentMessage(type) {
+            const resultBox = document.getElementById('agentResultBox');
+            const resultText = document.getElementById('agentResultText');
+            resultBox.classList.remove('hidden');
+
+            if (type === 'prospect') {
+                const name = document.getElementById('agentProspectName').value || 'Thomas';
+                const topic = document.getElementById('agentProspectTopic').value || 'la prospection B2B';
+                resultText.innerText = `Bonjour ${name},\n\nJ'ai adoré votre dernier contenu sur ${topic}.\n\nComme je développe un petit outil IA dédié aux professionnels pour recycler leurs contenus en posts LinkedIn en 15 secondes, je me suis permis de transformer votre sujet en 3 posts prêts à publier pour vous faire gagner du temps :\n\n👉 Accroches optimisées, structure aérée et appels à l'action.\n\nSi vous souhaitez tester l'outil gratuitement pour vos prochaines publications, le voici : https://postcraft-b2b-balhaa1.vercel.app\n\nExcellente journée à vous !`;
+            } else {
+                const niche = document.getElementById('agentLaunchNiche').value || 'Consultant / Solopreneur';
+                resultText.innerText = `🚀 J'ai arrêté de passer 4 heures par semaine à rédiger mes posts LinkedIn...\n\nEn tant que ${niche}, ma priorité est d'aider mes clients, pas de passer mes journées à chercher l'accroche parfaite pour l'algorithme.\n\nC'est pourquoi j'ai créé mon propre micro-SaaS : PostCraft B2B 🛠️\n\nVous collez une idée brute, un article ou un lien YouTube ➡️ L'IA vous génère instantanément 3 variantes de posts calibrées.\n\nLes 5 premiers essais sont 100% gratuits (sans carte bancaire).\n\n👇 Qui souhaite le lien en commentaire pour le tester ?`;
+            }
+            showToast("Contenu généré par l'agent IA !", "bot");
+        }
+
+        function copyAgentResult() {
+            const text = document.getElementById('agentResultText').innerText;
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            showToast("Texte copié dans le presse-papier !", "copy");
+        }
+
+        // Notification Toast discrète
+        function showToast(message, iconName = "check-circle") {
+            const toast = document.getElementById('toastBanner');
+            const msg = document.getElementById('toastMessage');
+            const icon = document.getElementById('toastIcon');
+            
+            msg.innerText = message;
+            icon.setAttribute('data-lucide', iconName);
+            lucide.createIcons();
+
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3500);
+        }
+
+        // Gestion de l'historique et modales (simulée/existante)
+        function toggleHistoryDrawer() {}
+        function clearHistory() {}
+        function openPricingModal() { document.getElementById('pricingModal').classList.remove('hidden'); }
+        function closePricingModal() { document.getElementById('pricingModal').classList.add('hidden'); }
+        function simulateUpgrade() { window.open("https://test.checkout.dodopayments.com/buy/pdt_0Ns917FNfILvPTkMQh2pO?quantity=1", '_blank'); }
+    </script>
+</body>
+</html>
