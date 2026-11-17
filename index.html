@@ -218,7 +218,7 @@
                         </span>
                     </div>
                     
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 pt-2">
                         <button onclick="handleProFeature('carousels')" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white p-3 rounded-xl text-xs font-semibold flex items-center gap-2 transition text-left relative">
                             <i data-lucide="file-stack" class="w-4 h-4 text-purple-300 shrink-0"></i>
                             <div>
@@ -238,6 +238,27 @@
                             <div>
                                 <span class="block font-bold">A/B Testing Accroches 🔒</span>
                                 <span class="text-[10px] text-amber-300 font-normal">3 styles de hooks</span>
+                            </div>
+                        </button>
+                        <button onclick="handleProFeature('commentary')" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white p-3 rounded-xl text-xs font-semibold flex items-center gap-2 transition text-left relative">
+                            <i data-lucide="message-circle-code" class="w-4 h-4 text-sky-300 shrink-0"></i>
+                            <div>
+                                <span class="block font-bold">Growth Commentaire 🔒</span>
+                                <span class="text-[10px] text-sky-300 font-normal">Amorces de débat</span>
+                            </div>
+                        </button>
+                        <button onclick="handleProFeature('calendar')" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white p-3 rounded-xl text-xs font-semibold flex items-center gap-2 transition text-left relative">
+                            <i data-lucide="calendar-days" class="w-4 h-4 text-rose-300 shrink-0"></i>
+                            <div>
+                                <span class="block font-bold">Calendrier 7 Jours 🔒</span>
+                                <span class="text-[10px] text-rose-300 font-normal">Planification sem.</span>
+                            </div>
+                        </button>
+                        <button onclick="handleProFeature('cta')" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white p-3 rounded-xl text-xs font-semibold flex items-center gap-2 transition text-left relative">
+                            <i data-lucide="link-2" class="w-4 h-4 text-indigo-300 shrink-0"></i>
+                            <div>
+                                <span class="block font-bold">Tracker CTA / UTM 🔒</span>
+                                <span class="text-[10px] text-indigo-300 font-normal">Optimisation clics</span>
                             </div>
                         </button>
                     </div>
@@ -313,13 +334,188 @@
 
     <script>
         lucide.createIcons();
-// ... existing code ... -->
+
+        const BACKEND_API_URL = "/api/generate";
+        const STRIPE_PAYMENT_LINK = ""; 
+
+        const state = {
+            activePlatform: 'LinkedIn',
+            language: 'Français',
+            credits: 5,
+            isPro: false,
+            history: []
+        };
+
+        function setPlatform(platform, btnElement) {
+            state.activePlatform = platform;
+            document.querySelectorAll('.platform-btn').forEach(btn => {
+                btn.className = "platform-btn py-2 px-3 rounded-xl border border-slate-200 bg-white text-xs font-medium text-slate-700 hover:border-slate-300 transition flex items-center justify-center gap-1.5";
+            });
+            btnElement.className = "platform-btn active py-2 px-3 rounded-xl border-2 border-[#0A66C2] bg-blue-50/60 text-xs font-bold text-slate-900 transition flex items-center justify-center gap-1.5";
+            document.getElementById('activePlatformBadge').innerText = platform;
+        }
+
+        function toggleVoiceDictation() {
+            const btnText = document.getElementById('voiceBtnText');
+            const textarea = document.getElementById('sourceInput');
+            if (!window.webkitSpeechRecognition && !window.SpeechRecognition) {
+                showToast("La dictée vocale n'est pas supportée par votre navigateur.", "alert-circle");
+                return;
+            }
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'fr-FR';
+            recognition.start();
+            btnText.innerText = "Écoute en cours...";
+            showToast("Parlez, l'IA écoute...", "mic");
+
+            recognition.onresult = function(event) {
+                const speechToText = event.results[0][0].transcript;
+                textarea.value += (textarea.value ? " " : "") + speechToText;
+                btnText.innerText = "Dicter vocalement";
+                showToast("Texte dicté avec succès !", "check");
+            };
+
+            recognition.onerror = function() {
+                btnText.innerText = "Dicter vocalement";
+                showToast("Erreur de reconnaissance vocale.", "alert-circle");
+            };
+        }
+
+        function fillExample() {
+            document.getElementById('sourceInput').value = "Beaucoup de solopreneurs s'épuisent à créer du contenu tous les jours sans stratégie claire. En recyclant un seul article de blog en un thread X, un post LinkedIn et une newsletter, on multiplie sa visibilité par 4 en passant 3 fois moins de temps.";
+            showToast("Exemple inséré !", "wand-2");
+        }
+
+        async function generatePosts() {
+            const rawText = document.getElementById('sourceInput').value.trim();
+            if (!rawText) {
+                showToast("Veuillez saisir ou dicter votre texte source.", "alert-circle");
+                return;
+            }
+            if (!state.isPro && state.credits <= 0) {
+                openPricingModal();
+                return;
+            }
+
+            document.getElementById('emptyState').classList.add('hidden');
+            document.getElementById('resultsContainer').classList.add('hidden');
+            document.getElementById('scaleToolsSection').classList.add('hidden');
+            document.getElementById('loadingState').classList.remove('hidden');
+
+            try {
+                const response = await fetch(BACKEND_API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ promptText: rawText, language: state.language, platform: state.activePlatform })
+                });
+                const data = await response.json();
+                if (data.posts) {
+                    renderPosts(data.posts);
+                } else {
+                    throw new Error();
+                }
+            } catch (e) {
+                await new Promise(r => setTimeout(r, 800));
+                renderPosts([
+                    { angleTitle: `Variante 1 : Angle Actionnable (${state.activePlatform})`, content: `La plupart des créateurs manquent de régularité.\n\nVoici la méthode exacte pour y remédier :\n\n${rawText}\n\n👉 Enregistrez ce post pour plus tard !` },
+                    { angleTitle: `Variante 2 : Storytelling B2B`, content: `Il y a quelques mois, j'ai réalisé une erreur critique :\n\n${rawText}\n\nLa leçon à retenir est simple.` },
+                    { angleTitle: `Variante 3 : Débat & Opinion`, content: `Arrêtez de faire du contenu sans structure.\n\nLa vérité :\n${rawText}\n\nQu'en pensez-vous ?` }
+                ]);
+            }
+
+            if (!state.isPro) {
+                state.credits--;
+                document.getElementById('creditsCount').innerText = `${state.credits}/5`;
+            }
+
+            document.getElementById('loadingState').classList.add('hidden');
+            document.getElementById('resultsContainer').classList.remove('hidden');
+            document.getElementById('scaleToolsSection').classList.remove('hidden');
+            
+            // Mettre à jour le badge Pro selon l'état
+            const badge = document.getElementById('proStatusBadge');
+            if (state.isPro) {
+                badge.innerHTML = '<i data-lucide="check-circle" class="w-3.5 h-3.5"></i> PRO ACTIF';
+                badge.className = "bg-emerald-400 text-slate-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1 shadow";
+            }
+            lucide.createIcons();
+            showToast("3 contenus multicanaux générés !");
+        }
+
+        function renderPosts(posts) {
+            const list = document.getElementById('postsList');
+            list.innerHTML = '';
+            posts.forEach((post, idx) => {
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-3";
+                card.innerHTML = `
+                    <div class="flex justify-between items-center border-b border-slate-100 pb-2">
+                        <span class="text-xs font-bold text-[#0A66C2] uppercase">${post.angleTitle}</span>
+                        <button onclick="copyText('post_${idx}')" class="text-xs bg-slate-900 text-white px-3 py-1.5 rounded-lg font-medium hover:bg-slate-800 transition">Copier</button>
+                    </div>
+                    <p id="post_${idx}" class="text-sm text-slate-800 whitespace-pre-wrap leading-relaxed">${post.content}</p>
+                `;
+                list.appendChild(card);
+            });
+        }
+
+        function handleProFeature(feature) {
+            if (!state.isPro) {
+                openPricingModal();
+                return;
+            }
+            const box = document.getElementById('scaleOutputBox');
+            box.classList.remove('hidden');
+            
+            if (feature === 'carousels') {
+                box.innerHTML = "<strong>📊 Plan Carrousel PDF (5 Slides) :</strong><br>• Slide 1 (Accroche) : Le piège n°1 en B2B<br>• Slide 2 : Le constat chiffré<br>• Slide 3 : La méthode en 3 étapes<br>• Slide 4 : Étude de cas client<br>• Slide 5 (CTA) : Téléchargez la checklist gratuite";
+            } else if (feature === 'hashtags') {
+                box.innerHTML = "<strong>🔥 Hashtags Recommandés :</strong> #B2B #GrowthHacking #Solopreneur #ContentMarketing #StratégieDigitale #Entrepreneur";
+            } else if (feature === 'abtest') {
+                box.innerHTML = "<strong>⚡ A/B Testing des Accroches :</strong><br>1. <em>Provocatrice :</em> 'Pourquoi 90% des freelances échouent sur leur prospection.'<br>2. <em>Chiffrée : +300% de visibilité en 10 minutes par jour.</em><br>3. <em>Question :</em> 'Et si votre stratégie de contenu était à l'envers ?'";
+            } else if (feature === 'commentary') {
+                box.innerHTML = "<strong>💬 Growth Commentaire (Amorce de débat) :</strong><br>'Excellent point ! Le vrai défi réside souvent dans la régularité plutôt que dans la perfection de l'outil. Tu fais comment de ton côté pour planifier tes posts ?'";
+            } else if (feature === 'calendar') {
+                box.innerHTML = "<strong>🗓️ Calendrier Éditorial 7 Jours :</strong><br>• Lundi : Post Éducatif (Conseil)<br>• Mercredi : Étude de cas / Preuve sociale<br>• Vendredi : Opinion tranchée / Débat de fin de semaine";
+            } else if (feature === 'cta') {
+                box.innerHTML = "<strong>🔗 Tracker CTA & UTM :</strong><br>Lien optimisé généré : <code>https://votre-site.com/?utm_source=postcraft&utm_medium=social&utm_campaign=multicanal</code>";
+            }
+            showToast("Fonctionnalité Pro exécutée !", "zap");
+        }
+
+        function copyText(elementId) {
+            const text = document.getElementById(elementId).innerText;
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            showToast("Contenu copié dans le presse-papier !");
+        }
+
+        function showToast(message, iconName = "check-circle") {
+            const toast = document.getElementById('toastBanner');
+            document.getElementById('toastMessage').innerText = message;
+            document.getElementById('toastIcon').setAttribute('data-lucide', iconName);
+            lucide.createIcons();
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => toast.classList.add('translate-y-20', 'opacity-0'), 3500);
+        }
+
         function openAgentModal() { document.getElementById('agentModal').classList.remove('hidden'); }
         function closeAgentModal() { document.getElementById('agentModal').classList.add('hidden'); }
         function openPricingModal() { document.getElementById('pricingModal').classList.remove('hidden'); }
-        function closePricingModal() { document.getElementById('pricingModal').classList.remove('hidden'); } // fixed closing logic
+        function closePricingModal() { document.getElementById('pricingModal').classList.add('hidden'); }
         function openMobileAppModal() { document.getElementById('mobileAppModal').classList.remove('hidden'); }
         function closeMobileAppModal() { document.getElementById('mobileAppModal').classList.add('hidden'); }
+        function simulateUpgrade() {
+            state.isPro = true;
+            document.getElementById('creditsCount').innerText = "Illimités";
+            closePricingModal();
+            showToast("Félicitations ! Vous êtes passé au Plan Pro.", "crown");
+        }
     </script>
 </body>
 </html>
