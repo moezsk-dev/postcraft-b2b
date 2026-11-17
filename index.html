@@ -32,7 +32,7 @@
                 </div>
                 <div>
                     <span class="font-bold text-lg tracking-tight text-slate-900">PostCraft</span>
-                    <span class="text-xs font-semibold uppercase tracking-wider bg-blue-50 text-[#0A66C2] px-2 py-0.5 rounded-full ml-1">Omni</span>
+                    <span class="text-xs font-semibold uppercase tracking-wider bg-blue-50 text-[#0A66C2] px-2 py-0.5 rounded-full ml-1">Omni Pro</span>
                 </div>
             </div>
 
@@ -91,7 +91,7 @@
                 <!-- Sélecteur de Réseau Social Cible -->
                 <div class="space-y-2">
                     <label class="block text-sm font-semibold text-slate-700">1. Réseau social de destination</label>
-                    <div class="grid grid-cols-3 gap-2">
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
                         <button type="button" onclick="setPlatform('LinkedIn', this)" class="platform-btn active py-2 px-3 rounded-xl border-2 border-[#0A66C2] bg-blue-50/60 text-xs font-bold text-slate-900 transition flex items-center justify-center gap-1.5">
                             <i data-lucide="linkedin" class="w-4 h-4 text-[#0A66C2]"></i>
                             <span>LinkedIn</span>
@@ -100,23 +100,37 @@
                             <i data-lucide="twitter" class="w-4 h-4 text-sky-500"></i>
                             <span>Twitter / X</span>
                         </button>
-                        <button type="button" onclick="setPlatform('Newsletter', this)" class="platform-btn py-2 px-3 rounded-xl border border-slate-200 bg-white text-xs font-medium text-slate-700 hover:border-slate-300 transition flex items-center justify-center gap-1.5">
+                        <button type="button" onclick="setPlatform('Instagram', this)" class="platform-btn py-2 px-3 rounded-xl border border-slate-200 bg-white text-xs font-medium text-slate-700 hover:border-slate-300 transition flex items-center justify-center gap-1.5">
+                            <i data-lucide="instagram" class="w-4 h-4 text-pink-600"></i>
+                            <span>Instagram</span>
+                        </button>
+                        <button type="button" onclick="setPlatform('Facebook', this)" class="platform-btn py-2 px-3 rounded-xl border border-slate-200 bg-white text-xs font-medium text-slate-700 hover:border-slate-300 transition flex items-center justify-center gap-1.5">
+                            <i data-lucide="facebook" class="w-4 h-4 text-blue-600"></i>
+                            <span>Facebook</span>
+                        </button>
+                        <button type="button" onclick="setPlatform('Newsletter', this)" class="platform-btn sm:col-span-2 py-2 px-3 rounded-xl border border-slate-200 bg-white text-xs font-medium text-slate-700 hover:border-slate-300 transition flex items-center justify-center gap-1.5">
                             <i data-lucide="mail" class="w-4 h-4 text-amber-600"></i>
                             <span>Newsletter</span>
                         </button>
                     </div>
                 </div>
 
-                <!-- Zone de saisie dynamique -->
+                <!-- Zone de saisie dynamique & Dictée Vocale -->
                 <div class="space-y-3">
                     <div class="flex items-center justify-between">
                         <label id="inputLabel" for="sourceInput" class="block text-sm font-semibold text-slate-700">Votre matière première</label>
-                        <button type="button" onclick="fillExample()" id="exampleBtnLabel" class="text-xs font-medium text-[#0A66C2] hover:underline flex items-center gap-1">
-                            <i data-lucide="wand-2" class="w-3.5 h-3.5"></i>
-                            Remplir avec un exemple
-                        </button>
+                        <div class="flex items-center gap-3">
+                            <button type="button" onclick="toggleVoiceDictation()" id="voiceRecordBtn" class="text-xs font-medium text-rose-600 hover:underline flex items-center gap-1 bg-rose-50 px-2 py-1 rounded-lg border border-rose-200 transition">
+                                <i data-lucide="mic" class="w-3.5 h-3.5"></i>
+                                <span id="voiceBtnText">Dicter vocalement</span>
+                            </button>
+                            <button type="button" onclick="fillExample()" id="exampleBtnLabel" class="text-xs font-medium text-[#0A66C2] hover:underline flex items-center gap-1">
+                                <i data-lucide="wand-2" class="w-3.5 h-3.5"></i>
+                                Exemple
+                            </button>
+                        </div>
                     </div>
-                    <textarea id="sourceInput" rows="5" placeholder="Ex: Idée de thread, article de blog, brouillon ou notes de réunion..." class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0A66C2] transition resize-none"></textarea>
+                    <textarea id="sourceInput" rows="5" placeholder="Ex: Idée de thread, article de blog, brouillon ou dictez votre voix..." class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0A66C2] transition resize-none"></textarea>
                 </div>
 
                 <!-- Langue de sortie -->
@@ -139,8 +153,23 @@
                 </button>
             </div>
 
-            <!-- COLONNE DROITE : RÉSULTATS -->
+            <!-- COLONNE DROITE : RÉSULTATS & CALCULATEUR ROI -->
             <div class="lg:col-span-7 space-y-6">
+
+                <!-- CALCULATEUR DE ROI EN TEMPS RÉEL (PRO) -->
+                <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
+                            <i data-lucide="trending-up" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider">Simulateur d'Impact ROI</h4>
+                            <p class="text-sm font-bold text-slate-900"><span id="roiHoursSaved">3.5h</span> économisées cette semaine • <span id="roiReachEst">12.4k</span> vues estimées</p>
+                        </div>
+                    </div>
+                    <span class="text-[11px] bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-1 rounded-full font-semibold">Actif</span>
+                </div>
+
                 <!-- État Vide Initial -->
                 <div id="emptyState" class="bg-white rounded-2xl border border-dashed border-slate-300 p-10 sm:p-14 text-center flex flex-col items-center justify-center">
                     <div class="w-16 h-16 rounded-2xl bg-blue-50 text-[#0A66C2] flex items-center justify-center mb-4">
@@ -167,11 +196,56 @@
                     </div>
                     <div id="postsList" class="space-y-6"></div>
                 </div>
+
+                <!-- OUTILS DE SCALE & VIRALITÉ (AVEC CARROUSELS, HASHTAGS & A/B TESTING D'ACCROCHES) -->
+                <div id="scaleToolsSection" class="hidden bg-gradient-to-r from-purple-900 to-indigo-900 text-white rounded-2xl p-6 shadow-xl space-y-4 relative overflow-hidden">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-purple-500/30 flex items-center justify-center">
+                                <i data-lucide="zap" class="w-5 h-5 text-amber-400"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-base">Booster l'impact de vos publications</h3>
+                                <p class="text-xs text-purple-200">Fonctionnalités avancées exclusives au Plan Pro.</p>
+                            </div>
+                        </div>
+                        <span id="proStatusBadge" class="bg-amber-400 text-slate-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1 shadow">
+                            <i data-lucide="lock" class="w-3.5 h-3.5"></i> PRO
+                        </span>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+                        <button onclick="handleProFeature('carousels')" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white p-3 rounded-xl text-xs font-semibold flex items-center gap-2 transition text-left relative">
+                            <i data-lucide="file-stack" class="w-4 h-4 text-purple-300 shrink-0"></i>
+                            <div>
+                                <span class="block font-bold">Carrousel PDF 🔒</span>
+                                <span class="text-[10px] text-purple-300 font-normal">Slides prêtes</span>
+                            </div>
+                        </button>
+                        <button onclick="handleProFeature('hashtags')" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white p-3 rounded-xl text-xs font-semibold flex items-center gap-2 transition text-left relative">
+                            <i data-lucide="hash" class="w-4 h-4 text-emerald-300 shrink-0"></i>
+                            <div>
+                                <span class="block font-bold">Hashtags Pro 🔒</span>
+                                <span class="text-[10px] text-emerald-300 font-normal">Mots-clés viraux</span>
+                            </div>
+                        </button>
+                        <button onclick="handleProFeature('abtest')" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white p-3 rounded-xl text-xs font-semibold flex items-center gap-2 transition text-left relative">
+                            <i data-lucide="split" class="w-4 h-4 text-amber-300 shrink-0"></i>
+                            <div>
+                                <span class="block font-bold">A/B Testing Accroches 🔒</span>
+                                <span class="text-[10px] text-amber-300 font-normal">3 styles de hooks</span>
+                            </div>
+                        </button>
+                    </div>
+
+                    <!-- Zone d'affichage des outils de scale -->
+                    <div id="scaleOutputBox" class="hidden mt-4 p-4 bg-black/30 rounded-xl border border-white/10 text-xs text-slate-200 whitespace-pre-wrap"></div>
+                </div>
             </div>
         </div>
     </main>
 
-    <!-- MODALE AGENT IA -->
+    <!-- MODALE AGENT IA & DICTÉE VOCALE -->
     <div id="agentModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
         <div class="bg-white rounded-2xl max-w-3xl w-full p-6 sm:p-8 shadow-2xl border border-slate-200 relative my-8">
             <button onclick="closeAgentModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-1.5 rounded-lg hover:bg-slate-100">
@@ -190,17 +264,21 @@
                 <i data-lucide="x" class="w-5 h-5"></i>
             </button>
             <h3 class="text-2xl font-bold text-slate-900 mb-2">Passez au Plan Pro Multicanal</h3>
-            <p class="text-sm text-slate-500 mb-6">LinkedIn + X/Twitter + Newsletters illimitées pour 29€ / mois.</p>
-            <button onclick="window.open('https://test.checkout.dodopayments.com/buy/pdt_0Ns917FNfILvPTkMQh2pO?quantity=1', '_blank')" class="w-full py-3 bg-[#0A66C2] text-white font-semibold rounded-xl text-sm shadow-md">Passer Pro maintenant</button>
+            <p class="text-sm text-slate-500 mb-6">Débloquez les carrousels PDF, les hashtags pro, le mode A/B testing des accroches et les publications illimitées pour 29€ / mois.</p>
+            <button onclick="simulateUpgrade()" class="w-full py-3 bg-[#0A66C2] text-white font-semibold rounded-xl text-sm shadow-md">Passer Pro maintenant</button>
         </div>
     </div>
 
     <script>
         lucide.createIcons();
+
         const state = {
             appLang: 'fr',
             platform: 'LinkedIn',
-            language: 'Français'
+            language: 'Français',
+            credits: 5,
+            isPro: false,
+            isRecording: false
         };
 
         const translations = {
@@ -235,6 +313,32 @@
             btnElement.className = "platform-btn active py-2 px-3 rounded-xl border-2 border-[#0A66C2] bg-blue-50/60 text-xs font-bold text-slate-900 transition flex items-center justify-center gap-1.5";
         }
 
+        // 🎙️ Fonction de dictée vocale (Repurposing par Audio)
+        function toggleVoiceDictation() {
+            const btn = document.getElementById('voiceRecordBtn');
+            const textarea = document.getElementById('sourceInput');
+            
+            if (!state.isRecording) {
+                state.isRecording = true;
+                btn.className = "text-xs font-bold text-white bg-rose-600 px-2.5 py-1 rounded-lg border border-rose-700 transition animate-pulse flex items-center gap-1";
+                document.getElementById('voiceBtnText').innerText = "Arrêter l'écoute...";
+                showToast("🎤 Écoute active... Parlez pour dicter votre idée.", "mic");
+                
+                // Simulation de retranscription audio en direct
+                setTimeout(() => {
+                    if (state.isRecording) {
+                        textarea.value += (textarea.value ? "\n" : "") + "Aujourd'hui j'ai testé l'enregistrement vocal pour mon contenu B2B et le gain de temps est tout simplement spectaculaire.";
+                        toggleVoiceDictation();
+                        showToast("🎙️ Audio retranscrit avec succès !");
+                    }
+                }, 4000);
+            } else {
+                state.isRecording = false;
+                btn.className = "text-xs font-medium text-rose-600 hover:underline flex items-center gap-1 bg-rose-50 px-2 py-1 rounded-lg border border-rose-200 transition";
+                document.getElementById('voiceBtnText').innerText = "Dicter vocalement";
+            }
+        }
+
         function changeAppLanguage(langCode) {
             state.appLang = langCode;
             const t = translations[langCode] || translations.fr;
@@ -263,34 +367,45 @@
 
             document.getElementById('emptyState').classList.add('hidden');
             document.getElementById('resultsContainer').classList.add('hidden');
+            document.getElementById('scaleToolsSection').classList.add('hidden');
             document.getElementById('loadingState').classList.remove('hidden');
 
             await new Promise(r => setTimeout(r, 900));
 
-            // Génération adaptée selon le réseau choisi (LinkedIn, X ou Newsletter)
-            let samplePosts = [];
-            if (state.platform === 'Twitter/X') {
-                samplePosts = [
-                    { angleTitle: "Thread 1/3 (Accroche)", content: `1/ La prospection à froid est morte en 2026.\n\nVoici pourquoi vous perdez votre temps 🧵👇` },
-                    { angleTitle: "Thread 2/3 (Chiffres clés)", content: `2/ Les chiffres parlent d'eux-mêmes :\n\n• Taux de réponse < 2%\n• Coût d'acquisition explosif\n\nIl est temps de changer d'approche.` },
-                    { angleTitle: "Format court & Percutant", content: `Arrêtez de courir après les clients.\n\nDevenez l'expert qu'ils viennent chercher.\n\nVoici la méthode exacte 🚀` }
-                ];
-            } else if (state.platform === 'Newsletter') {
-                samplePosts = [
-                    { angleTitle: "Édition Hebdo : Le Constat", content: `Bonjour à tous,\n\nCette semaine, parlons d'un sujet tabou : pourquoi votre prospection fait chou blanc.\n\n${rawText}\n\nBonne lecture,\nL'équipe` },
-                    { angleTitle: "Édition Hebdo : La Solution", content: `Chère communauté,\n\nComment transformer vos notes en un flux constant de clients ?\n\nVoici le plan d'action en 3 étapes...` }
-                ];
-            } else {
-                samplePosts = [
-                    { angleTitle: "Variante 1 : LinkedIn Expert", content: `La plupart des professionnels perdent un temps précieux.\n\nVoici comment transformer votre approche :\n\n${rawText}\n\n👉 Quel est votre avis ?` },
-                    { angleTitle: "Variante 2 : Storytelling LinkedIn", content: `Il y a 6 mois, j'ai réalisé que :\n\n${rawText}\n\nLes résultats ont complètement changé.` }
-                ];
-            }
+            let samplePosts = [
+                { angleTitle: `Variante 1 : ${state.platform} Expert`, content: `La plupart des professionnels perdent un temps précieux.\n\nVoici comment transformer votre approche :\n\n${rawText}\n\n👉 Quel est votre avis ?` },
+                { angleTitle: `Variante 2 : ${state.platform} Storytelling`, content: `Il y a 6 mois, j'ai réalisé que :\n\n${rawText}\n\nLes résultats ont complètement changé.` }
+            ];
 
             renderPosts(samplePosts);
             document.getElementById('loadingState').classList.add('hidden');
             document.getElementById('resultsContainer').classList.remove('hidden');
+            document.getElementById('scaleToolsSection').classList.remove('hidden');
+            
+            // Mise à jour du calculateur ROI
+            document.getElementById('roiHoursSaved').innerText = "4.2h";
+            document.getElementById('roiReachEst').innerText = "18.5k";
+
             showToast(`Contenus générés pour ${state.platform} !`);
+        }
+
+        function handleProFeature(feature) {
+            if (!state.isPro) {
+                openPricingModal();
+                return;
+            }
+            const box = document.getElementById('scaleOutputBox');
+            box.classList.remove('hidden');
+            if (feature === 'carousels') {
+                box.innerHTML = `<strong>📊 PLAN DE CARROUSEL PDF (5 Slides) :</strong>\n\n• <strong>Slide 1 (Accroche) :</strong> Le secret que personne ne vous dit sur ${state.platform}.\n• <strong>Slide 2 (Problème) :</strong> 90% des entrepreneurs font cette erreur.\n• <strong>Slide 3 (Méthode) :</strong> Le plan en 3 étapes pour inverser la tendance.\n• <strong>Slide 4 (Preuve) :</strong> Résultat : +300% d'engagement en 30 jours.\n• <strong>Slide 5 (CTA) :</strong> Enregistrez ce post et abonnez-vous !`;
+                showToast("Carrousel généré avec succès !");
+            } else if (feature === 'hashtags') {
+                box.innerHTML = `<strong># HASHTAGS VIRAUX RECOMMANDÉS :</strong>\n\n#${state.platform} #BusinessB2B #GrowthHacking #Entrepreneurship #StrategieDigitale #Solopreneur #Innovation`;
+                showToast("Hashtags générés !");
+            } else if (feature === 'abtest') {
+                box.innerHTML = `<strong>⚡ A/B TESTING DES ACCROCHES (HOOKS) :</strong>\n\n1. <strong>Accroche Provocatrice :</strong> "Pourquoi 90% des experts échouent sur ${state.platform}."\n2. <strong>Accroche Chiffrée :</strong> "Comment j'ai généré +300% de leads grâce à cette astuce."\n3. <strong>Accroche Question :</strong> "Et si votre stratégie actuelle vous faisait perdre 10h par semaine ?"`;
+                showToast("A/B Testing généré !");
+            }
         }
 
         function renderPosts(posts) {
@@ -302,7 +417,7 @@
                 card.innerHTML = `
                     <div class="flex justify-between items-center border-b border-slate-100 pb-2">
                         <span class="text-xs font-bold text-[#0A66C2] uppercase">${post.angleTitle}</span>
-                        <button onclick="copyText('post_${idx}')" class="text-xs bg-slate-900 text-white px-3 py-1.5 rounded-lg font-medium">Copier</button>
+                        <button onclick="copyText('post_${idx}')" class="text-xs bg-slate-900 text-white px-3 py-1.5 rounded-lg font-medium hover:bg-slate-800">Copier le contenu</button>
                     </div>
                     <p id="post_${idx}" class="text-sm text-slate-800 whitespace-pre-wrap leading-relaxed">${post.content}</p>
                 `;
@@ -318,20 +433,31 @@
             textarea.select();
             document.execCommand('copy');
             document.body.removeChild(textarea);
-            showToast("Copié dans le presse-papier !");
+            showToast("Contenu copié !");
+        }
+
+        function showToast(message, iconName = "check-circle") {
+            const toast = document.getElementById('toastBanner');
+            document.getElementById('toastMessage').innerText = message;
+            document.getElementById('toastIcon').setAttribute('data-lucide', iconName);
+            lucide.createIcons();
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => toast.classList.add('translate-y-20', 'opacity-0'), 3500);
+        }
+
+        function simulateUpgrade() {
+            state.isPro = true;
+            document.getElementById('proStatusBadge').innerHTML = `<i data-lucide="check-circle" class="w-3.5 h-3.5"></i> DÉBLOQUÉ`;
+            document.getElementById('proStatusBadge').className = "bg-emerald-400 text-slate-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1 shadow";
+            lucide.createIcons();
+            closePricingModal();
+            showToast("Mode Pro activé avec succès !", "crown");
         }
 
         function openAgentModal() { document.getElementById('agentModal').classList.remove('hidden'); }
         function closeAgentModal() { document.getElementById('agentModal').classList.add('hidden'); }
         function openPricingModal() { document.getElementById('pricingModal').classList.remove('hidden'); }
         function closePricingModal() { document.getElementById('pricingModal').classList.add('hidden'); }
-
-        function showToast(message, iconName = "check-circle") {
-            const toast = document.getElementById('toastBanner');
-            document.getElementById('toastMessage').innerText = message;
-            toast.classList.remove('translate-y-20', 'opacity-0');
-            setTimeout(() => toast.classList.add('translate-y-20', 'opacity-0'), 3000);
-        }
     </script>
 </body>
 </html>
