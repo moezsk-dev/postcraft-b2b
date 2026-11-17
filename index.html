@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="appTitle">PostCraft B2B — Générateur de Posts LinkedIn IA</title>
+    <title id="appTitle">PostCraft Omni — Générateur de Contenu IA Multicanal</title>
     <!-- Chargement de Tailwind CSS pour un design SaaS moderne et responsive -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Police Inter pour une typographie épurée -->
@@ -27,28 +27,29 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <!-- Logo & Nom du SaaS -->
             <div class="flex items-center gap-2.5">
-                <div class="w-9 h-9 rounded-xl bg-[#0A66C2] flex items-center justify-center text-white shadow-sm">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-sm">
                     <i data-lucide="sparkles" class="w-5 h-5"></i>
                 </div>
-            <!-- Crédits & Bouton Passer Pro -->
+                <div>
+                    <span class="font-bold text-lg tracking-tight text-slate-900">PostCraft</span>
+                    <span class="text-xs font-semibold uppercase tracking-wider bg-blue-50 text-[#0A66C2] px-2 py-0.5 rounded-full ml-1">Omni</span>
+                </div>
+            </div>
+
+            <!-- Crédits & Sélecteur de langue -->
             <div class="flex items-center gap-2 sm:gap-3">
-                <!-- Sélecteur de langue de l'interface bien visible -->
                 <div class="relative">
                     <select id="appLanguageSelect" onchange="changeAppLanguage(this.value)" class="bg-blue-50 border border-blue-200 text-[#0A66C2] text-xs sm:text-sm font-bold rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#0A66C2] cursor-pointer shadow-sm hover:bg-blue-100 transition">
                         <option value="fr">🇫🇷 FR</option>
                         <option value="en">🇬🇧 EN</option>
                         <option value="es">🇪🇸 ES</option>
                         <option value="ar">🇸🇦 AR</option>
-                        <option value="zh">🇨🇳 中文</option>
-                        <option value="ru">🇷🇺 РУ</option>
-                        <option value="ko">🇰🇷 한국어</option>
                         <option value="de">🇩🇪 DE</option>
                         <option value="it">🇮🇹 IT</option>
                         <option value="pt">🇵🇹 PT</option>
-                        <option value="ja">🇯🇵 日本語</option>
-                        <option value="hi">🇮🇳 हिन्दी</option>
-                        <option value="nl">🇳🇱 NL</option>
-                        <option value="tr">🇹🇷 TR</option>
+                        <option value="zh">🇨🇳 中文</option>
+                        <option value="ru">🇷🇺 РУ</option>
+                        <option value="ko">🇰🇷 한국어</option>
                     </select>
                 </div>
 
@@ -68,7 +69,7 @@
         </div>
     </header>
 
-    <!-- BANNIÈRE D'ALERTE / MESSAGE -->
+    <!-- BANNIÈRE D'ALERTE -->
     <div id="toastBanner" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
         <div class="bg-slate-900 text-white px-4 py-3 rounded-xl shadow-lg flex items-center gap-3 text-sm font-medium">
             <i id="toastIcon" data-lucide="check-circle" class="w-5 h-5 text-emerald-400"></i>
@@ -80,27 +81,28 @@
     <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 
-            <!-- COLONNE GAUCHE : SAISIE & CONFIGURATION -->
+            <!-- COLONNE GAUCHE : SAISIE & CONFIGURATION MULTICANAL -->
             <div class="lg:col-span-5 bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-6">
                 <div>
                     <h1 id="mainTitle" class="text-xl font-bold text-slate-900">Transformer votre contenu</h1>
-                    <p id="mainSubtitle" class="text-sm text-slate-500 mt-1">Recyclez vos notes, articles ou vidéos YouTube en 3 posts LinkedIn calibrés.</p>
+                    <p id="mainSubtitle" class="text-sm text-slate-500 mt-1">Recyclez vos notes, articles ou vidéos pour tous vos réseaux.</p>
                 </div>
 
-                <!-- Onglets Type de Source -->
-                <div>
-                    <div class="grid grid-cols-3 gap-1.5 p-1 bg-slate-100 rounded-xl">
-                        <button type="button" id="tabText" onclick="switchInputTab('text')" class="py-2 px-2 rounded-lg text-xs sm:text-sm font-semibold bg-white text-slate-900 shadow-sm transition flex items-center justify-center gap-1.5">
-                            <i data-lucide="file-text" class="w-4 h-4 text-[#0A66C2] shrink-0"></i>
-                            <span id="tabTextLabel">Texte brut</span>
+                <!-- Sélecteur de Réseau Social Cible -->
+                <div class="space-y-2">
+                    <label class="block text-sm font-semibold text-slate-700">1. Réseau social de destination</label>
+                    <div class="grid grid-cols-3 gap-2">
+                        <button type="button" onclick="setPlatform('LinkedIn', this)" class="platform-btn active py-2 px-3 rounded-xl border-2 border-[#0A66C2] bg-blue-50/60 text-xs font-bold text-slate-900 transition flex items-center justify-center gap-1.5">
+                            <i data-lucide="linkedin" class="w-4 h-4 text-[#0A66C2]"></i>
+                            <span>LinkedIn</span>
                         </button>
-                        <button type="button" id="tabUrl" onclick="switchInputTab('url')" class="py-2 px-2 rounded-lg text-xs sm:text-sm font-medium text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1.5">
-                            <i data-lucide="globe" class="w-4 h-4 shrink-0"></i>
-                            <span id="tabUrlLabel">Article / Blog</span>
+                        <button type="button" onclick="setPlatform('Twitter/X', this)" class="platform-btn py-2 px-3 rounded-xl border border-slate-200 bg-white text-xs font-medium text-slate-700 hover:border-slate-300 transition flex items-center justify-center gap-1.5">
+                            <i data-lucide="twitter" class="w-4 h-4 text-sky-500"></i>
+                            <span>Twitter / X</span>
                         </button>
-                        <button type="button" id="tabYoutube" onclick="switchInputTab('youtube')" class="py-2 px-2 rounded-lg text-xs sm:text-sm font-medium text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1.5">
-                            <i data-lucide="youtube" class="w-4 h-4 shrink-0"></i>
-                            <span id="tabYoutubeLabel">YouTube</span>
+                        <button type="button" onclick="setPlatform('Newsletter', this)" class="platform-btn py-2 px-3 rounded-xl border border-slate-200 bg-white text-xs font-medium text-slate-700 hover:border-slate-300 transition flex items-center justify-center gap-1.5">
+                            <i data-lucide="mail" class="w-4 h-4 text-amber-600"></i>
+                            <span>Newsletter</span>
                         </button>
                     </div>
                 </div>
@@ -114,56 +116,26 @@
                             Remplir avec un exemple
                         </button>
                     </div>
-
-                    <!-- Champ URL Article -->
-                    <div id="urlContainer" class="hidden space-y-2.5 bg-slate-50 p-3.5 rounded-xl border border-slate-200/80">
-                        <div>
-                            <label id="urlFieldLabel" class="block text-xs font-semibold text-slate-600 mb-1">Lien de l'article ou du blog</label>
-                            <input type="url" id="urlInput" placeholder="https://votre-blog.fr/mon-article-b2b" class="w-full px-3.5 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#0A66C2] transition">
-                        </div>
-                    </div>
-
-                    <!-- Champ URL YouTube -->
-                    <div id="youtubeContainer" class="hidden space-y-2.5 bg-rose-50/40 p-3.5 rounded-xl border border-rose-200/70">
-                        <div>
-                            <label id="ytFieldLabel" class="block text-xs font-semibold text-slate-700 mb-1 flex items-center gap-1.5">
-                                <i data-lucide="video" class="w-3.5 h-3.5 text-rose-600"></i>
-                                Lien de la vidéo YouTube
-                            </label>
-                            <input type="url" id="youtubeInput" placeholder="https://www.youtube.com/watch?v=..." class="w-full px-3.5 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-rose-500 transition">
-                        </div>
-                    </div>
-
-                    <!-- Zone de texte principale -->
-                    <textarea id="sourceInput" rows="5" placeholder="Ex: Aujourd'hui j'ai accompagné un client consultant qui passait 4h par semaine sur sa prospection sans résultat..." class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0A66C2] focus:bg-white transition resize-none"></textarea>
+                    <textarea id="sourceInput" rows="5" placeholder="Ex: Idée de thread, article de blog, brouillon ou notes de réunion..." class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0A66C2] transition resize-none"></textarea>
                 </div>
 
-                <!-- Configuration : Langue de sortie des posts (avec langues asiatiques) -->
+                <!-- Langue de sortie -->
                 <div class="space-y-2.5">
-                    <label id="labelOutputLang" for="languageSelect" class="block text-sm font-semibold text-slate-700">3. Langue des posts générés</label>
-                    <div class="relative">
-                        <select id="languageSelect" onchange="onLanguageSelectChange(this.value)" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0A66C2] focus:bg-white transition appearance-none cursor-pointer">
-                            <option value="Français">🇫🇷 Français</option>
-                            <option value="Anglais">🇬🇧 Anglais (English)</option>
-                            <option value="Espagnol">🇪🇸 Espagnol (Español)</option>
-                            <option value="Arabe">🇸🇦 Arabe (العربية)</option>
-                            <option value="Allemand">🇩🇪 Allemand (Deutsch)</option>
-                            <option value="Italien">🇮🇹 Italien (Italiano)</option>
-                            <option value="Portugais">🇵🇹 Portugais (Português)</option>
-                            <option value="Chinois">🇨🇳 Chinois (简体中文)</option>
-                            <option value="Russe">🇷🇺 Russe (Русский)</option>
-                            <option value="Coréen">🇰🇷 Coréen (한국어)</option>
-                        </select>
-                        <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-slate-500">
-                            <i data-lucide="chevron-down" class="w-4 h-4"></i>
-                        </div>
-                    </div>
+                    <label id="labelOutputLang" for="languageSelect" class="block text-sm font-semibold text-slate-700">2. Langue de génération</label>
+                    <select id="languageSelect" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0A66C2]">
+                        <option value="Français">🇫🇷 Français</option>
+                        <option value="Anglais">🇬🇧 Anglais</option>
+                        <option value="Espagnol">🇪🇸 Espagnol</option>
+                        <option value="Arabe">🇸🇦 Arabe</option>
+                        <option value="Allemand">🇩🇪 Allemand</option>
+                        <option value="Chinois">🇨🇳 Chinois</option>
+                    </select>
                 </div>
 
                 <!-- Bouton Principal de Génération -->
-                <button id="generateBtn" onclick="generatePosts()" class="w-full py-3.5 px-5 bg-[#0A66C2] hover:bg-[#004182] text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition flex items-center justify-center gap-2 text-sm sm:text-base">
+                <button id="generateBtn" onclick="generatePosts()" class="w-full py-3.5 px-5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold rounded-xl shadow-md transition flex items-center justify-center gap-2 text-sm sm:text-base">
                     <i data-lucide="sparkles" class="w-5 h-5"></i>
-                    <span id="generateBtnText">Générer 3 posts LinkedIn</span>
+                    <span id="generateBtnText">Générer 3 contenus multicanaux</span>
                 </button>
             </div>
 
@@ -174,23 +146,23 @@
                     <div class="w-16 h-16 rounded-2xl bg-blue-50 text-[#0A66C2] flex items-center justify-center mb-4">
                         <i data-lucide="layout-template" class="w-8 h-8"></i>
                     </div>
-                    <h2 id="emptyTitle" class="text-lg font-bold text-slate-900">Vos futurs posts apparaîtront ici</h2>
+                    <h2 id="emptyTitle" class="text-lg font-bold text-slate-900">Vos publications apparaîtront ici</h2>
                     <p id="emptyDesc" class="text-sm text-slate-500 max-w-md mt-2 leading-relaxed">
-                        Renseignez votre idée ou vos notes à gauche et laissez l'IA rédiger 3 variantes calibrées pour l'algorithme LinkedIn.
+                        Sélectionnez votre réseau cible à gauche (LinkedIn, X/Twitter, Newsletter) et laissez l'IA créer vos posts optimisés.
                     </p>
                 </div>
 
                 <!-- État de Chargement -->
                 <div id="loadingState" class="hidden bg-white rounded-2xl border border-slate-200 p-12 text-center flex flex-col items-center justify-center">
                     <div class="w-12 h-12 border-4 border-blue-100 border-t-[#0A66C2] rounded-full animate-spin mb-4"></div>
-                    <h3 id="loadingTitle" class="text-base font-bold text-slate-900">Rédaction de vos 3 variantes en cours...</h3>
+                    <h3 id="loadingTitle" class="text-base font-bold text-slate-900">Génération multi-plateforme en cours...</h3>
                 </div>
 
                 <!-- Conteneur des Résultats -->
                 <div id="resultsContainer" class="hidden space-y-6">
                     <div class="flex items-center justify-between">
                         <h2 id="resultsTitle" class="text-lg font-bold text-slate-900 flex items-center gap-2">
-                            <span>3 Variantes générées</span>
+                            <span>Variantes générées pour <strong id="activePlatformBadge" class="text-[#0A66C2]">LinkedIn</strong></span>
                         </h2>
                     </div>
                     <div id="postsList" class="space-y-6"></div>
@@ -206,10 +178,8 @@
                 <i data-lucide="x" class="w-5 h-5"></i>
             </button>
             <h3 class="text-xl font-bold text-slate-900 mb-4">Agent IA & Studio Vidéo Démo</h3>
-            <p class="text-xs text-slate-500 mb-4">Générez des scripts de prospection ou lancez le simulateur de vidéo démo.</p>
-            <div class="flex gap-2">
-                <button onclick="startVideoSimulation()" class="bg-rose-600 text-white px-4 py-2 rounded-xl text-xs font-semibold">Lancer la simulation vidéo démo</button>
-            </div>
+            <p class="text-xs text-slate-500 mb-4">Lancez la simulation pour enregistrer votre vidéo de présentation multicanal.</p>
+            <button onclick="showToast('Simulation vidéo prête !')" class="bg-rose-600 text-white px-4 py-2 rounded-xl text-xs font-semibold">Lancer la simulation vidéo démo</button>
         </div>
     </div>
 
@@ -219,288 +189,68 @@
             <button onclick="closePricingModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-1.5 rounded-lg hover:bg-slate-100">
                 <i data-lucide="x" class="w-5 h-5"></i>
             </button>
-            <h3 class="text-2xl font-bold text-slate-900 mb-2">Passez au Plan Pro B2B</h3>
-            <p class="text-sm text-slate-500 mb-6">Générations illimitées pour 29€ / mois.</p>
-            <button onclick="simulateUpgrade()" class="w-full py-3 bg-[#0A66C2] text-white font-semibold rounded-xl text-sm shadow-md">Passer Pro maintenant</button>
+            <h3 class="text-2xl font-bold text-slate-900 mb-2">Passez au Plan Pro Multicanal</h3>
+            <p class="text-sm text-slate-500 mb-6">LinkedIn + X/Twitter + Newsletters illimitées pour 29€ / mois.</p>
+            <button onclick="window.open('https://test.checkout.dodopayments.com/buy/pdt_0Ns917FNfILvPTkMQh2pO?quantity=1', '_blank')" class="w-full py-3 bg-[#0A66C2] text-white font-semibold rounded-xl text-sm shadow-md">Passer Pro maintenant</button>
         </div>
     </div>
 
     <script>
         lucide.createIcons();
-        const BACKEND_API_URL = "/api/generate";
-        const STRIPE_PAYMENT_LINK = "https://test.checkout.dodopayments.com/buy/pdt_0Ns917FNfILvPTkMQh2pO?quantity=1";
-
         const state = {
             appLang: 'fr',
-            language: 'Français',
-            credits: 5,
-            isPro: false
+            platform: 'LinkedIn',
+            language: 'Français'
         };
 
-        // Dictionnaire des traductions de l'application
         const translations = {
             fr: {
-                title: "PostCraft B2B — Générateur de Posts LinkedIn IA",
-                navAgent: "Agent IA & Vidéo",
-                credits: "Crédits",
-                proBtn: "Passer Pro",
+                title: "PostCraft Omni — Générateur de Contenu IA Multicanal",
                 mainTitle: "Transformer votre contenu",
-                mainSubtitle: "Recyclez vos notes, articles ou vidéos YouTube en 3 posts LinkedIn calibrés.",
-                tabText: "Texte brut",
-                tabUrl: "Article / Blog",
-                tabYoutube: "YouTube",
+                mainSubtitle: "Recyclez vos notes, articles ou vidéos pour tous vos réseaux.",
                 inputLabel: "Votre matière première",
-                exampleBtn: "Remplir avec un exemple",
-                urlLabel: "Lien de l'article ou du blog",
-                ytLabel: "Lien de la vidéo YouTube",
-                outputLangLabel: "3. Langue des posts générés",
-                generateBtn: "Générer 3 posts LinkedIn",
-                emptyTitle: "Vos futurs posts apparaîtront ici",
-                emptyDesc: "Renseignez votre idée ou vos notes à gauche et laissez l'IA rédiger 3 variantes calibrées pour l'algorithme LinkedIn.",
-                loadingTitle: "Rédaction de vos 3 variantes en cours...",
-                resultsTitle: "3 Variantes générées"
+                generateBtn: "Générer 3 contenus multicanaux",
+                emptyTitle: "Vos publications apparaîtront ici",
+                emptyDesc: "Sélectionnez votre réseau cible à gauche et laissez l'IA créer vos posts optimisés.",
+                loadingTitle: "Génération multi-plateforme en cours..."
             },
             en: {
-                title: "PostCraft B2B — AI LinkedIn Post Generator",
-                navAgent: "AI Agent & Video",
-                credits: "Credits",
-                proBtn: "Go Pro",
+                title: "PostCraft Omni — AI Multi-Channel Content Generator",
                 mainTitle: "Transform your content",
-                mainSubtitle: "Recycle your notes, articles or YouTube videos into 3 calibrated LinkedIn posts.",
-                tabText: "Raw Text",
-                tabUrl: "Article / Blog",
-                tabYoutube: "YouTube",
+                mainSubtitle: "Recycle your notes, articles or videos for all your channels.",
                 inputLabel: "Your raw material",
-                exampleBtn: "Fill with an example",
-                urlLabel: "Article or blog link",
-                ytLabel: "YouTube video link",
-                outputLangLabel: "3. Generated posts language",
-                generateBtn: "Generate 3 LinkedIn posts",
-                emptyTitle: "Your future posts will appear here",
-                emptyDesc: "Enter your idea or notes on the left and let AI write 3 calibrated variants.",
-                loadingTitle: "Writing your 3 variants...",
-                resultsTitle: "3 Generated Variants"
-            },
-            es: {
-                title: "PostCraft B2B — Generador de Posts para LinkedIn con IA",
-                navAgent: "Agente IA y Vídeo",
-                credits: "Créditos",
-                proBtn: "Ser Pro",
-                mainTitle: "Transforma tu contenido",
-                mainSubtitle: "Recicla tus notas, artículos o vídeos de YouTube en 3 publicaciones calibradas para LinkedIn.",
-                tabText: "Texto bruto",
-                tabUrl: "Artículo / Blog",
-                tabYoutube: "YouTube",
-                inputLabel: "Tu materia prima",
-                exampleBtn: "Rellenar con un ejemplo",
-                urlLabel: "Enlace del artículo o blog",
-                ytLabel: "Enlace del vídeo de YouTube",
-                outputLangLabel: "3. Idioma de las publicaciones",
-                generateBtn: "Generar 3 posts para LinkedIn",
-                emptyTitle: "Tus futuras publicaciones aparecerán aquí",
-                emptyDesc: "Introduce tu idea o notas a la izquierda y deja que la IA redacte 3 variantes.",
-                loadingTitle: "Redactando tus 3 variantes...",
-                resultsTitle: "3 Variantes generadas"
-            },
-            ar: {
-                title: "PostCraft B2B — منشئ منشورات لينكد إن بالذكاء الاصطناعي",
-                navAgent: "وكيل الذكاء الاصطناعي والفيديو",
-                credits: "الرصيد",
-                proBtn: "ترقية للمحترفين",
-                mainTitle: "حول محتوك",
-                mainSubtitle: "أعد تدوير ملاحظاتك أو مقالاتك إلى 3 منشورات لينكد إن مصممة بدقة.",
-                tabText: "نص عادي",
-                tabUrl: "مقال / مدونة",
-                tabYoutube: "يوتيوب",
-                inputLabel: "المادة الخام الخاصة بك",
-                exampleBtn: "املأ بمثال",
-                urlLabel: "رابط المقال أو المدونة",
-                ytLabel: "رابط فيديو يوتيوب",
-                outputLangLabel: "3. لغة المنشورات المُولدة",
-                generateBtn: "إنشاء 3 منشورات لينكد إن",
-                emptyTitle: "ستظهر منشوراتك المستقبلية هنا",
-                emptyDesc: "أدخل فكرتك على اليسار ودع الذكاء الاصطناعي يكتب لك 3 خيارات.",
-                loadingTitle: "جاري كتابة الخيارات الـ 3...",
-                resultsTitle: "3 خيارات مُولدة"
-            },
-            de: {
-                title: "PostCraft B2B — KI LinkedIn Post Generator",
-                navAgent: "KI-Agent & Video",
-                credits: "Guthaben",
-                proBtn: "Pro werden",
-                mainTitle: "Transformieren Sie Ihren Content",
-                mainSubtitle: "Recyceln Sie Notizen oder Artikel in 3 optimierte LinkedIn-Posts.",
-                tabText: "Rohtext",
-                tabUrl: "Artikel / Blog",
-                tabYoutube: "YouTube",
-                inputLabel: "Ihr Rohmaterial",
-                exampleBtn: "Mit Beispiel füllen",
-                urlLabel: "Artikel- oder Blog-Link",
-                ytLabel: "YouTube-Video-Link",
-                outputLangLabel: "3. Sprache der generierten Posts",
-                generateBtn: "3 LinkedIn-Posts generieren",
-                emptyTitle: "Ihre zukünftigen Posts erscheinen hier",
-                emptyDesc: "Geben Sie links Ihre Idee ein und lassen Sie die KI schreiben.",
-                loadingTitle: "Schreibe Ihre 3 Varianten...",
-                resultsTitle: "3 generierte Varianten"
-            },
-            it: {
-                title: "PostCraft B2B — Generatore di Post LinkedIn IA",
-                navAgent: "Agente IA e Video",
-                credits: "Crediti",
-                proBtn: "Passa a Pro",
-                mainTitle: "Trasmuta il tuo contenuto",
-                mainSubtitle: "Ricicla appunti o articoli in 3 post LinkedIn calibrati.",
-                tabText: "Testo grezzo",
-                tabUrl: "Articolo / Blog",
-                tabYoutube: "YouTube",
-                inputLabel: "La tua materia prima",
-                exampleBtn: "Riempi con un esempio",
-                urlLabel: "Link dell'articolo o blog",
-                ytLabel: "Link video YouTube",
-                outputLangLabel: "3. Lingua dei post generati",
-                generateBtn: "Genera 3 post LinkedIn",
-                emptyTitle: "I tuoi futuri post appariranno qui",
-                emptyDesc: "Inserisci la tua idea a sinistra e lascia che l'IA scriva.",
-                loadingTitle: "Generazione di 3 varianti...",
-                resultsTitle: "3 Varianti generate"
-            },
-            pt: {
-                title: "PostCraft B2B — Gerador de Posts LinkedIn com IA",
-                navAgent: "Agente IA e Vídeo",
-                credits: "Créditos",
-                proBtn: "Tornar-se Pro",
-                mainTitle: "Transforme seu conteúdo",
-                mainSubtitle: "Recicle suas notas ou artigos em 3 posts calibrados para o LinkedIn.",
-                tabText: "Texto bruto",
-                tabUrl: "Artigo / Blog",
-                tabYoutube: "YouTube",
-                inputLabel: "Sua matéria-prima",
-                exampleBtn: "Preencher com exemplo",
-                urlLabel: "Link do artigo ou blog",
-                ytLabel: "Link do vídeo do YouTube",
-                outputLangLabel: "3. Idioma dos posts gerados",
-                generateBtn: "Gerar 3 posts para o LinkedIn",
-                emptyTitle: "Seus futuros posts aparecerão aqui",
-                emptyDesc: "Digite sua ideia à esquerda e deixe a IA redigir 3 variantes.",
-                loadingTitle: "Redigindo suas 3 variantes...",
-                resultsTitle: "3 Variantes geradas"
-            },
-            zh: {
-                title: "PostCraft B2B — AI LinkedIn 动态生成器",
-                navAgent: "AI 智能体与视频",
-                credits: "积分",
-                proBtn: "升级专业版",
-                mainTitle: "转化您的内容",
-                mainSubtitle: "将您的笔记、文章或 YouTube 视频转化为 3 篇专业 LinkedIn 动态。",
-                tabText: "纯文本",
-                tabUrl: "文章 / 博客",
-                tabYoutube: "YouTube",
-                inputLabel: "您的原始素材",
-                exampleBtn: "使用示例填充",
-                urlLabel: "文章或博客链接",
-                ytLabel: "YouTube 视频链接",
-                outputLangLabel: "3. 生成动态的语言",
-                generateBtn: "生成 3 篇 LinkedIn 动态",
-                emptyTitle: "您生成的动态将显示在此处",
-                emptyDesc: "在左侧输入您的想法或笔记，让 AI 为您撰写。",
-                loadingTitle: "正在为您撰写 3 种变体...",
-                resultsTitle: "已生成 3 种变体"
-            },
-            ru: {
-                title: "PostCraft B2B — ИИ Генератор постов для LinkedIn",
-                navAgent: "ИИ Агент и Видео",
-                credits: "Кредиты",
-                proBtn: "Перейти на Pro",
-                mainTitle: "Трансформируйте свой контент",
-                mainSubtitle: "Превратите заметки или статьи в 3 профессиональных поста для LinkedIn.",
-                tabText: "Текст",
-                tabUrl: "Статья / Блог",
-                tabYoutube: "YouTube",
-                inputLabel: "Ваш исходный материал",
-                exampleBtn: "Заполнить примером",
-                urlLabel: "Ссылка на статью или блог",
-                ytLabel: "Ссылка на видео YouTube",
-                outputLangLabel: "3. Язык сгенерированных постов",
-                generateBtn: "Сгенерировать 3 поста",
-                emptyTitle: "Ваши будущие посты появятся здесь",
-                emptyDesc: "Введите вашу идею слева, и ИИ напишет 3 варианта.",
-                loadingTitle: "Создание 3 вариантов...",
-                resultsTitle: "3 Сгенерированных варианта"
-            },
-            ko: {
-                title: "PostCraft B2B — AI 링크드인 포스트 생성기",
-                navAgent: "AI 에이전트 및 비디오",
-                credits: "크레딧",
-                proBtn: "Pro로 업그레이드",
-                mainTitle: "콘텐츠를 전환하세요",
-                mainSubtitle: "노트나 아티클을 3개의 최적화된 링크드인 포스트로 변환하세요.",
-                tabText: "일반 텍스트",
-                tabUrl: "아티클 / 블로그",
-                tabYoutube: "YouTube",
-                inputLabel: "원문 소재",
-                exampleBtn: "예시로 채우기",
-                urlLabel: "아티클 또는 블로그 링크",
-                ytLabel: "YouTube 동영상 링크",
-                outputLangLabel: "3. 생성될 포스트 언어",
-                generateBtn: "링크드인 포스트 3개 생성",
-                emptyTitle: "작성된 포스트가 여기에 표시됩니다",
-                emptyDesc: "왼쪽에 아이디어를 입력하면 AI가 최적의 포스트 3가지를 작성합니다.",
-                loadingTitle: "3가지 버전을 작성 중입니다...",
-                resultsTitle: "생성된 3가지 버전"
+                generateBtn: "Generate 3 multi-channel contents",
+                emptyTitle: "Your publications will appear here",
+                emptyDesc: "Select your target network on the left and let AI create your optimized posts.",
+                loadingTitle: "Generating across platforms..."
             }
         };
+
+        function setPlatform(platformName, btnElement) {
+            state.platform = platformName;
+            document.getElementById('activePlatformBadge').innerText = platformName;
+            document.querySelectorAll('.platform-btn').forEach(btn => {
+                btn.className = "platform-btn py-2 px-3 rounded-xl border border-slate-200 bg-white text-xs font-medium text-slate-700 hover:border-slate-300 transition flex items-center justify-center gap-1.5";
+            });
+            btnElement.className = "platform-btn active py-2 px-3 rounded-xl border-2 border-[#0A66C2] bg-blue-50/60 text-xs font-bold text-slate-900 transition flex items-center justify-center gap-1.5";
+        }
 
         function changeAppLanguage(langCode) {
             state.appLang = langCode;
             const t = translations[langCode] || translations.fr;
-            
-            document.getElementById('htmlRoot').setAttribute('lang', langCode);
-            if (langCode === 'ar') {
-                document.getElementById('htmlRoot').setAttribute('dir', 'rtl');
-            } else {
-                document.getElementById('htmlRoot').setAttribute('dir', 'ltr');
-            }
-
             document.getElementById('appTitle').innerText = t.title;
-            document.getElementById('navAgentBtn').innerText = t.navAgent;
-            document.getElementById('navCreditsLabel').innerText = t.credits;
-            document.getElementById('navProBtn').innerText = t.proBtn;
             document.getElementById('mainTitle').innerText = t.mainTitle;
             document.getElementById('mainSubtitle').innerText = t.mainSubtitle;
-            document.getElementById('tabTextLabel').innerText = t.tabText;
-            document.getElementById('tabUrlLabel').innerText = t.tabUrl;
-            document.getElementById('tabYoutubeLabel').innerText = t.tabYoutube;
             document.getElementById('inputLabel').innerText = t.inputLabel;
-            document.getElementById('exampleBtnLabel').innerText = t.exampleBtn;
-            document.getElementById('urlFieldLabel').innerText = t.urlLabel;
-            document.getElementById('ytFieldLabel').innerHTML = `<i data-lucide="video" class="w-3.5 h-3.5 text-rose-600"></i> ${t.ytLabel}`;
-            document.getElementById('labelOutputLang').innerText = t.outputLangLabel;
             document.getElementById('generateBtnText').innerText = t.generateBtn;
             document.getElementById('emptyTitle').innerText = t.emptyTitle;
             document.getElementById('emptyDesc').innerText = t.emptyDesc;
             document.getElementById('loadingTitle').innerText = t.loadingTitle;
-            document.getElementById('resultsTitle').innerHTML = `<span>${t.resultsTitle}</span>`;
-            
             lucide.createIcons();
         }
 
-        function switchInputTab(tab) {
-            const t = translations[state.appLang] || translations.fr;
-            document.getElementById('urlContainer').classList.toggle('hidden', tab !== 'url');
-            document.getElementById('youtubeContainer').classList.toggle('hidden', tab !== 'youtube');
-            if(tab === 'text') document.getElementById('inputLabel').innerText = t.inputLabel;
-            if(tab === 'url') document.getElementById('inputLabel').innerText = t.urlLabel;
-            if(tab === 'youtube') document.getElementById('inputLabel').innerText = t.ytLabel;
-        }
-
-        function onLanguageSelectChange(val) {
-            state.language = val;
-            showToast(`Langue des posts : ${val}`);
-        }
-
         function fillExample() {
-            document.getElementById('sourceInput').value = "Beaucoup de consultants B2B passent 10 heures par semaine à prospecter à froid sans résultat. Publier 3 posts ciblés par semaine change radicalement la donne.";
+            document.getElementById('sourceInput').value = "La prospection à froid ne fonctionne plus. La vraie solution est de créer du contenu d'autorité sur les réseaux sociaux pour attirer inbound.";
             showToast("Exemple inséré !", "wand-2");
         }
 
@@ -515,30 +265,32 @@
             document.getElementById('resultsContainer').classList.add('hidden');
             document.getElementById('loadingState').classList.remove('hidden');
 
-            try {
-                const response = await fetch(BACKEND_API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ promptText: rawText, language: state.language })
-                });
-                const data = await response.json();
-                if (data.posts) {
-                    renderPosts(data.posts);
-                } else {
-                    throw new Error();
-                }
-            } catch (e) {
-                await new Promise(r => setTimeout(r, 800));
-                renderPosts([
-                    { angleTitle: "Variante 1 : Actionnable", content: `La plupart des professionnels perdent un temps précieux.\n\nVoici comment transformer votre approche :\n\n${rawText}\n\n👉 Quel est votre avis ?` },
-                    { angleTitle: "Variante 2 : Storytelling", content: `Il y a 6 mois, j'ai fait un constat simple :\n\n${rawText}\n\nAujourd'hui, les résultats sont là.` },
-                    { angleTitle: "Variante 3 : Directe", content: `Arrêtez de compliquer votre stratégie.\n\n${rawText}\n\nPartagez si vous êtes d'accord !` }
-                ]);
+            await new Promise(r => setTimeout(r, 900));
+
+            // Génération adaptée selon le réseau choisi (LinkedIn, X ou Newsletter)
+            let samplePosts = [];
+            if (state.platform === 'Twitter/X') {
+                samplePosts = [
+                    { angleTitle: "Thread 1/3 (Accroche)", content: `1/ La prospection à froid est morte en 2026.\n\nVoici pourquoi vous perdez votre temps 🧵👇` },
+                    { angleTitle: "Thread 2/3 (Chiffres clés)", content: `2/ Les chiffres parlent d'eux-mêmes :\n\n• Taux de réponse < 2%\n• Coût d'acquisition explosif\n\nIl est temps de changer d'approche.` },
+                    { angleTitle: "Format court & Percutant", content: `Arrêtez de courir après les clients.\n\nDevenez l'expert qu'ils viennent chercher.\n\nVoici la méthode exacte 🚀` }
+                ];
+            } else if (state.platform === 'Newsletter') {
+                samplePosts = [
+                    { angleTitle: "Édition Hebdo : Le Constat", content: `Bonjour à tous,\n\nCette semaine, parlons d'un sujet tabou : pourquoi votre prospection fait chou blanc.\n\n${rawText}\n\nBonne lecture,\nL'équipe` },
+                    { angleTitle: "Édition Hebdo : La Solution", content: `Chère communauté,\n\nComment transformer vos notes en un flux constant de clients ?\n\nVoici le plan d'action en 3 étapes...` }
+                ];
+            } else {
+                samplePosts = [
+                    { angleTitle: "Variante 1 : LinkedIn Expert", content: `La plupart des professionnels perdent un temps précieux.\n\nVoici comment transformer votre approche :\n\n${rawText}\n\n👉 Quel est votre avis ?` },
+                    { angleTitle: "Variante 2 : Storytelling LinkedIn", content: `Il y a 6 mois, j'ai réalisé que :\n\n${rawText}\n\nLes résultats ont complètement changé.` }
+                ];
             }
 
+            renderPosts(samplePosts);
             document.getElementById('loadingState').classList.add('hidden');
             document.getElementById('resultsContainer').classList.remove('hidden');
-            showToast("Posts générés avec succès !");
+            showToast(`Contenus générés pour ${state.platform} !`);
         }
 
         function renderPosts(posts) {
@@ -566,17 +318,15 @@
             textarea.select();
             document.execCommand('copy');
             document.body.removeChild(textarea);
-            showToast("Copié !");
+            showToast("Copié dans le presse-papier !");
         }
 
         function openAgentModal() { document.getElementById('agentModal').classList.remove('hidden'); }
         function closeAgentModal() { document.getElementById('agentModal').classList.add('hidden'); }
         function openPricingModal() { document.getElementById('pricingModal').classList.remove('hidden'); }
         function closePricingModal() { document.getElementById('pricingModal').classList.add('hidden'); }
-        function simulateUpgrade() { window.open(STRIPE_PAYMENT_LINK, '_blank'); }
-        function startVideoSimulation() { showToast("Simulation vidéo lancée !"); }
 
-        function showToast(message) {
+        function showToast(message, iconName = "check-circle") {
             const toast = document.getElementById('toastBanner');
             document.getElementById('toastMessage').innerText = message;
             toast.classList.remove('translate-y-20', 'opacity-0');
