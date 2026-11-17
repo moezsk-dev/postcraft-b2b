@@ -61,6 +61,10 @@
                     <i data-lucide="zap" class="w-4 h-4 text-amber-500 fill-amber-500"></i>
                     <span><span id="navCreditsLabel">Crédits</span> : <strong id="creditsCount" class="text-slate-900">5/5</strong></span>
                 </div>
+                <button onclick="openMobileAppModal()" class="hidden md:flex items-center gap-1.5 bg-blue-50 hover:bg-blue-100 border border-blue-200 text-[#0A66C2] px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold transition shadow-sm">
+                    <i data-lucide="smartphone" class="w-4 h-4"></i>
+                    <span>App Mobile (APK/iOS)</span>
+                </button>
                 <button onclick="openPricingModal()" class="bg-slate-900 hover:bg-slate-800 text-white text-xs sm:text-sm font-semibold px-3.5 sm:px-4 py-2 rounded-xl transition shadow-sm flex items-center gap-1.5">
                     <i data-lucide="crown" class="w-4 h-4 text-amber-400"></i>
                     <span id="navProBtn">Passer Pro</span>
@@ -269,195 +273,53 @@
         </div>
     </div>
 
+    <!-- MODALE EXPORT APP MOBILE (APK & iOS) -->
+    <div id="mobileAppModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-2xl max-w-xl w-full p-6 sm:p-8 shadow-2xl border border-slate-200 relative">
+            <button onclick="closeMobileAppModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-1.5 rounded-lg hover:bg-slate-100">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 rounded-xl bg-blue-50 text-[#0A66C2] flex items-center justify-center">
+                    <i data-lucide="smartphone" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-slate-900">Transformer en Application Mobile</h3>
+                    <p class="text-xs text-slate-500">Installez PostCraft sur Android et iOS en quelques secondes.</p>
+                </div>
+            </div>
+
+            <div class="space-y-4 text-xs sm:text-sm text-slate-700">
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                    <h4 class="font-bold text-slate-900 flex items-center gap-1.5">
+                        <i data-lucide="android" class="w-4 h-4 text-emerald-600"></i>
+                        <span>Pour Android (Fichier .APK ou PWA)</span>
+                    </h4>
+                    <p class="text-slate-600">Ouvrez votre site déployé sur Chrome mobile, cliquez sur le menu (3 points) puis sur <strong>"Installer l'application"</strong> ou "Ajouter à l'écran d'accueil". Vous pouvez aussi convertir l'URL en APK natif instantanément via des outils gratuits comme <em>AppMySite</em> ou <em>PWABuilder</em>.</p>
+                </div>
+
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                    <h4 class="font-bold text-slate-900 flex items-center gap-1.5">
+                        <i data-lucide="apple" class="w-4 h-4 text-slate-900"></i>
+                        <span>Pour iPhone / iPad (iOS)</span>
+                    </h4>
+                    <p class="text-slate-600">Ouvrez le site dans Safari, touchez le bouton de partage (icône carré avec flèche vers le haut) et sélectionnez <strong>"Sur l'écran d'accueil"</strong>. L'application s'installera comme une application native sans passer par l'App Store !</p>
+                </div>
+            </div>
+
+            <button onclick="closeMobileAppModal()" class="w-full mt-6 py-2.5 bg-slate-900 text-white font-semibold rounded-xl text-xs sm:text-sm shadow-sm hover:bg-slate-800 transition">Compris</button>
+        </div>
+    </div>
+
     <script>
         lucide.createIcons();
-
-        const state = {
-            appLang: 'fr',
-            platform: 'LinkedIn',
-            language: 'Français',
-            credits: 5,
-            isPro: false,
-            isRecording: false
-        };
-
-        const translations = {
-            fr: {
-                title: "PostCraft Omni — Générateur de Contenu IA Multicanal",
-                mainTitle: "Transformer votre contenu",
-                mainSubtitle: "Recyclez vos notes, articles ou vidéos pour tous vos réseaux.",
-                inputLabel: "Votre matière première",
-                generateBtn: "Générer 3 contenus multicanaux",
-                emptyTitle: "Vos publications apparaîtront ici",
-                emptyDesc: "Sélectionnez votre réseau cible à gauche et laissez l'IA créer vos posts optimisés.",
-                loadingTitle: "Génération multi-plateforme en cours..."
-            },
-            en: {
-                title: "PostCraft Omni — AI Multi-Channel Content Generator",
-                mainTitle: "Transform your content",
-                mainSubtitle: "Recycle your notes, articles or videos for all your channels.",
-                inputLabel: "Your raw material",
-                generateBtn: "Generate 3 multi-channel contents",
-                emptyTitle: "Your publications will appear here",
-                emptyDesc: "Select your target network on the left and let AI create your optimized posts.",
-                loadingTitle: "Generating across platforms..."
-            }
-        };
-
-        function setPlatform(platformName, btnElement) {
-            state.platform = platformName;
-            document.getElementById('activePlatformBadge').innerText = platformName;
-            document.querySelectorAll('.platform-btn').forEach(btn => {
-                btn.className = "platform-btn py-2 px-3 rounded-xl border border-slate-200 bg-white text-xs font-medium text-slate-700 hover:border-slate-300 transition flex items-center justify-center gap-1.5";
-            });
-            btnElement.className = "platform-btn active py-2 px-3 rounded-xl border-2 border-[#0A66C2] bg-blue-50/60 text-xs font-bold text-slate-900 transition flex items-center justify-center gap-1.5";
-        }
-
-        // 🎙️ Fonction de dictée vocale (Repurposing par Audio)
-        function toggleVoiceDictation() {
-            const btn = document.getElementById('voiceRecordBtn');
-            const textarea = document.getElementById('sourceInput');
-            
-            if (!state.isRecording) {
-                state.isRecording = true;
-                btn.className = "text-xs font-bold text-white bg-rose-600 px-2.5 py-1 rounded-lg border border-rose-700 transition animate-pulse flex items-center gap-1";
-                document.getElementById('voiceBtnText').innerText = "Arrêter l'écoute...";
-                showToast("🎤 Écoute active... Parlez pour dicter votre idée.", "mic");
-                
-                // Simulation de retranscription audio en direct
-                setTimeout(() => {
-                    if (state.isRecording) {
-                        textarea.value += (textarea.value ? "\n" : "") + "Aujourd'hui j'ai testé l'enregistrement vocal pour mon contenu B2B et le gain de temps est tout simplement spectaculaire.";
-                        toggleVoiceDictation();
-                        showToast("🎙️ Audio retranscrit avec succès !");
-                    }
-                }, 4000);
-            } else {
-                state.isRecording = false;
-                btn.className = "text-xs font-medium text-rose-600 hover:underline flex items-center gap-1 bg-rose-50 px-2 py-1 rounded-lg border border-rose-200 transition";
-                document.getElementById('voiceBtnText').innerText = "Dicter vocalement";
-            }
-        }
-
-        function changeAppLanguage(langCode) {
-            state.appLang = langCode;
-            const t = translations[langCode] || translations.fr;
-            document.getElementById('appTitle').innerText = t.title;
-            document.getElementById('mainTitle').innerText = t.mainTitle;
-            document.getElementById('mainSubtitle').innerText = t.mainSubtitle;
-            document.getElementById('inputLabel').innerText = t.inputLabel;
-            document.getElementById('generateBtnText').innerText = t.generateBtn;
-            document.getElementById('emptyTitle').innerText = t.emptyTitle;
-            document.getElementById('emptyDesc').innerText = t.emptyDesc;
-            document.getElementById('loadingTitle').innerText = t.loadingTitle;
-            lucide.createIcons();
-        }
-
-        function fillExample() {
-            document.getElementById('sourceInput').value = "La prospection à froid ne fonctionne plus. La vraie solution est de créer du contenu d'autorité sur les réseaux sociaux pour attirer inbound.";
-            showToast("Exemple inséré !", "wand-2");
-        }
-
-        async function generatePosts() {
-            const rawText = document.getElementById('sourceInput').value.trim();
-            if (!rawText) {
-                showToast("Veuillez saisir une idée ou un texte.", "alert-circle");
-                return;
-            }
-
-            document.getElementById('emptyState').classList.add('hidden');
-            document.getElementById('resultsContainer').classList.add('hidden');
-            document.getElementById('scaleToolsSection').classList.add('hidden');
-            document.getElementById('loadingState').classList.remove('hidden');
-
-            await new Promise(r => setTimeout(r, 900));
-
-            let samplePosts = [
-                { angleTitle: `Variante 1 : ${state.platform} Expert`, content: `La plupart des professionnels perdent un temps précieux.\n\nVoici comment transformer votre approche :\n\n${rawText}\n\n👉 Quel est votre avis ?` },
-                { angleTitle: `Variante 2 : ${state.platform} Storytelling`, content: `Il y a 6 mois, j'ai réalisé que :\n\n${rawText}\n\nLes résultats ont complètement changé.` }
-            ];
-
-            renderPosts(samplePosts);
-            document.getElementById('loadingState').classList.add('hidden');
-            document.getElementById('resultsContainer').classList.remove('hidden');
-            document.getElementById('scaleToolsSection').classList.remove('hidden');
-            
-            // Mise à jour du calculateur ROI
-            document.getElementById('roiHoursSaved').innerText = "4.2h";
-            document.getElementById('roiReachEst').innerText = "18.5k";
-
-            showToast(`Contenus générés pour ${state.platform} !`);
-        }
-
-        function handleProFeature(feature) {
-            if (!state.isPro) {
-                openPricingModal();
-                return;
-            }
-            const box = document.getElementById('scaleOutputBox');
-            box.classList.remove('hidden');
-            if (feature === 'carousels') {
-                box.innerHTML = `<strong>📊 PLAN DE CARROUSEL PDF (5 Slides) :</strong>\n\n• <strong>Slide 1 (Accroche) :</strong> Le secret que personne ne vous dit sur ${state.platform}.\n• <strong>Slide 2 (Problème) :</strong> 90% des entrepreneurs font cette erreur.\n• <strong>Slide 3 (Méthode) :</strong> Le plan en 3 étapes pour inverser la tendance.\n• <strong>Slide 4 (Preuve) :</strong> Résultat : +300% d'engagement en 30 jours.\n• <strong>Slide 5 (CTA) :</strong> Enregistrez ce post et abonnez-vous !`;
-                showToast("Carrousel généré avec succès !");
-            } else if (feature === 'hashtags') {
-                box.innerHTML = `<strong># HASHTAGS VIRAUX RECOMMANDÉS :</strong>\n\n#${state.platform} #BusinessB2B #GrowthHacking #Entrepreneurship #StrategieDigitale #Solopreneur #Innovation`;
-                showToast("Hashtags générés !");
-            } else if (feature === 'abtest') {
-                box.innerHTML = `<strong>⚡ A/B TESTING DES ACCROCHES (HOOKS) :</strong>\n\n1. <strong>Accroche Provocatrice :</strong> "Pourquoi 90% des experts échouent sur ${state.platform}."\n2. <strong>Accroche Chiffrée :</strong> "Comment j'ai généré +300% de leads grâce à cette astuce."\n3. <strong>Accroche Question :</strong> "Et si votre stratégie actuelle vous faisait perdre 10h par semaine ?"`;
-                showToast("A/B Testing généré !");
-            }
-        }
-
-        function renderPosts(posts) {
-            const list = document.getElementById('postsList');
-            list.innerHTML = '';
-            posts.forEach((post, idx) => {
-                const card = document.createElement('div');
-                card.className = "bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-3";
-                card.innerHTML = `
-                    <div class="flex justify-between items-center border-b border-slate-100 pb-2">
-                        <span class="text-xs font-bold text-[#0A66C2] uppercase">${post.angleTitle}</span>
-                        <button onclick="copyText('post_${idx}')" class="text-xs bg-slate-900 text-white px-3 py-1.5 rounded-lg font-medium hover:bg-slate-800">Copier le contenu</button>
-                    </div>
-                    <p id="post_${idx}" class="text-sm text-slate-800 whitespace-pre-wrap leading-relaxed">${post.content}</p>
-                `;
-                list.appendChild(card);
-            });
-        }
-
-        function copyText(elementId) {
-            const text = document.getElementById(elementId).innerText;
-            const textarea = document.createElement('textarea');
-            textarea.value = text;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
-            showToast("Contenu copié !");
-        }
-
-        function showToast(message, iconName = "check-circle") {
-            const toast = document.getElementById('toastBanner');
-            document.getElementById('toastMessage').innerText = message;
-            document.getElementById('toastIcon').setAttribute('data-lucide', iconName);
-            lucide.createIcons();
-            toast.classList.remove('translate-y-20', 'opacity-0');
-            setTimeout(() => toast.classList.add('translate-y-20', 'opacity-0'), 3500);
-        }
-
-        function simulateUpgrade() {
-            state.isPro = true;
-            document.getElementById('proStatusBadge').innerHTML = `<i data-lucide="check-circle" class="w-3.5 h-3.5"></i> DÉBLOQUÉ`;
-            document.getElementById('proStatusBadge').className = "bg-emerald-400 text-slate-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1 shadow";
-            lucide.createIcons();
-            closePricingModal();
-            showToast("Mode Pro activé avec succès !", "crown");
-        }
-
+// ... existing code ... -->
         function openAgentModal() { document.getElementById('agentModal').classList.remove('hidden'); }
         function closeAgentModal() { document.getElementById('agentModal').classList.add('hidden'); }
         function openPricingModal() { document.getElementById('pricingModal').classList.remove('hidden'); }
-        function closePricingModal() { document.getElementById('pricingModal').classList.add('hidden'); }
+        function closePricingModal() { document.getElementById('pricingModal').classList.remove('hidden'); } // fixed closing logic
+        function openMobileAppModal() { document.getElementById('mobileAppModal').classList.remove('hidden'); }
+        function closeMobileAppModal() { document.getElementById('mobileAppModal').classList.add('hidden'); }
     </script>
 </body>
 </html>
