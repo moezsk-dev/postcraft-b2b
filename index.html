@@ -229,6 +229,34 @@
         </div>
     </main>
 
+    <!-- PIED DE PAGE LÉGAL (Requis pour validation Dodo Payments) -->
+    <footer class="bg-white border-t border-slate-200 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+            <div class="flex items-center gap-2">
+                <span class="font-semibold text-slate-700">PostCraft B2B</span>
+                <span>© 2026 Balhaa Corp. Tous droits réservés.</span>
+            </div>
+            <div class="flex flex-wrap items-center justify-center gap-4">
+                <button type="button" onclick="openLegalModal('terms')" class="hover:text-slate-800 transition">Conditions d'utilisation</button>
+                <button type="button" onclick="openLegalModal('privacy')" class="hover:text-slate-800 transition">Confidentialité</button>
+                <button type="button" onclick="openLegalModal('refund')" class="hover:text-slate-800 transition">Politique de remboursement</button>
+                <a href="mailto:support@postcraft-b2b.com" class="text-[#0A66C2] hover:underline font-medium">Contact Support</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODALE MENTIONS LÉGALES -->
+    <div id="legalModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 relative">
+            <button onclick="closeLegalModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-1.5 rounded-lg hover:bg-slate-100">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <h3 id="legalTitle" class="text-lg font-bold text-slate-900 mb-3">Informations légales</h3>
+            <div id="legalContent" class="text-sm text-slate-600 space-y-2.5 leading-relaxed"></div>
+            <button onclick="closeLegalModal()" class="mt-5 w-full py-2.5 bg-slate-900 text-white text-sm font-semibold rounded-xl hover:bg-slate-800 transition">Fermer</button>
+        </div>
+    </div>
+
     <!-- TIROIR LATÉRAL : HISTORIQUE -->
     <div id="historyOverlay" onclick="toggleHistoryDrawer()" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-40 hidden transition-opacity"></div>
     <aside id="historyDrawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl border-l border-slate-200 z-50 transform translate-x-full transition-transform duration-300 flex flex-col">
@@ -286,218 +314,12 @@
     </div>
 
     <script>
+        // Initialisation des icônes Lucide
         lucide.createIcons();
 
-        // Configuration de production (URL de l'API Vercel et lien de paiement Stripe)
+        // Configuration de production (URL de l'API Vercel et lien de paiement Dodo Payments)
         const BACKEND_API_URL = "/api/generate";
-        const STRIPE_PAYMENT_LINK = ""; // Collez ici votre lien Stripe Payment Link
+        const STRIPE_PAYMENT_LINK = "https://test.checkout.dodopayments.com/buy/pdt_0Ns917FNfILvPTkMQh2pO?quantity=1"; // Votre lien de paiement Dodo Payments intégré
 
-        const state = {
-            inputMode: 'text',
-            objective: 'Éducatif & Conseils',
-            tone: 'Professionnel & Expert',
-            language: 'Français',
-            credits: 5,
-            isPro: false,
-            generatedPosts: [],
-            history: JSON.parse(localStorage.getItem('postcraft_history') || '[]')
-        };
-
-        updateHistoryBadge();
-
-        function switchInputTab(mode) {
-            state.inputMode = mode;
-            const tabs = {
-                text: document.getElementById('tabText'),
-                url: document.getElementById('tabUrl'),
-                youtube: document.getElementById('tabYoutube')
-            };
-            Object.keys(tabs).forEach(key => {
-                tabs[key].className = key === mode
-                    ? 'py-2 px-2 rounded-lg text-xs sm:text-sm font-semibold bg-white text-slate-900 shadow-sm transition flex items-center justify-center gap-1.5'
-                    : 'py-2 px-2 rounded-lg text-xs sm:text-sm font-medium text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1.5';
-            });
-            document.getElementById('urlContainer').classList.toggle('hidden', mode !== 'url');
-            document.getElementById('youtubeContainer').classList.toggle('hidden', mode !== 'youtube');
-        }
-
-        function selectOption(category, btnElement, value) {
-            state[category] = value;
-            const parent = btnElement.parentElement;
-            parent.querySelectorAll('.option-btn').forEach(btn => {
-                btn.classList.remove('border-2', 'border-[#0A66C2]', 'bg-blue-50/60', 'text-slate-900');
-                btn.classList.add('border', 'border-slate-200', 'bg-white', 'text-slate-700');
-            });
-            btnElement.classList.remove('border', 'border-slate-200', 'bg-white', 'text-slate-700');
-            btnElement.classList.add('border-2', 'border-[#0A66C2]', 'bg-blue-50/60', 'text-slate-900');
-        }
-
-        function fillExample() {
-            switchInputTab('text');
-            document.getElementById('sourceInput').value = "Beaucoup de consultants pensent qu'il faut publier tous les jours sur LinkedIn pour trouver des clients. C'est faux. J'ai accompagné 12 indépendants ce trimestre : ceux qui signent le plus ne publient que 2 fois par semaine, mais chacun de leurs posts répond à un problème précis de leur client idéal.";
-            showToast("Exemple B2B chargé !", "sparkles");
-        }
-
-        async function callGeminiAPI(promptText, fallbackSource) {
-            try {
-                const response = await fetch(BACKEND_API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ promptText, language: state.language })
-                });
-                if (!response.ok) throw new Error('API non disponible');
-                const data = await response.json();
-                if (data.posts && Array.isArray(data.posts)) return data.posts;
-                throw new Error('Réponse invalide');
-            } catch (error) {
-                await new Promise(resolve => setTimeout(resolve, 900));
-                return generateFallbackPosts(fallbackSource);
-            }
-        }
-
-        async function generatePosts() {
-            if (!state.isPro && state.credits <= 0) {
-                openPricingModal();
-                return;
-            }
-            const rawText = document.getElementById('sourceInput').value.trim();
-            if (!rawText) {
-                showToast("Veuillez saisir un texte ou une idée.", "alert-circle");
-                return;
-            }
-
-            document.getElementById('emptyState').classList.add('hidden');
-            document.getElementById('resultsContainer').classList.add('hidden');
-            document.getElementById('loadingState').classList.remove('hidden');
-
-            const prompt = `Rédige 3 posts LinkedIn en ${state.language} avec un objectif "${state.objective}" et un ton "${state.tone}" à partir de ce contenu :\n\n${rawText}`;
-            const posts = await callGeminiAPI(prompt, rawText);
-
-            if (!state.isPro) {
-                state.credits--;
-                document.getElementById('creditsCount').textContent = `${state.credits}/5`;
-            }
-
-            state.generatedPosts = posts;
-            saveToHistory(rawText, posts);
-            renderPosts(posts);
-
-            document.getElementById('loadingState').classList.add('hidden');
-            document.getElementById('resultsContainer').classList.remove('hidden');
-            showToast("3 posts LinkedIn générés !", "check-circle");
-        }
-
-        function generateFallbackPosts(source) {
-            return [
-                {
-                    angleTitle: "Angle 1 : Le Conseil Pratique",
-                    content: `La majorité des entrepreneurs font cette erreur chaque semaine 👇\n\nIls confondent agitation et résultats.\n\nVoici ce que j'ai retenu :\n${source}\n\nQuelle action appliquez-vous dès aujourd'hui ?`
-                },
-                {
-                    angleTitle: "Angle 2 : L'Approche Directe",
-                    content: `Arrêtez de perdre votre temps avec des méthodes complexes.\n\nLa réalité est simple :\n${source}\n\nÊtes-vous d'accord avec cette approche ?`
-                },
-                {
-                    angleTitle: "Angle 3 : La Vision Stratégique",
-                    content: `Ce que 90% des indépendants ignorent sur leur croissance :\n\n${source}\n\nPartagez votre avis en commentaire 👇`
-                }
-            ];
-        }
-
-        function renderPosts(posts) {
-            const container = document.getElementById('postsList');
-            container.innerHTML = '';
-            posts.forEach((post, index) => {
-                const card = document.createElement('div');
-                card.className = "bg-white rounded-2xl linkedin-shadow overflow-hidden border border-slate-200";
-                card.innerHTML = `
-                    <div class="bg-slate-50 px-5 py-3 border-b border-slate-200 flex items-center justify-between">
-                        <span class="text-xs font-bold uppercase tracking-wider text-[#0A66C2]">${post.angleTitle}</span>
-                        <button onclick="copyPost(${index})" class="text-xs font-semibold bg-[#0A66C2] hover:bg-[#004182] text-white px-3 py-1.5 rounded-lg transition">Copier</button>
-                    </div>
-                    <div class="p-5">
-                        <textarea id="textarea-${index}" rows="7" class="w-full text-sm text-slate-800 leading-relaxed focus:outline-none resize-none">${post.content}</textarea>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        function copyPost(index) {
-            const text = document.getElementById(`textarea-${index}`).value;
-            navigator.clipboard.writeText(text);
-            showToast("Post copié dans le presse-papiers !", "check-circle");
-        }
-
-        function saveToHistory(source, posts) {
-            state.history.unshift({ date: new Date().toLocaleDateString('fr-FR'), source: source.slice(0, 60) + '...', posts });
-            localStorage.setItem('postcraft_history', JSON.stringify(state.history.slice(0, 15)));
-            updateHistoryBadge();
-        }
-
-        function updateHistoryBadge() {
-            document.getElementById('historyBadge').textContent = state.history.length;
-        }
-
-        function toggleHistoryDrawer() {
-            const drawer = document.getElementById('historyDrawer');
-            const overlay = document.getElementById('historyOverlay');
-            const isClosed = drawer.classList.contains('translate-x-full');
-            if (isClosed) {
-                renderHistoryList();
-                overlay.classList.remove('hidden');
-                drawer.classList.remove('translate-x-full');
-            } else {
-                overlay.classList.add('hidden');
-                drawer.classList.add('translate-x-full');
-            }
-        }
-
-        function renderHistoryList() {
-            const list = document.getElementById('historyList');
-            list.innerHTML = state.history.length ? state.history.map((item, idx) => `
-                <div onclick="loadHistoryItem(${idx})" class="p-3.5 rounded-xl border border-slate-200 hover:border-[#0A66C2] cursor-pointer transition bg-slate-50/50">
-                    <div class="text-[11px] text-slate-400 mb-1">${item.date}</div>
-                    <div class="text-xs font-medium text-slate-700">${item.source}</div>
-                </div>
-            `).join('') : '<p class="text-xs text-slate-400 text-center py-8">Aucun historique pour le moment.</p>';
-        }
-
-        function loadHistoryItem(idx) {
-            const item = state.history[idx];
-            renderPosts(item.posts);
-            document.getElementById('emptyState').classList.add('hidden');
-            document.getElementById('resultsContainer').classList.remove('hidden');
-            toggleHistoryDrawer();
-        }
-
-        function clearHistory() {
-            state.history = [];
-            localStorage.removeItem('postcraft_history');
-            updateHistoryBadge();
-            renderHistoryList();
-        }
-
-        function openPricingModal() { document.getElementById('pricingModal').classList.remove('hidden'); }
-        function closePricingModal() { document.getElementById('pricingModal').classList.add('hidden'); }
-
-        function simulateUpgrade() {
-            if (STRIPE_PAYMENT_LINK) {
-                window.open(STRIPE_PAYMENT_LINK, '_blank');
-                return;
-            }
-            state.isPro = true;
-            document.getElementById('creditsCount').textContent = 'Illimité';
-            closePricingModal();
-            showToast("Mode Pro activé !", "crown");
-        }
-
-        function showToast(message, iconName) {
-            const banner = document.getElementById('toastBanner');
-            document.getElementById('toastMessage').textContent = message;
-            banner.classList.remove('translate-y-20', 'opacity-0');
-            setTimeout(() => banner.classList.add('translate-y-20', 'opacity-0'), 3000);
-        }
-    </script>
-</body>
-</html>
+        // État global de l'application
+// ... existing code ... -->
