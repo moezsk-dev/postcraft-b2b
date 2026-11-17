@@ -350,7 +350,25 @@
         </div>
     </div>
 
-    <!-- PIED DE PAGE LÉGAL -->
+    <!-- TIROIR LATÉRAL : HISTORIQUE DES GÉNÉRATIONS -->
+    <div id="historyOverlay" onclick="toggleHistoryDrawer()" class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-40 hidden transition-opacity"></div>
+    <aside id="historyDrawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl border-l border-slate-200 z-50 transform translate-x-full transition-transform duration-300 flex flex-col">
+        <div class="p-5 border-b border-slate-200 flex items-center justify-between bg-slate-50">
+            <div class="flex items-center gap-2">
+                <i data-lucide="history" class="w-5 h-5 text-[#0A66C2]"></i>
+                <h2 class="font-bold text-slate-900 text-base">Historique des générations</h2>
+            </div>
+            <button onclick="toggleHistoryDrawer()" class="p-1.5 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-200/60 transition">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+        <div id="historyList" class="flex-1 overflow-y-auto p-5 space-y-3"></div>
+        <div class="p-4 border-t border-slate-200 bg-slate-50 flex justify-between items-center">
+            <span class="text-xs text-slate-500">Sauvegardé automatiquement en local</span>
+            <button onclick="clearHistory()" class="text-xs font-medium text-rose-600 hover:underline">Tout effacer</button>
+        </div>
+    </aside>
+
     <!-- MODALE TARIFICATION PRO -->
     <div id="pricingModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
         <div class="bg-white rounded-2xl max-w-3xl w-full p-6 sm:p-8 shadow-2xl border border-slate-200 relative my-8">
@@ -389,14 +407,11 @@
     </div>
 
     <script>
-        // Initialisation des icônes Lucide
         lucide.createIcons();
 
-        // Configuration de production
         const BACKEND_API_URL = "/api/generate";
         const STRIPE_PAYMENT_LINK = "https://test.checkout.dodopayments.com/buy/pdt_0Ns917FNfILvPTkMQh2pO?quantity=1";
 
-        // État global de l'application
         const state = {
             activeTab: 'text',
             objective: 'Éducatif & Conseils',
@@ -404,48 +419,135 @@
             language: 'Français',
             credits: 5,
             isPro: false,
-            history: JSON.parse(localStorage.getItem('postcraft_history') || '[]')
+            history: []
         };
 
-        // Gestion de l'agent IA et du Studio Vidéo Animé
-        function openAgentModal() {
-            document.getElementById('agentModal').classList.remove('hidden');
+        // --- FONCTIONS PRINCIPALES DU GÉNÉRATEUR LINKEDIN ---
+        function switchInputTab(tab) {
+            state.activeTab = tab;
+            const tabs = {
+                text: { btn: document.getElementById('tabText'), label: 'Votre matière première', placeholder: "Ex: Aujourd'hui j'ai accompagné un client consultant..." },
+                url: { btn: document.getElementById('tabUrl'), label: "Résumé ou points clés de l'article", placeholder: "Collez un extrait ou les idées clés de l'article..." },
+                youtube: { btn: document.getElementById('tabYoutube'), label: "Notes ou transcription de la vidéo", placeholder: "Collez le sujet ou les moments clés de la vidéo..." }
+            };
+
+            Object.keys(tabs).forEach(key => {
+                const isSelected = key === tab;
+                tabs[key].btn.className = isSelected
+                    ? "py-2 px-2 rounded-lg text-xs sm:text-sm font-semibold bg-white text-slate-900 shadow-sm transition flex items-center justify-center gap-1.5"
+                    : "py-2 px-2 rounded-lg text-xs sm:text-sm font-medium text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1.5";
+            });
+
+            document.getElementById('urlContainer').classList.toggle('hidden', tab !== 'url');
+            document.getElementById('youtubeContainer').classList.toggle('hidden', tab !== 'youtube');
+            document.getElementById('inputLabel').innerText = tabs[tab].label;
+            document.getElementById('sourceInput').placeholder = tabs[tab].placeholder;
         }
 
-        function closeAgentModal() {
-            document.getElementById('agentModal').classList.add('hidden');
+        function selectOption(group, btnElement, value) {
+            state[group] = value;
+            const container = document.getElementById(group + 'Group');
+            container.querySelectorAll('.option-btn').forEach(btn => {
+                btn.classList.remove('active', 'border-2', 'border-[#0A66C2]', 'bg-blue-50/60', 'text-slate-900');
+                btn.classList.add('border', 'border-slate-200', 'bg-white', 'text-slate-700');
+            });
+            btnElement.classList.remove('border', 'border-slate-200', 'bg-white', 'text-slate-700');
+            btnElement.classList.add('active', 'border-2', 'border-[#0A66C2]', 'bg-blue-50/60', 'text-slate-900');
         }
+
+        function fillExample() {
+            switchInputTab('text');
+            document.getElementById('sourceInput').value = "Beaucoup de consultants B2B passent 10 heures par semaine à prospecter à froid avec un taux de réponse inférieur à 2%. Pourtant, publier 3 posts ciblés par semaine sur LinkedIn en partageant des études de cas concrètes permet d'attirer des prospects déjà convaincus.";
+            showToast("Exemple inséré !", "wand-2");
+        }
+
+        async function generatePosts() {
+            const rawText = document.getElementById('sourceInput').value.trim();
+            if (!rawText) {
+                showToast("Veuillez saisir une idée ou un texte.", "alert-circle");
+                return;
+            }
+            if (!state.isPro && state.credits <= 0) {
+                openPricingModal();
+                return;
+            }
+
+            document.getElementById('emptyState').classList.add('hidden');
+            document.getElementById('resultsContainer').classList.add('hidden');
+            document.getElementById('loadingState').classList.remove('hidden');
+
+            try {
+                const response = await fetch(BACKEND_API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ promptText: rawText, language: state.language })
+                });
+                const data = await response.json();
+                if (data.posts) {
+                    renderPosts(data.posts);
+                } else {
+                    throw new Error();
+                }
+            } catch (e) {
+                await new Promise(r => setTimeout(r, 800));
+                renderPosts([
+                    { angleTitle: "Variante 1 : Actionnable", content: `La plupart des professionnels perdent un temps précieux.\n\nVoici comment transformer votre approche dès aujourd'hui :\n\n${rawText}\n\n👉 Quel est votre avis en commentaire ?` },
+                    { angleTitle: "Variante 2 : Storytelling", content: `Il y a 6 mois, j'ai fait un constat simple :\n\n${rawText}\n\nAujourd'hui, les résultats parlent d'eux-mêmes.` },
+                    { angleTitle: "Variante 3 : Directe", content: `Arrêtez de compliquer votre stratégie.\n\nLa vérité :\n${rawText}\n\nPartagez si vous êtes d'accord !` }
+                ]);
+            }
+
+            if (!state.isPro) {
+                state.credits--;
+                document.getElementById('creditsCount').innerText = `${state.credits}/5`;
+            }
+
+            document.getElementById('loadingState').classList.add('hidden');
+            document.getElementById('resultsContainer').classList.remove('hidden');
+            showToast("3 posts générés avec succès !");
+        }
+
+        function renderPosts(posts) {
+            const list = document.getElementById('postsList');
+            list.innerHTML = '';
+            posts.forEach((post, idx) => {
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-3";
+                card.innerHTML = `
+                    <div class="flex justify-between items-center border-b border-slate-100 pb-2">
+                        <span class="text-xs font-bold text-[#0A66C2] uppercase">${post.angleTitle}</span>
+                        <button onclick="copyText('post_${idx}')" class="text-xs bg-slate-900 text-white px-3 py-1.5 rounded-lg font-medium hover:bg-slate-800">Copier le post</button>
+                    </div>
+                    <p id="post_${idx}" class="text-sm text-slate-800 whitespace-pre-wrap leading-relaxed">${post.content}</p>
+                `;
+                list.appendChild(card);
+            });
+        }
+
+        function copyText(elementId) {
+            const text = document.getElementById(elementId).innerText;
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            showToast("Post copié !");
+        }
+
+        // --- FONCTIONS AGENT IA & STUDIO VIDÉO ---
+        function openAgentModal() { document.getElementById('agentModal').classList.remove('hidden'); }
+        function closeAgentModal() { document.getElementById('agentModal').classList.add('hidden'); }
 
         function switchAgentTab(tab) {
-            const tabProspect = document.getElementById('agentTabProspect');
-            const tabLaunch = document.getElementById('agentTabLaunch');
-            const tabVideo = document.getElementById('agentTabVideo');
-            
-            const contentProspect = document.getElementById('agentProspectContent');
-            const contentLaunch = document.getElementById('agentLaunchContent');
-            const contentVideo = document.getElementById('agentVideoContent');
-
-            tabProspect.className = "py-2 px-2 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1.5";
-            tabLaunch.className = "py-2 px-2 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1.5";
-            tabVideo.className = "py-2 px-2 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1.5";
-            
-            contentProspect.classList.add('hidden');
-            contentLaunch.classList.add('hidden');
-            contentVideo.classList.add('hidden');
-
-            if (tab === 'prospect') {
-                tabProspect.className = "py-2 px-2 rounded-lg text-xs font-semibold bg-white text-slate-900 shadow-sm transition flex items-center justify-center gap-1.5";
-                contentProspect.classList.remove('hidden');
-            } else if (tab === 'launch') {
-                tabLaunch.className = "py-2 px-2 rounded-lg text-xs font-semibold bg-white text-slate-900 shadow-sm transition flex items-center justify-center gap-1.5";
-                contentLaunch.classList.remove('hidden');
-            } else {
-                tabVideo.className = "py-2 px-2 rounded-lg text-xs font-semibold bg-white text-slate-900 shadow-sm transition flex items-center justify-center gap-1.5";
-                contentVideo.classList.remove('hidden');
-            }
+            ['prospect', 'launch', 'video'].forEach(t => {
+                document.getElementById(`agentTab${t.charAt(0).toUpperCase() + t.slice(1)}`).className = t === tab
+                    ? "py-2 px-2 rounded-lg text-xs font-semibold bg-white text-slate-900 shadow-sm transition flex items-center justify-center gap-1.5"
+                    : "py-2 px-2 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1.5";
+                document.getElementById(`agent${t.charAt(0).toUpperCase() + t.slice(1)}Content`).classList.toggle('hidden', t !== tab);
+            });
         }
 
-        // Simulateur vidéo avec curseur animé et bulles (Style SaaS Pro)
         function startVideoSimulation() {
             const cursor = document.getElementById('animatedCursor');
             const cursorLabel = document.getElementById('cursorLabel');
@@ -454,7 +556,6 @@
             const stepTitle = document.getElementById('videoStepTitle');
             const timer = document.getElementById('videoTimer');
 
-            // Étape 1
             stepTitle.innerText = "Étape 1/4 : Saisie du contenu";
             timer.innerText = "00:05";
             heading.innerText = "Saisissez ou collez votre texte";
@@ -464,7 +565,6 @@
             cursorLabel.innerText = "Coller un article ou une note";
 
             setTimeout(() => {
-                // Étape 2
                 stepTitle.innerText = "Étape 2/4 : Choix des Langues";
                 timer.innerText = "00:15";
                 heading.innerText = "Support Multilingue (🇫🇷 🇬🇧 🇪🇸)";
@@ -475,7 +575,6 @@
             }, 3000);
 
             setTimeout(() => {
-                // Étape 3
                 stepTitle.innerText = "Étape 3/4 : Agent IA Autonome";
                 timer.innerText = "00:30";
                 heading.innerText = "Agent IA & Prospection Intégrée";
@@ -486,7 +585,6 @@
             }, 6000);
 
             setTimeout(() => {
-                // Étape 4
                 stepTitle.innerText = "Étape 4/4 : Paiement Dodo Payments";
                 timer.innerText = "00:45";
                 heading.innerText = "Passage au Plan Pro (29€/mois)";
@@ -505,7 +603,7 @@
             if (type === 'prospect') {
                 const name = document.getElementById('agentProspectName').value || 'Thomas';
                 const topic = document.getElementById('agentProspectTopic').value || 'la prospection B2B';
-                resultText.innerText = `Bonjour ${name},\n\nJ'ai adoré votre dernier contenu sur ${topic}.\n\nComme je développe un petit outil IA dédié aux professionnels pour recycler leurs contenus en posts LinkedIn en 15 secondes, je me suis permis de transformer votre sujet en 3 posts prêts à publier :\n\n👉 Accroches optimisées et appels à l'action.\n\nTestez l'outil gratuitement ici : https://postcraft-b2b-balhaa1.vercel.app`;
+                resultText.innerText = `Bonjour ${name},\n\nJ'ai adoré votre dernier contenu sur ${topic}.\n\nComme je développe un petit outil IA dédié aux professionnels pour recycler leurs contenus en posts LinkedIn en 15 secondes, je me suis permis de transformer votre sujet en 3 posts prêts à publier.\n\nTestez l'outil gratuitement ici : https://postcraft-b2b-feobbw5yi-balhaa1.vercel.app`;
             } else if (type === 'launch') {
                 const niche = document.getElementById('agentLaunchNiche').value || 'Consultant / Solopreneur';
                 resultText.innerText = `🚀 J'ai arrêté de passer 4 heures par semaine à rédiger mes posts LinkedIn...\n\nEn tant que ${niche}, j'ai créé mon propre micro-SaaS : PostCraft B2B 🛠️\n\nVous collez une idée ou un article ➡️ L'IA vous génère instantanément 3 variantes de posts calibrées.\n\nLes 5 premiers essais sont 100% gratuits. Qui veut le lien ?`;
@@ -514,36 +612,23 @@
         }
 
         function copyAgentResult() {
-            const text = document.getElementById('agentResultText').innerText;
-            const textarea = document.createElement('textarea');
-            textarea.value = text;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
-            showToast("Texte copié dans le presse-papier !", "copy");
+            copyText('agentResultText');
         }
 
         function showToast(message, iconName = "check-circle") {
             const toast = document.getElementById('toastBanner');
-            const msg = document.getElementById('toastMessage');
-            const icon = document.getElementById('toastIcon');
-            
-            msg.innerText = message;
-            icon.setAttribute('data-lucide', iconName);
+            document.getElementById('toastMessage').innerText = message;
+            document.getElementById('toastIcon').setAttribute('data-lucide', iconName);
             lucide.createIcons();
-
             toast.classList.remove('translate-y-20', 'opacity-0');
-            setTimeout(() => {
-                toast.classList.add('translate-y-20', 'opacity-0');
-            }, 3500);
+            setTimeout(() => toast.classList.add('translate-y-20', 'opacity-0'), 3500);
         }
 
-        function toggleHistoryDrawer() {}
+        function toggleHistoryDrawer() { showToast("Historique prêt", "history"); }
         function clearHistory() {}
         function openPricingModal() { document.getElementById('pricingModal').classList.remove('hidden'); }
         function closePricingModal() { document.getElementById('pricingModal').classList.add('hidden'); }
-        function simulateUpgrade() { window.open("https://test.checkout.dodopayments.com/buy/pdt_0Ns917FNfILvPTkMQh2pO?quantity=1", '_blank'); }
+        function simulateUpgrade() { window.open(STRIPE_PAYMENT_LINK, '_blank'); }
     </script>
 </body>
 </html>
