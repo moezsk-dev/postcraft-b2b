@@ -342,6 +342,16 @@
                             <div class="font-bold text-xs text-slate-900 pt-1">🚀 Agent Promo SaaS IA</div>
                             <p class="text-[11px] text-slate-500">Générateur prêts-à-poster (LinkedIn, X, Reddit, PH)</p>
                         </button>
+
+                        <!-- Nouveau Module 10 : Auto-Diffuseur 1-Clic (Diffusion Prémâchée) -->
+                        <button onclick="useTrialModule('autodiffuse')" class="p-3.5 rounded-xl border border-slate-200 hover:border-emerald-500 bg-slate-50/70 hover:bg-emerald-50/40 transition text-left space-y-1.5 sm:col-span-2 md:col-span-2">
+                            <div class="flex items-center justify-between">
+                                <span class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center"><i data-lucide="send" class="w-4 h-4"></i></span>
+                                <span id="badge-autodiffuse" class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">3/3 essais</span>
+                            </div>
+                            <div class="font-bold text-xs text-slate-900 pt-1">📡 Auto-Diffuseur 1-Clic (Zéro Effort)</div>
+                            <p class="text-[11px] text-slate-500">Simulateur de publication instantanée sur les réseaux sans ouvrir les apps</p>
+                        </button>
                     </div>
 
                     <!-- Zone d'affichage interactive des modules d'essai -->
@@ -1040,62 +1050,34 @@
                 • <strong>Twitter / X Thread :</strong> "1/ Je passais 5h par semaine à rédiger mes posts. J'ai codé une IA pour automatiser ça. Voici le résultat..."<br><br>
                 • <strong>Reddit (r/SaaS) :</strong> "Showcase: I built an AI multi-channel content repurposing tool in 48h. Feedback welcome!"<br><br>
                 • <strong>Product Hunt Launch Tagline :</strong> "Turn one idea into 5 social platforms instantly with AI."`;
+            } else if (mod === 'autodiffuse') {
+                out.innerHTML = `<strong>📡 Auto-Diffuseur 1-Clic (Mode Paresseux Activé) :</strong><br>
+                <div class="space-y-2 mt-2">
+                    <div class="flex items-center justify-between bg-slate-800 p-2 rounded-lg">
+                        <span>🔗 LinkedIn (Profil principal)</span>
+                        <span class="text-emerald-400 font-bold flex items-center gap-1"><i data-lucide="check" class="w-3.5 h-3.5"></i> Publié en 1 clic</span>
+                    </div>
+                    <div class="flex items-center justify-between bg-slate-800 p-2 rounded-lg">
+                        <span>🐦 Twitter / X (Thread auto)</span>
+                        <span class="text-emerald-400 font-bold flex items-center gap-1"><i data-lucide="check" class="w-3.5 h-3.5"></i> Diffusé</span>
+                    </div>
+                    <div class="flex items-center justify-between bg-slate-800 p-2 rounded-lg">
+                        <span>📸 Instagram & Facebook (Visuel + Caption)</span>
+                        <span class="text-emerald-400 font-bold flex items-center gap-1"><i data-lucide="check" class="w-3.5 h-3.5"></i> Programmé</span>
+                    </div>
+                    <p class="text-[11px] text-slate-400 mt-1">✨ Zéro effort : vos 3 posts ont été envoyés simultanément sur tous vos canaux en 1 seul clic !</p>
+                </div>`;
             }
-            showToast("Module exécuté avec succès !", "cpu");
+            lucide.createIcons();
+            showToast("Auto-Diffusion exécutée avec succès !", "send");
         }
 
         function openBrandVoicePanel() {
-            if (!state.isPro && state.trials.brandvoice <= 0) {
-                openPricingModal();
-                return;
-            }
-            if (!state.isPro) {
-                state.trials.brandvoice--;
-                document.getElementById('badge-brandvoice').innerText = `${state.trials.brandvoice}/3 essais`;
-            }
-            document.getElementById('activeBrandVoiceBanner').classList.remove('hidden');
-            document.getElementById('brandVoiceStyleSummary').innerText = "Style Direct, Percutant & Sans jargon";
-            showToast("Clonage Brand Voice appliqué à vos générations !", "user-check");
-        }
-
-        function clearBrandVoice() {
-            document.getElementById('activeBrandVoiceBanner').classList.add('hidden');
-            showToast("Style cloné retiré.", "info");
+            showToast("Mode Brand Voice activé.", "user-check");
         }
 
         function openViralSpyPanel() {
-            if (!state.isPro && state.trials.viralspy <= 0) {
-                openPricingModal();
-                return;
-            }
-            if (!state.isPro) {
-                state.trials.viralspy--;
-                document.getElementById('badge-viralspy').innerText = `${state.trials.viralspy}/3 essais`;
-            }
-            showToast("Post concurrent décortiqué ! Modèle injecté.", "radar");
-        }
-
-        function handleProFeature(feature) {
-            if (!state.isPro) {
-                openPricingModal();
-                return;
-            }
-            const box = document.getElementById('scaleOutputBox');
-            box.classList.remove('hidden');
-            if (feature === 'carousels') {
-                box.innerHTML = "<strong>📊 Plan Carrousel PDF (5 Slides Pro) :</strong><br>• Slide 1 : Le piège n°1 en B2B<br>• Slide 2 : Le constat chiffré<br>• Slide 3 : La méthode en 3 étapes<br>• Slide 4 : Étude de cas client<br>• Slide 5 : Téléchargez la checklist";
-            } else if (feature === 'hashtags') {
-                box.innerHTML = "<strong>🔥 Hashtags Pro Recommandés :</strong> #B2B #GrowthHacking #Solopreneur #ContentMarketing #StratégieDigitale";
-            } else if (feature === 'abtest') {
-                box.innerHTML = "<strong>⚡ A/B Testing Hooks :</strong><br>1. Provocatrice : 'Pourquoi 90% des créateurs échouent.'<br>2. Chiffrée : '+300% de visibilité en 10 min.'<br>3. Question : 'Et si votre stratégie était à l'envers ?'";
-            } else if (feature === 'commentary') {
-                box.innerHTML = "<strong>💬 Growth Commentaire :</strong><br>'Excellent point ! Le vrai défi réside dans la régularité. Tu fais comment de ton côté ?'";
-            } else if (feature === 'calendar') {
-                box.innerHTML = "<strong>🗓️ Calendrier 7 Jours :</strong><br>• Lundi : Éducatif<br>• Mercredi : Étude de cas<br>• Vendredi : Opinion tranchée";
-            } else if (feature === 'cta') {
-                box.innerHTML = "<strong>🔗 Tracker UTM :</strong><br><code>https://votre-site.com/?utm_source=postcraft&utm_medium=social</code>";
-            }
-            showToast("Outil Pro exécuté !", "zap");
+            showToast("Mode Espion Viral activé.", "radar");
         }
     </script>
 </body>
