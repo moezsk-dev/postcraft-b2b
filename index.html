@@ -332,6 +332,16 @@
                             <div class="font-bold text-xs text-slate-900 pt-1">🔗 Raccourcisseur & UTM Tracker</div>
                             <p class="text-[11px] text-slate-500">Suivi précis des clics et du trafic</p>
                         </button>
+
+                        <!-- Nouveau Module 9 : Agent Growth & Promo SaaS (LinkedIn, X, Reddit, Product Hunt) -->
+                        <button onclick="useTrialModule('growthagent')" class="p-3.5 rounded-xl border border-slate-200 hover:border-purple-500 bg-slate-50/70 hover:bg-purple-50/40 transition text-left space-y-1.5 sm:col-span-2 md:col-span-1">
+                            <div class="flex items-center justify-between">
+                                <span class="w-8 h-8 rounded-lg bg-purple-100 text-purple-700 flex items-center justify-center"><i data-lucide="megaphone" class="w-4 h-4"></i></span>
+                                <span id="badge-growthagent" class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-purple-50 text-purple-700 border border-purple-200">3/3 essais</span>
+                            </div>
+                            <div class="font-bold text-xs text-slate-900 pt-1">🚀 Agent Promo SaaS IA</div>
+                            <p class="text-[11px] text-slate-500">Générateur prêts-à-poster (LinkedIn, X, Reddit, PH)</p>
+                        </button>
                     </div>
 
                     <!-- Zone d'affichage interactive des modules d'essai -->
@@ -644,6 +654,7 @@
                 editorial: 3,
                 export: 3,
                 utmtracker: 3,
+                growthagent: 3,
                 rewrite: 3,
                 videoscript: 3,
                 tts: 3
@@ -1023,6 +1034,12 @@
                 out.innerHTML = "<strong>🗓️ Planificateur Semaine (7 Jours) :</strong><br>• Lundi : Post Éducatif (Conseil & Méthode)<br>• Mercredi : Étude de cas / Preuve sociale<br>• Vendredi : Opinion tranchée / Débat";
             } else if (mod === 'utmtracker') {
                 out.innerHTML = "<strong>🔗 Raccourcisseur & UTM Tracker :</strong><br>Lien tracké généré : <code>https://postcraft.io/r/xyz99?utm_source=linkedin&utm_medium=social&utm_campaign=lancement</code>";
+            } else if (mod === 'growthagent') {
+                out.innerHTML = `<strong>🚀 Kit de Promotion Agent IA (Prêt à publier) :</strong><br>
+                • <strong>LinkedIn :</strong> "J'ai créé PostCraft Omni pour automatiser mes posts en 30s. Résultat : x4 de visibilité. Testez-le (3 essais offerts) 👉 [Votre Lien]"<br><br>
+                • <strong>Twitter / X Thread :</strong> "1/ Je passais 5h par semaine à rédiger mes posts. J'ai codé une IA pour automatiser ça. Voici le résultat..."<br><br>
+                • <strong>Reddit (r/SaaS) :</strong> "Showcase: I built an AI multi-channel content repurposing tool in 48h. Feedback welcome!"<br><br>
+                • <strong>Product Hunt Launch Tagline :</strong> "Turn one idea into 5 social platforms instantly with AI."`;
             }
             showToast("Module exécuté avec succès !", "cpu");
         }
