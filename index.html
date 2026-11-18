@@ -35,7 +35,7 @@
             <!-- Logo Proposition 3 (Plume & IA) & Nom du SaaS (5 clics rapides = Porte d'accès Créateur dissimulée) -->
             <div onclick="handleSecretAdminClick()" class="flex items-center gap-2.5 cursor-pointer select-none" title="PostCraft Omni">
                 <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-purple-700 to-teal-400 flex items-center justify-center text-white shadow-sm">
-                    <!-- Icône SVG personnalisée : Plume & Circuit (Proposition 3) -->
+                    <!-- Icône SVG officielle : Proposition 3 (Plume & Circuit) -->
                     <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path>
                         <line x1="16" y1="8" x2="2" y2="22"></line>
@@ -548,7 +548,7 @@
 
     <!-- MODALE TARIFICATION PRO -->
     <div id="pricingModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
-        <div class="bg-white rounded-2xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-slate-200 relative text-center">
+        <div class="bg-white rounded-2xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-slate-200 relative text-center space-y-4">
             <button onclick="closePricingModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-1.5 rounded-lg hover:bg-slate-100">
                 <i data-lucide="x" class="w-5 h-5"></i>
             </button>
@@ -557,7 +557,15 @@
             </div>
             <h3 class="text-2xl font-bold text-slate-900 mb-2">Passez au Plan Pro Multicanal</h3>
             <p class="text-sm text-slate-500 mb-6">Débloquez en illimité le Clonage Brand Voice, l'Espion Viral, le Réécriveur 1-Clic, l'Auto-Répondeur, le Planificateur Semaine et les Outils Pro pour 29€ / mois.</p>
-            <button onclick="simulateUpgrade()" class="w-full py-3.5 bg-[#0A66C2] hover:bg-[#004182] text-white font-semibold rounded-xl text-sm shadow-md transition">Activer le Plan Pro maintenant</button>
+            
+            <!-- Bouton de Paiement Réel / Redirection Stripe -->
+            <button onclick="handleStripeCheckout()" class="w-full py-3.5 bg-[#0A66C2] hover:bg-[#004182] text-white font-semibold rounded-xl text-sm shadow-md transition flex items-center justify-center gap-2">
+                <i data-lucide="lock" class="w-4 h-4"></i>
+                <span>Procéder au paiement sécurisé (29€ / mois)</span>
+            </button>
+            
+            <!-- Lien discret pour le créateur (ou rappel du code secret) -->
+            <p class="text-[11px] text-slate-400 pt-2">Vous êtes le créateur ? Cliquez 5 fois sur le logo en haut à gauche pour activer votre accès Fondateur gratuit.</p>
         </div>
     </div>
 
@@ -622,6 +630,7 @@
         lucide.createIcons();
 
         const BACKEND_API_URL = "/api/generate";
+        const STRIPE_PAYMENT_LINK = ""; // Remplacez par votre lien Stripe (ex: https://buy.stripe.com/...)
 
         const state = {
             activePlatform: 'LinkedIn',
@@ -692,6 +701,29 @@
                 showToast("Accès Fondateur Illimité Activé !", "key-round");
             } else {
                 showToast("Code secret incorrect.", "alert-circle");
+            }
+        }
+
+        function applyAdminModeUI() {
+            document.getElementById('headerPlanTag').innerText = "FONDATEUR";
+            document.getElementById('headerPlanTag').className = "text-xs font-semibold uppercase tracking-wider bg-amber-100 text-amber-800 px-2.5 py-0.5 rounded-full ml-1";
+            document.getElementById('creditsCount').innerText = "∞";
+            document.querySelectorAll('[id^="badge-"]').forEach(el => el.innerText = "∞ ILLIMITÉ");
+            const proBadge = document.getElementById('proStatusBadge');
+            if (proBadge) {
+                proBadge.innerHTML = '<i data-lucide="check-circle" class="w-3.5 h-3.5"></i> FONDATEUR';
+                proBadge.className = "bg-amber-400 text-slate-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1 shadow";
+            }
+            document.querySelectorAll('.pro-lock-icon').forEach(el => el.innerText = "🔓");
+            lucide.createIcons();
+        }
+
+        // Gestion du paiement Stripe (pour les clients)
+        function handleStripeCheckout() {
+            if (STRIPE_PAYMENT_LINK) {
+                window.open(STRIPE_PAYMENT_LINK, '_blank');
+            } else {
+                showToast("Veuillez configurer votre lien de paiement Stripe (STRIPE_PAYMENT_LINK).", "alert-circle");
             }
         }
 
