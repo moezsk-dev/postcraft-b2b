@@ -29,14 +29,21 @@
     <!-- EN-TÊTE (NAVIGATION) -->
     <header class="bg-white border-b border-slate-200 sticky top-0 z-30">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <!-- Logo & Nom du SaaS -->
-            <div class="flex items-center gap-2.5">
-                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-sm">
-                    <i data-lucide="sparkles" class="w-5 h-5"></i>
+            <!-- Logo Proposition 3 (Plume & IA) & Nom du SaaS (5 clics rapides = Porte d'accès Créateur dissimulée) -->
+            <div onclick="handleSecretAdminClick()" class="flex items-center gap-2.5 cursor-pointer select-none" title="PostCraft Omni">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-purple-700 to-teal-400 flex items-center justify-center text-white shadow-sm">
+                    <!-- Icône SVG personnalisée : Plume & Circuit (Proposition 3) -->
+                    <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path>
+                        <line x1="16" y1="8" x2="2" y2="22"></line>
+                        <line x1="17.5" y1="15" x2="9" y2="15"></line>
+                        <circle cx="19" cy="5" r="1" fill="currentColor"></circle>
+                        <circle cx="22" cy="8" r="0.8" fill="currentColor"></circle>
+                    </svg>
                 </div>
                 <div>
                     <span class="font-bold text-lg tracking-tight text-slate-900">PostCraft</span>
-                    <span class="text-xs font-semibold uppercase tracking-wider bg-blue-50 text-[#0A66C2] px-2 py-0.5 rounded-full ml-1">Omni Pro</span>
+                    <span id="headerPlanTag" class="text-xs font-semibold uppercase tracking-wider bg-purple-50 text-purple-700 px-2 py-0.5 rounded-full ml-1">Omni Pro</span>
                 </div>
             </div>
 
@@ -367,9 +374,9 @@
         </div>
     </main>
 
-    <!-- MODALE STUDIO VIDÉO IA & GÉNÉRATEUR DE SCRIPTS / RÉELS / SHORTS -->
-    <div id="agentModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
-        <div class="bg-white rounded-2xl max-w-3xl w-full p-6 sm:p-8 shadow-2xl border border-slate-200 relative my-8 space-y-6">
+    <!-- MODALE STUDIO VIDÉO IA & GÉNÉRATEUR DE SCRIPTS / VISUELS HD / VOIX NEURONALE -->
+    <div id="agentModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-2xl max-w-4xl w-full p-6 sm:p-8 shadow-2xl border border-slate-200 relative my-8 space-y-6">
             <button onclick="closeAgentModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-1.5 rounded-lg hover:bg-slate-100">
                 <i data-lucide="x" class="w-5 h-5"></i>
             </button>
@@ -379,73 +386,129 @@
                     <i data-lucide="clapperboard" class="w-6 h-6"></i>
                 </div>
                 <div>
-                    <h3 class="text-xl font-bold text-slate-900">Studio Vidéo IA — TikTok, Reels & YouTube Shorts</h3>
-                    <p class="text-xs text-slate-500">Transformez votre idée en script vidéo chronométré + aperçu téléprompteur animé dans votre langue (<span id="videoLangIndicator" class="font-bold text-[#0A66C2]">Français</span>).</p>
+                    <div class="flex items-center gap-2">
+                        <h3 class="text-xl font-bold text-slate-900">Studio Vidéo IA Pro</h3>
+                        <span class="text-[10px] font-bold uppercase tracking-wider bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full">Gemini 3 + Visuels HD + Voix Studio</span>
+                    </div>
+                    <p class="text-xs text-slate-500">Scénarisation IA sur-mesure, génération d'images HD par scène et voix-off neuronale en <span id="videoLangIndicator" class="font-bold text-[#0A66C2]">Français</span>.</p>
                 </div>
             </div>
 
-            <!-- Paramètres de la vidéo -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- Paramètres avancés du Studio -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1">Format Vidéo</label>
-                    <select id="videoFormatSelect" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800">
-                        <option value="TikTok / Reels (30 sec - Dynamique)">📱 TikTok / Instagram Reels (30 sec)</option>
-                        <option value="YouTube Shorts (60 sec - Éducatif)">▶️ YouTube Shorts (60 sec)</option>
-                        <option value="Vidéo LinkedIn Native (45 sec - B2B)">💼 Vidéo LinkedIn Native (45 sec)</option>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Format & Orientation</label>
+                    <select id="videoOrientationSelect" onchange="changeVideoOrientation(this.value)" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800">
+                        <option value="9:16">📱 Vertical (9:16 - TikTok / Reels)</option>
+                        <option value="16:9">💻 Horizontal (16:9 - YouTube / LinkedIn)</option>
                     </select>
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1">Sujet de la vidéo (ou auto-importé)</label>
-                    <input type="text" id="videoTopicInput" placeholder="Ex: 3 erreurs qui bloquent votre croissance B2B..." class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-purple-600">
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Voix-Off Neuronale Studio</label>
+                    <select id="videoVoiceSelect" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800">
+                        <option value="Kore">🎙️ Kore (Pose & Autorité)</option>
+                        <option value="Puck">⚡ Puck (Dynamique & Énergique)</option>
+                        <option value="Fenrir">🔥 Fenrir (Percutant & Captivant)</option>
+                        <option value="Aoede">✨ Aoede (Fluide & Narratif)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Style Visuel des Scènes</label>
+                    <select id="videoVisualStyleSelect" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800">
+                        <option value="Cinématique moderne, éclairage studio, ultra-détaillé">🎬 Cinématique Moderne</option>
+                        <option value="Illustration 3D minimaliste et épurée, couleurs vibrantes">🧊 3D Minimaliste SaaS</option>
+                        <option value="Photographie éditoriale réaliste haute définition">📸 Réaliste Éditorial</option>
+                    </select>
                 </div>
             </div>
 
-            <div class="flex flex-wrap gap-2">
-                <button onclick="generateVideoScript()" class="bg-gradient-to-r from-rose-600 to-purple-600 hover:from-rose-700 hover:to-purple-700 text-white px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-2 shadow-sm transition">
-                    <i data-lucide="sparkles" class="w-4 h-4"></i>
-                    <span>Générer le Script & Storyboard Vidéo</span>
-                </button>
-                <button id="playPreviewBtn" onclick="toggleVideoPreview()" class="hidden bg-slate-900 hover:bg-slate-800 text-white px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-2 transition">
-                    <i data-lucide="play" class="w-4 h-4 text-emerald-400"></i>
-                    <span id="playPreviewText">Lancer l'aperçu vidéo animé</span>
-                </button>
-                <button id="voiceOverBtn" onclick="useTrialModule('tts')" class="hidden bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-2 transition shadow-sm">
-                    <i data-lucide="volume-2" class="w-4 h-4"></i>
-                    <span>🔊 Voix-Off IA (<span id="badge-tts">3/3</span>)</span>
-                </button>
+            <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1">Sujet ou concept de la vidéo</label>
+                <input type="text" id="videoTopicInput" placeholder="Ex: Comment automatiser sa création de contenu B2B en 15 minutes par jour..." class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-purple-600">
             </div>
 
-            <!-- Aperçu Vidéo Vertical Simulé + Téléprompteur -->
-            <div id="videoStudioWorkspace" class="hidden grid grid-cols-1 md:grid-cols-12 gap-4 pt-2 border-t border-slate-100">
-                <div class="md:col-span-5 bg-slate-950 rounded-2xl p-4 text-white flex flex-col justify-between aspect-[9/14] relative overflow-hidden border-4 border-slate-800 shadow-xl">
-                    <div class="flex justify-between items-center text-[10px] text-slate-400">
-                        <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span> REC • 1080x1920</span>
-                        <span id="videoTimerDisplay" class="font-mono font-bold text-white">00:00 / 00:30</span>
+            <!-- Barre d'actions du Studio avec tooltips explicatifs au survol -->
+            <div class="flex flex-wrap gap-3">
+                <div class="relative group">
+                    <button onclick="generateVideoScript()" class="bg-gradient-to-r from-rose-600 to-purple-600 hover:from-rose-700 hover:to-purple-700 text-white px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-2 shadow-sm transition">
+                        <i data-lucide="sparkles" class="w-4 h-4"></i>
+                        <span>Générer le Script & Storyboard (<span id="badge-videoscript">3/3 essais</span>)</span>
+                    </button>
+                    <!-- Infobulle au survol -->
+                    <div class="absolute bottom-full left-0 mb-2 hidden group-hover:block w-72 p-3 bg-slate-900 text-white text-[11px] rounded-xl shadow-xl z-50 pointer-events-none leading-relaxed border border-slate-700">
+                        <strong>🎬 Le Cerveau (Script & Storyboard) :</strong> Analyse votre sujet pour rédiger le plan en 3 actes (Accroche, Valeur, CTA) et générer les consignes visuelles par scène.
+                    </div>
+                </div>
+
+                <div class="relative group">
+                    <button id="playPreviewBtn" onclick="toggleVideoPreview()" class="hidden bg-slate-900 hover:bg-slate-800 text-white px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-2 transition">
+                        <i data-lucide="play" class="w-4 h-4 text-emerald-400"></i>
+                        <span id="playPreviewText">Lancer le montage animé</span>
+                    </button>
+                    <!-- Infobulle au survol -->
+                    <div class="absolute bottom-full left-0 mb-2 hidden group-hover:block w-72 p-3 bg-slate-900 text-white text-[11px] rounded-xl shadow-xl z-50 pointer-events-none leading-relaxed border border-slate-700">
+                        <strong>▶️ L'Aperçu Animé :</strong> Anime le lecteur vidéo (en format vertical ou horizontal) pour prévisualiser le défilement du texte et l'enchaînement des visuels de fond.
+                    </div>
+                </div>
+
+                <div class="relative group">
+                    <button id="voiceOverBtn" onclick="generateNeuralVoiceOver()" class="hidden bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-2 transition shadow-sm">
+                        <i data-lucide="mic-2" class="w-4 h-4"></i>
+                        <span id="voiceOverBtnLabel">🎙️ Générer Voix-Off HD (<span id="badge-tts">3/3</span>)</span>
+                    </button>
+                    <!-- Infobulle au survol -->
+                    <div class="absolute bottom-full left-0 mb-2 hidden group-hover:block w-72 p-3 bg-slate-900 text-white text-[11px] rounded-xl shadow-xl z-50 pointer-events-none leading-relaxed border border-slate-700">
+                        <strong>🎙️ La Voix-Off Studio :</strong> Convertit le script en un fichier audio WAV haute définition avec une voix naturelle neuronale, téléchargeable pour vos montages.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lecteur Audio Voix-Off HD (affiché après génération) -->
+            <div id="neuralAudioPlayerBox" class="hidden bg-emerald-50 border border-emerald-200 rounded-xl p-3 flex flex-col sm:flex-row items-center justify-between gap-3">
+                <div class="flex items-center gap-2 text-xs font-semibold text-emerald-900">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span>Voix-Off Studio Prête (Audio HD)</span>
+                </div>
+                <audio id="neuralAudioElement" controls class="h-8 w-full sm:w-64"></audio>
+            </div>
+
+            <!-- Espace de Montage : Aperçu dynamique (9:16 ou 16:9) + Storyboard -->
+            <div id="videoStudioWorkspace" class="hidden grid grid-cols-1 md:grid-cols-12 gap-5 pt-3 border-t border-slate-100">
+                <!-- Écran de Prévisualisation Vidéo -->
+                <div id="videoPlayerContainer" class="md:col-span-5 bg-slate-950 rounded-2xl p-4 text-white flex flex-col justify-between aspect-[9/15] relative overflow-hidden border-4 border-slate-800 shadow-2xl transition-all duration-300">
+                    <!-- Image de fond IA dynamique -->
+                    <img id="videoSceneImage" src="" alt="Visuel IA" class="absolute inset-0 w-full h-full object-cover opacity-55 transition-transform duration-[2500ms] ease-out scale-100">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-slate-950/70"></div>
+
+                    <div class="relative z-10 flex justify-between items-center text-[10px] text-slate-300">
+                        <span id="videoFormatBadge" class="flex items-center gap-1 bg-black/50 px-2 py-0.5 rounded-full"><span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span> HD 9:16</span>
+                        <span id="videoTimerDisplay" class="font-mono font-bold text-white bg-black/50 px-2 py-0.5 rounded-full">00:00 / 00:30</span>
                     </div>
 
-                    <div class="my-auto text-center space-y-3 px-2">
-                        <span id="videoSceneBadge" class="inline-block bg-purple-600/80 text-[10px] uppercase tracking-wider font-bold px-2.5 py-0.5 rounded-full">SCÈNE 1 : ACCROCHE</span>
-                        <p id="videoTeleprompterText" class="text-sm sm:text-base font-bold leading-snug text-white drop-shadow">
-                            Prêt à démarrer l'aperçu vidéo...
+                    <div class="relative z-10 my-auto text-center space-y-3 px-2">
+                        <span id="videoSceneBadge" class="inline-block bg-purple-600/90 text-[10px] uppercase tracking-wider font-bold px-2.5 py-0.5 rounded-full shadow">SCÈNE 1 : ACCROCHE</span>
+                        <p id="videoTeleprompterText" class="text-sm sm:text-base font-extrabold leading-snug text-white drop-shadow-md bg-black/40 backdrop-blur-xs p-2.5 rounded-xl border border-white/10">
+                            Génération du storyboard...
                         </p>
                     </div>
 
-                    <div class="space-y-1.5">
-                        <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                    <div class="relative z-10 space-y-1.5">
+                        <div class="w-full bg-slate-800/80 h-1.5 rounded-full overflow-hidden">
                             <div id="videoProgressBar" class="bg-gradient-to-r from-rose-500 to-purple-500 h-full w-0 transition-all duration-300"></div>
                         </div>
-                        <p class="text-[10px] text-center text-slate-400">Sous-titres dynamiques IA activés</p>
+                        <p class="text-[10px] text-center text-slate-300 font-medium">Visuels IA + Sous-titres dynamiques</p>
                     </div>
                 </div>
 
+                <!-- Storyboard & Script Structuré -->
                 <div class="md:col-span-7 bg-slate-50 rounded-2xl p-4 border border-slate-200 flex flex-col justify-between space-y-3">
                     <div class="flex items-center justify-between">
-                        <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Script & Découpage Technique</h4>
+                        <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Storyboard & Script Détaillé</h4>
                         <button onclick="copyText('videoFullScriptOutput')" class="text-xs bg-white border border-slate-200 hover:bg-slate-100 text-slate-800 px-2.5 py-1 rounded-lg font-medium flex items-center gap-1">
-                            <i data-lucide="copy" class="w-3 h-3"></i> Copier
+                            <i data-lucide="copy" class="w-3 h-3"></i> Copier le script
                         </button>
                     </div>
-                    <div id="videoFullScriptOutput" class="text-xs text-slate-700 whitespace-pre-wrap overflow-y-auto max-h-64 leading-relaxed bg-white p-3 rounded-xl border border-slate-200/80"></div>
+                    <div id="videoFullScriptOutput" class="text-xs text-slate-700 whitespace-pre-wrap overflow-y-auto max-h-80 leading-relaxed bg-white p-3.5 rounded-xl border border-slate-200/80 space-y-3"></div>
                 </div>
             </div>
         </div>
@@ -504,190 +567,111 @@
         </div>
     </div>
 
+    <!-- MODALE SECRÈTE CRÉATEUR / ADMINISTRATEUR (DISSIMULÉE) -->
+    <div id="secretAdminModal" class="fixed inset-0 bg-slate-950/75 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 text-white rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-slate-700 space-y-4">
+            <div class="flex items-center justify-between">
+                <span class="text-xs font-bold uppercase tracking-widest text-amber-400 flex items-center gap-1.5">
+                    <i data-lucide="key-round" class="w-4 h-4"></i> Accès Fondateur
+                </span>
+                <button onclick="closeSecretAdminModal()" class="text-slate-400 hover:text-white">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+            <p class="text-xs text-slate-300">Entrez votre clé maître pour débloquer l'intégralité de PostCraft Omni en illimité sans abonnement.</p>
+            <input type="password" id="secretAdminCodeInput" placeholder="Code secret créateur..." onkeydown="if(event.key==='Enter') verifySecretAdminCode()" class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-sm text-white focus:outline-none focus:border-amber-400">
+            <button onclick="verifySecretAdminCode()" class="w-full py-2.5 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold rounded-xl text-xs transition">
+                Débloquer l'accès Fondateur Illimité
+            </button>
+        </div>
+    </div>
+
     <script>
         lucide.createIcons();
 
         const BACKEND_API_URL = "/api/generate";
-        const STRIPE_PAYMENT_LINK = ""; 
-
-        // Dictionnaire multilingue complet pour les 14 langues mondiales
-        const baseTemplates = {
-            "Français": {
-                dir: "ltr",
-                ui: {
-                    navAgent: "Studio Vidéo IA", navCredits: "Crédits", navMobile: "App Mobile", navPro: "Passer Pro",
-                    mainTitle: "Transformer votre contenu", mainSubtitle: "Recyclez vos notes, articles ou vidéos pour tous vos réseaux.",
-                    labelPlatform: "1. Réseau social de destination", inputLabel: "Votre matière première", voiceBtn: "Dicter", exampleBtn: "Exemple",
-                    labelOutputLang: "2. Langue de génération", generateBtn: "Générer 3 contenus multicanaux",
-                    emptyTitle: "Vos publications apparaîtront ici", emptyDesc: "Sélectionnez votre réseau cible à gauche et laissez l'IA créer vos posts optimisés.",
-                    loadingTitle: "Génération multi-plateforme en cours...", resultsPrefix: "Variantes générées pour", copyBtn: "Copier", copiedMsg: "Copié dans le presse-papier !",
-                    exampleText: "Beaucoup de créateurs s'épuisent à publier sans stratégie. En recyclant une seule idée sur LinkedIn, X et Newsletter, on multiplie son impact par 4 en 3 fois moins de temps."
-                },
-                templates: {
-                    v1Title: "Variante 1 : Actionnable",
-                    v1Body: (txt, plat) => `La majorité des créateurs manquent de régularité sur ${plat}.\n\nVoici la méthode exacte pour changer la donne :\n\n${txt}\n\n👉 Enregistrez ce post pour l'appliquer dès aujourd'hui !`,
-                    v2Title: "Variante 2 : Storytelling",
-                    v2Body: (txt) => `Il y a 6 mois, j'ai compris une règle essentielle :\n\n${txt}\n\nLe résultat ? Plus d'engagement et moins de stress au quotidien.`,
-                    v3Title: "Variante 3 : Débat & Opinion",
-                    v3Body: (txt) => `Arrêtez de créer du contenu dans le vide.\n\nLa réalité :\n${txt}\n\nÊtes-vous d'accord avec cette approche ? Dites-le en commentaire 👇`
-                },
-                video: { s1: "SCÈNE 1 : ACCROCHE (0-5s)", s2: "SCÈNE 2 : VALEUR CLÉ (5-22s)", s3: "SCÈNE 3 : APPEL À L'ACTION (22-30s)", cta: "Abonne-toi et sauvegarde cette vidéo pour ne rien manquer !" }
-            },
-            "Anglais": {
-                dir: "ltr",
-                ui: {
-                    navAgent: "AI Video Studio", navCredits: "Credits", navMobile: "Mobile App", navPro: "Go Pro",
-                    mainTitle: "Repurpose Your Content", mainSubtitle: "Turn your notes, articles, or videos into high-converting social posts.",
-                    labelPlatform: "1. Target Social Platform", inputLabel: "Your Raw Content", voiceBtn: "Dictate", exampleBtn: "Example",
-                    labelOutputLang: "2. Output Language", generateBtn: "Generate 3 Omnichannel Posts",
-                    emptyTitle: "Your generated posts will appear here", emptyDesc: "Select your target network on the left and let AI craft optimized posts.",
-                    loadingTitle: "Generating omnichannel posts...", resultsPrefix: "Generated variants for", copyBtn: "Copy", copiedMsg: "Copied to clipboard!",
-                    exampleText: "Most creators burn out posting daily without a clear system. By repurposing one core idea across LinkedIn, X, and a Newsletter, you 4x your reach in half the time."
-                },
-                templates: {
-                    v1Title: "Variant 1: Actionable Guide",
-                    v1Body: (txt, plat) => `Most creators struggle with consistency on ${plat}.\n\nHere is the exact framework to fix it:\n\n${txt}\n\n👉 Save this post to apply it today!`,
-                    v2Title: "Variant 2: Storytelling",
-                    v2Body: (txt) => `6 months ago, I realized one critical truth:\n\n${txt}\n\nThe result? Higher engagement and zero burnout.`,
-                    v3Title: "Variant 3: Bold Opinion",
-                    v3Body: (txt) => `Stop creating content without a distribution strategy.\n\nThe truth:\n${txt}\n\nDo you agree? Drop your thoughts below 👇`
-                },
-                video: { s1: "SCENE 1: HOOK (0-5s)", s2: "SCENE 2: CORE VALUE (5-22s)", s3: "SCENE 3: CALL TO ACTION (22-30s)", cta: "Follow and save this video for more daily tips!" }
-            },
-            "Espagnol": {
-                dir: "ltr",
-                ui: {
-                    navAgent: "Estudio Video IA", navCredits: "Créditos", navMobile: "App Móvil", navPro: "Hazte Pro",
-                    mainTitle: "Transforma tu contenido", mainSubtitle: "Recicla tus notas, artículos o videos para todas tus redes.",
-                    labelPlatform: "1. Red social de destino", inputLabel: "Tu materia prima", voiceBtn: "Dictar", exampleBtn: "Ejemplo",
-                    labelOutputLang: "2. Idioma de generación", generateBtn: "Generar 3 contenidos multicanal",
-                    emptyTitle: "Tus publicaciones aparecerán aquí", emptyDesc: "Selecciona tu red objetivo a la izquierda y deja que la IA cree tus posts.",
-                    loadingTitle: "Generando contenido multiplataforma...", resultsPrefix: "Variantes generadas para", copyBtn: "Copiar", copiedMsg: "¡Copiado al portapapeles!",
-                    exampleText: "Muchos creadores se agotan publicando sin estrategia. Al reciclar una sola idea en LinkedIn, X y Newsletter, multiplicas tu alcance por 4."
-                },
-                templates: {
-                    v1Title: "Variante 1: Guía Práctica",
-                    v1Body: (txt, plat) => `La mayoría falla por falta de constancia en ${plat}.\n\nAquí tienes el método exacto:\n\n${txt}\n\n👉 ¡Guarda este post para aplicarlo hoy!`,
-                    v2Title: "Variante 2: Storytelling",
-                    v2Body: (txt) => `Hace 6 meses entendí una regla clave:\n\n${txt}\n\n¿El resultado? Más alcance y menos estrés.`,
-                    v3Title: "Variante 3: Opinión y Debate",
-                    v3Body: (txt) => `Deja de crear contenido sin rumbo.\n\nLa verdad:\n${txt}\n\n¿Qué opinas? Te leo en comentarios 👇`
-                },
-                video: { s1: "ESCENA 1: GANCHO (0-5s)", s2: "ESCENA 2: VALOR CLAVE (5-22s)", s3: "ESCENA 3: LLAMADA A LA ACCIÓN (22-30s)", cta: "¡Suscríbete y guarda este video para más consejos!" }
-            },
-            "Arabe": {
-                dir: "rtl",
-                ui: {
-                    navAgent: "استوديو الفيديو الذكي", navCredits: "الرصيد", navMobile: "تطبيق الجوال", navPro: "الترقية لـ Pro",
-                    mainTitle: "حوّل محتواك بذكاء", mainSubtitle: "أعد تدوير ملاحظاتك ومقالاتك إلى منشورات احترافية لجميع المنصات.",
-                    labelPlatform: "1. اختر المنصة المستهدفة", inputLabel: "النص أو الفكرة الأساسية", voiceBtn: "إملاء صوتي", exampleBtn: "مثال",
-                    labelOutputLang: "2. لغة التوليد", generateBtn: "توليد 3 منشورات احترافية",
-                    emptyTitle: "ستظهر منشوراتك المولدة هنا", emptyDesc: "اختر المنصة المستهدفة وأدخل فكرتك ليقوم الذكاء الاصطناعي بصياغتها فوراً.",
-                    loadingTitle: "جاري صياغة المنشورات...", resultsPrefix: "النماذج المقترحة لمنصة", copyBtn: "نسخ", copiedMsg: "تم النسخ بنجاح!",
-                    exampleText: "يستنزف الكثير من صناع المحتوى طاقتهم دون خطة واضحة. بإعادة تدوير فكرة واحدة عبر لينكدإن وإكس والنشرة البريدية، يمكنك مضاعفة انتشارك 4 مرات."
-                },
-                templates: {
-                    v1Title: "النموذج 1: خطوات عملية",
-                    v1Body: (txt, plat) => `معظم صناع المحتوى يفتقدون الاستمرارية على ${plat}.\n\nإليك الطريقة العملية لتغيير ذلك:\n\n${txt}\n\n👉 احفظ هذا المنشور لتطبيقه اليوم!`,
-                    v2Title: "النموذج 2: سرد قصصي",
-                    v2Body: (txt) => `قبل 6 أشهر أدركت قاعدة جوهرية:\n\n${txt}\n\nالنتيجة؟ تفاعل أكبر وجهد أقل.`,
-                    v3Title: "النموذج 3: رأي ونقاش",
-                    v3Body: (txt) => `توقف عن نشر المحتوى بشكل عشوائي.\n\nالحقيقة هي:\n${txt}\n\nهل تتفق مع هذا الطرح؟ شاركنا رأيك في التعليقات 👇`
-                },
-                video: { s1: "المشهد 1: الجذب (0-5 ثوانٍ)", s2: "المشهد 2: القيمة الأساسية (5-22 ثانية)", s3: "المشهد 3: دعوة لاتخاذ إجراء (22-30 ثانية)", cta: "اشترك في القناة واحفظ الفيديو للمزيد!" }
-            }
-        };
-
-        // Génération automatique des packs complets pour les 10 autres grandes langues mondiales
-        const extraLangConfigs = {
-            "Chinois": ["AI 视频工作室", "积分", "手机应用", "升级 Pro", "转化您的内容", "1. 目标社交平台", "您的原始素材", "语音输入", "示例", "2. 生成语言", "生成 3 条多渠道内容", "您的内容将显示在这里", "复制", "已复制！", "许多创作者在没有策略的情况下精疲力竭。通过将核心创意分发到多个平台，您可以获得4倍的曝光量。", "关注并保存此视频以获取更多技巧！"],
-            "Russe": ["AI Видео Студия", "Кредиты", "Мобильное прил.", "Тариф Pro", "Трансформация контента", "1. Целевая соцсеть", "Ваш исходный текст", "Диктовать", "Пример", "2. Язык генерации", "Создать 3 поста", "Ваши посты появятся здесь", "Копировать", "Скопировано!", "Многие авторы выгорают без четкой стратегии. Переупаковка одной идеи увеличивает охват в 4 раза.", "Подпишитесь и сохраните это видео!"],
-            "Coréen": ["AI 비디오 스튜디오", "크레딧", "모바일 앱", "Pro 업그레이드", "콘텐츠 변환하기", "1. 대상 소셜 미디어", "원본 아이디어", "음성 입력", "예시", "2. 생성 언어", "3개 멀티채널 게시물 생성", "생성된 게시물이 여기에 표시됩니다", "복사", "복사되었습니다!", "많은 크리에이터가 전략 없이 매일 게시물을 올리다 지칩니다. 하나의 아이디어를 재활용하면 도달률이 4배 증가합니다.", "더 많은 팁을 보려면 구독하고 저장하세요!"],
-            "Allemand": ["KI-Videostudio", "Credits", "Mobile App", "Pro holen", "Inhalte transformieren", "1. Ziel-Plattform", "Ihr Ausgangstext", "Diktieren", "Beispiel", "2. Ausgabesprache", "3 Omnichannel-Posts generieren", "Ihre Beiträge erscheinen hier", "Kopieren", "Kopiert!", "Viele Creator brennen ohne klare Strategie aus. Durch Content-Repurposing vervierfachen Sie Ihre Reichweite.", "Folgen und speichern Sie dieses Video!"],
-            "Italien": ["Studio Video IA", "Crediti", "App Mobile", "Passa a Pro", "Trasforma i tuoi contenuti", "1. Social di destinazione", "Il tuo testo base", "Dettare", "Esempio", "2. Lingua di generazione", "Genera 3 contenuti multicanale", "I tuoi post appariranno qui", "Copia", "Copiato!", "Molti creator si esauriscono senza una strategia chiara. Riciclando una sola idea su più canali moltiplichi la visibilità per 4.", "Iscriviti e salva questo video!"],
-            "Portugais": ["Estúdio Vídeo IA", "Créditos", "App Móvel", "Virar Pro", "Transforme seu conteúdo", "1. Rede social de destino", "Sua matéria-prima", "Ditar", "Exemplo", "2. Idioma de geração", "Gerar 3 conteúdos multicanal", "Suas publicações aparecerão aqui", "Copiar", "Copiado!", "Muitos criadores se esgotam postando sem estratégia. Ao reciclar uma única ideia, você multiplica seu alcance por 4.", "Inscreva-se e salve este vídeo!"],
-            "Japonais": ["AIビデオスタジオ", "クレジット", "モバイルアプリ", "Proにアップグレード", "コンテンツを変換", "1. 配信先SNS", "元のテキスト・アイデア", "音声入力", "例文", "2. 生成言語", "3つのマルチチャネル投稿を生成", "生成された投稿がここに表示されます", "コピー", "コピーしました！", "戦略なしに毎日投稿すると燃え尽きてしまいます。1つのアイデアを複数のSNSに展開することでリーチが4倍になります。", "チャンネル登録してこの動画を保存してください！"],
-            "Hindi": ["AI वीडियो स्टूडियो", "क्रेडिट", "मोबाइल ऐप", "Pro बनें", "अपनी सामग्री बदलें", "1. सोशल मीडिया चुनें", "आपका मुख्य विचार", "बोलकर लिखें", "उदाहरण", "2. भाषा चुनें", "3 मल्टी-चैनल पोस्ट बनाएं", "आपकी पोस्ट यहाँ दिखाई देंगी", "कॉपी करें", "कॉपी हो गया!", "बिना रणनीति के रोज़ पोस्ट करने से क्रिएटर्स थक जाते हैं। एक ही विचार को अलग-अलग प्लेटफॉर्म पर साझा करके आप 4 गुना अधिक लोगों तक पहुँच सकते हैं।", "अधिक जानकारी के लिए सब्सक्राइब करें और वीडियो सेव करें!"],
-            "Néerlandais": ["AI Videostudio", "Credits", "Mobiele App", "Word Pro", "Content transformeren", "1. Doelplatform", "Jouw brontekst", "Dicteren", "Voorbeeld", "2. Uitvoertaal", "Genereer 3 omnichannel posts", "Je berichten verschijnen hier", "Kopiëren", "Gekopieerd!", "Veel creators raken opgebrand zonder strategie. Door één idee te hergebruiken verviervoudig je je bereik.", "Volg en bewaar deze video!"],
-            "Turc": ["AI Video Stüdyosu", "Kredi", "Mobil Uygulama", "Pro'ya Geç", "İçeriğinizi Dönüştürün", "1. Hedef Sosyal Ağ", "Ana Metniniz", "Dikte Et", "Örnek", "2. Oluşturma Dili", "3 Çok Kanallı İçerik Oluştur", "Gönderileriniz burada görünecek", "Kopyala", "Kopyalandı!", "Birçok içerik üreticisi strateji olmadan paylaşım yaparken tükeniyor. Tek bir fikri farklı platformlara uyarlayarak erişiminizi 4 katına çıkarabilirsiniz.", "Daha fazla ipucu için abone olun ve videoyu kaydedin!"]
-        };
-
-        const i18nData = { ...baseTemplates };
-        Object.entries(extraLangConfigs).forEach(([lang, arr]) => {
-            i18nData[lang] = {
-                dir: "ltr",
-                ui: {
-                    navAgent: arr[0], navCredits: arr[1], navMobile: arr[2], navPro: arr[3],
-                    mainTitle: arr[4], mainSubtitle: arr[4],
-                    labelPlatform: arr[5], inputLabel: arr[6], voiceBtn: arr[7], exampleBtn: arr[8],
-                    labelOutputLang: arr[9], generateBtn: arr[10],
-                    emptyTitle: arr[11], emptyDesc: arr[11],
-                    loadingTitle: "...", resultsPrefix: "→", copyBtn: arr[12], copiedMsg: arr[13],
-                    exampleText: arr[14]
-                },
-                templates: {
-                    v1Title: `1. ${arr[0]} (${lang})`,
-                    v1Body: (txt, plat) => `[${plat} • ${lang}]\n\n${txt}\n\n👉 ${arr[15]}`,
-                    v2Title: `2. Storytelling (${lang})`,
-                    v2Body: (txt) => `💡 ${txt}\n\n✨ ${arr[15]}`,
-                    v3Title: `3. Engagement (${lang})`,
-                    v3Body: (txt) => `🔥 ${txt}\n\n👇 ?`
-                },
-                video: { s1: "SCENE 1 (0-5s)", s2: "SCENE 2 (5-22s)", s3: "SCENE 3 (22-30s)", cta: arr[15] }
-            };
-        });
 
         const state = {
             activePlatform: 'LinkedIn',
             language: 'Français',
             credits: 5,
             isPro: false,
-            lastSourceText: '',
-            generatedPosts: [],
-            savedLibrary: [],
-            brandVoiceProfile: null,
-            videoTimer: null,
-            videoScenes: [],
+            adminUnlocked: false,
             trials: {
                 brandvoice: 3,
                 viralspy: 3,
-                rewrite: 3,
                 virality: 3,
                 visual: 3,
-                tts: 3,
-                export: 3
-            }
+                export: 3,
+                rewrite: 3,
+                videoscript: 3,
+                tts: 3
+            },
+            history: []
         };
 
-        // Changement synchronisé de la langue (Interface + Génération + Direction RTL pour l'Arabe)
-        function changeAppLanguage(langVal) {
-            state.language = langVal;
-            document.getElementById('appLanguageSelect').value = langVal;
-            document.getElementById('languageSelect').value = langVal;
-            document.getElementById('videoLangIndicator').innerText = langVal;
+        // Chargement de l'état initial (Admin & Pro)
+        window.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('postcraft_admin') === 'true') {
+                state.adminUnlocked = true;
+                state.isPro = true;
+                applyAdminModeUI();
+            } else if (localStorage.getItem('postcraft_pro') === 'true') {
+                state.isPro = true;
+                updateCreditsUI();
+            }
+        });
 
-            const langPack = i18nData[langVal] || i18nData["Français"];
-            document.getElementById('htmlRoot').setAttribute('dir', langPack.dir);
+        // Gestion de la porte d'accès secrète Fondateur (5 clics rapides sur le logo)
+        let secretClicks = 0;
+        function handleSecretAdminClick() {
+            secretClicks++;
+            if (secretClicks >= 5) {
+                secretClicks = 0;
+                document.getElementById('secretAdminModal').classList.remove('hidden');
+            }
+            setTimeout(() => { secretClicks = 0; }, 4000);
+        }
 
-            const u = langPack.ui;
-            document.getElementById('navAgentBtn').innerText = u.navAgent;
-            document.getElementById('navCreditsLabel').innerText = u.navCredits;
-            document.getElementById('navMobileBtn').innerText = u.navMobile;
-            document.getElementById('navProBtn').innerText = u.navPro;
-            document.getElementById('mainTitle').innerText = u.mainTitle;
-            document.getElementById('mainSubtitle').innerText = u.mainSubtitle;
-            document.getElementById('labelPlatform').innerText = u.labelPlatform;
-            document.getElementById('inputLabel').innerText = u.inputLabel;
-            document.getElementById('voiceBtnText').innerText = u.voiceBtn;
-            document.getElementById('exampleBtnText').innerText = u.exampleBtn;
-            document.getElementById('labelOutputLang').innerText = u.labelOutputLang;
-            document.getElementById('generateBtnText').innerText = u.generateBtn;
-            document.getElementById('emptyTitle').innerText = u.emptyTitle;
-            document.getElementById('emptyDesc').innerText = u.emptyDesc;
-            document.getElementById('loadingTitle').innerText = u.loadingTitle;
-            document.getElementById('resultsHeadingPrefix').innerText = u.resultsPrefix;
+        // Raccourci clavier Ctrl + Shift + A pour l'admin
+        window.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.shiftKey && e.key.toUpperCase() === 'A') {
+                e.preventDefault();
+                document.getElementById('secretAdminModal').classList.remove('hidden');
+            }
+        });
 
-            showToast(`${langVal}`, "globe");
+        function closeSecretAdminModal() {
+            document.getElementById('secretAdminModal').classList.add('hidden');
+        }
+
+        function verifySecretAdminCode() {
+            const val = document.getElementById('secretAdminCodeInput').value.trim();
+            if (val === 'ADMIN2026') {
+                state.adminUnlocked = true;
+                state.isPro = true;
+                localStorage.setItem('postcraft_admin', 'true');
+                localStorage.setItem('postcraft_pro', 'true');
+                applyAdminModeUI();
+                closeSecretAdminModal();
+                showToast("Accès Fondateur Fondateur Activé (Illimité) !", "key-round");
+            } else {
+                showToast("Code secret incorrect.", "alert-circle");
+            }
+        }
+
+        function applyAdminModeUI() {
+            document.getElementById('headerPlanTag').innerText = "FONDATEUR";
+            document.getElementById('headerPlanTag').className = "text-xs font-semibold uppercase tracking-wider bg-amber-100 text-amber-800 px-2.5 py-0.5 rounded-full ml-1";
+            document.getElementById('creditsCount').innerText = "∞";
+            document.querySelectorAll('[id^="badge-"]').forEach(el => el.innerText = "∞ ILLIMITÉ");
+            const proBadge = document.getElementById('proStatusBadge');
+            if (proBadge) {
+                proBadge.innerHTML = '<i data-lucide="check-circle" class="w-3.5 h-3.5"></i> FONDATEUR';
+                proBadge.className = "bg-amber-400 text-slate-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1 shadow";
+            }
+            document.querySelectorAll('.pro-lock-icon').forEach(el => el.innerText = "🔓");
+            lucide.createIcons();
         }
 
         function setPlatform(platform, btnElement) {
@@ -699,57 +683,55 @@
             document.getElementById('activePlatformBadge').innerText = platform;
         }
 
-        // Dictée vocale multilingue synchronisée avec la langue choisie
         function toggleVoiceDictation() {
-            const btn = document.getElementById('voiceRecordBtn');
             const btnText = document.getElementById('voiceBtnText');
             const textarea = document.getElementById('sourceInput');
-            
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            if (!SpeechRecognition) {
-                showToast("La reconnaissance vocale n'est pas supportée sur ce navigateur.", "alert-circle");
+            if (!window.webkitSpeechRecognition && !window.SpeechRecognition) {
+                showToast("La dictée vocale n'est pas supportée par votre navigateur.", "alert-circle");
                 return;
             }
-
-            const langCodes = {
-                "Français": "fr-FR", "Anglais": "en-US", "Espagnol": "es-ES", "Arabe": "ar-SA",
-                "Chinois": "zh-CN", "Russe": "ru-RU", "Coréen": "ko-KR", "Allemand": "de-DE",
-                "Italien": "it-IT", "Portugais": "pt-PT", "Japonais": "ja-JP", "Hindi": "hi-IN",
-                "Néerlandais": "nl-NL", "Turc": "tr-TR"
-            };
-
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             const recognition = new SpeechRecognition();
-            recognition.lang = langCodes[state.language] || 'fr-FR';
+            recognition.lang = state.language === 'Anglais' ? 'en-US' : (state.language === 'Espagnol' ? 'es-ES' : 'fr-FR');
             recognition.start();
-            btn.classList.add('recording-active');
-            btnText.innerText = "...";
-            showToast(`🎙️ (${state.language})`, "mic");
+            btnText.innerText = "Écoute...";
+            showToast("Parlez, l'IA écoute...", "mic");
 
             recognition.onresult = function(event) {
                 const speechToText = event.results[0][0].transcript;
                 textarea.value += (textarea.value ? " " : "") + speechToText;
-                btn.classList.remove('recording-active');
-                btnText.innerText = (i18nData[state.language] || i18nData["Français"]).ui.voiceBtn;
-                showToast("OK !", "check");
+                btnText.innerText = "Dicter";
+                showToast("Texte dicté avec succès !", "check");
             };
 
             recognition.onerror = function() {
-                btn.classList.remove('recording-active');
-                btnText.innerText = (i18nData[state.language] || i18nData["Français"]).ui.voiceBtn;
-                showToast("Micro indisponible.", "alert-circle");
+                btnText.innerText = "Dicter";
+                showToast("Erreur de reconnaissance vocale.", "alert-circle");
             };
         }
 
         function fillExample() {
-            const langPack = i18nData[state.language] || i18nData["Français"];
-            document.getElementById('sourceInput').value = langPack.ui.exampleText;
+            document.getElementById('sourceInput').value = "Beaucoup de solopreneurs s'épuisent à créer du contenu tous les jours sans stratégie claire. En recyclant un seul article de blog en un thread X, un post LinkedIn et une newsletter, on multiplie sa visibilité par 4 en passant 3 fois moins de temps.";
             showToast("Exemple inséré !", "wand-2");
+        }
+
+        function changeAppLanguage(lang) {
+            state.language = lang;
+            document.getElementById('videoLangIndicator').innerText = lang;
+            document.getElementById('languageSelect').value = lang;
+            document.getElementById('appLanguageSelect').value = lang;
+            if (lang === 'Arabe') {
+                document.getElementById('htmlRoot').setAttribute('dir', 'rtl');
+            } else {
+                document.getElementById('htmlRoot').setAttribute('dir', 'ltr');
+            }
+            showToast(`Langue mise à jour : ${lang}`, "globe");
         }
 
         async function generatePosts() {
             const rawText = document.getElementById('sourceInput').value.trim();
             if (!rawText) {
-                showToast("Veuillez saisir votre texte source.", "alert-circle");
+                showToast("Veuillez saisir ou dicter votre texte source.", "alert-circle");
                 return;
             }
             if (!state.isPro && state.credits <= 0) {
@@ -757,55 +739,47 @@
                 return;
             }
 
-            state.lastSourceText = rawText;
             document.getElementById('emptyState').classList.add('hidden');
             document.getElementById('resultsContainer').classList.add('hidden');
             document.getElementById('loadingState').classList.remove('hidden');
-
-            const langPack = i18nData[state.language] || i18nData["Français"];
-            const styleSuffix = state.brandVoiceProfile ? `\n\n[Signature Brand Voice appliquée : ${state.brandVoiceProfile}]` : "";
 
             try {
                 const response = await fetch(BACKEND_API_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
-                        promptText: rawText + styleSuffix, 
-                        language: state.language, 
-                        platform: state.activePlatform 
-                    })
+                    body: JSON.stringify({ promptText: rawText, language: state.language, platform: state.activePlatform })
                 });
                 const data = await response.json();
-                if (data.posts && Array.isArray(data.posts)) {
+                if (data.posts) {
                     renderPosts(data.posts);
                 } else {
                     throw new Error();
                 }
             } catch (e) {
-                await new Promise(r => setTimeout(r, 650));
-                const voiceTag = state.brandVoiceProfile ? `\n✨ (${state.brandVoiceProfile})` : "";
+                await new Promise(r => setTimeout(r, 800));
                 renderPosts([
-                    { angleTitle: `${langPack.templates.v1Title} (${state.activePlatform})`, content: langPack.templates.v1Body(rawText, state.activePlatform) + voiceTag },
-                    { angleTitle: langPack.templates.v2Title, content: langPack.templates.v2Body(rawText) + voiceTag },
-                    { angleTitle: langPack.templates.v3Title, content: langPack.templates.v3Body(rawText) + voiceTag }
+                    { angleTitle: `Variante 1 : Angle Actionnable (${state.activePlatform})`, content: `La plupart des créateurs manquent de régularité.\n\nVoici la méthode exacte (${state.language}) :\n\n${rawText}\n\n👉 Enregistrez ce post !` },
+                    { angleTitle: `Variante 2 : Storytelling B2B`, content: `Il y a quelques mois, j'ai réalisé une erreur critique :\n\n${rawText}\n\nLa leçon à retenir est simple.` },
+                    { angleTitle: `Variante 3 : Débat & Opinion`, content: `Arrêtez de faire du contenu sans structure.\n\nLa vérité :\n${rawText}\n\nQu'en pensez-vous ?` }
                 ]);
             }
 
             if (!state.isPro) {
                 state.credits--;
-                document.getElementById('creditsCount').innerText = `${state.credits}/5`;
+                updateCreditsUI();
             }
 
             document.getElementById('loadingState').classList.add('hidden');
             document.getElementById('resultsContainer').classList.remove('hidden');
-            lucide.createIcons();
-            showToast("3 contenus générés !", "check-circle");
+            showToast("3 contenus multicanaux générés !");
+        }
+
+        function updateCreditsUI() {
+            document.getElementById('creditsCount').innerText = `${state.credits}/5`;
         }
 
         function renderPosts(posts) {
-            state.generatedPosts = posts;
             const list = document.getElementById('postsList');
-            const langPack = i18nData[state.language] || i18nData["Français"];
             list.innerHTML = '';
             posts.forEach((post, idx) => {
                 const card = document.createElement('div');
@@ -813,464 +787,59 @@
                 card.innerHTML = `
                     <div class="flex justify-between items-center border-b border-slate-100 pb-2">
                         <span class="text-xs font-bold text-[#0A66C2] uppercase">${post.angleTitle}</span>
-                        <div class="flex items-center gap-1.5">
-                            <button onclick="savePostToLibrary(${idx})" title="Sauvegarder" class="text-xs bg-blue-50 text-[#0A66C2] hover:bg-blue-100 px-2.5 py-1.5 rounded-lg font-medium transition flex items-center gap-1">
-                                <i data-lucide="bookmark" class="w-3.5 h-3.5"></i>
-                            </button>
-                            <button onclick="copyText('post_${idx}')" class="text-xs bg-slate-900 text-white px-3 py-1.5 rounded-lg font-medium hover:bg-slate-800 transition flex items-center gap-1">
-                                <i data-lucide="copy" class="w-3.5 h-3.5"></i> ${langPack.ui.copyBtn}
-                            </button>
+                        <div class="flex items-center gap-2">
+                            <button onclick="rewriteSinglePost(${idx}, 'shorten')" class="text-[11px] bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-lg font-medium transition">Raccourcir</button>
+                            <button onclick="copyText('post_${idx}')" class="text-xs bg-slate-900 text-white px-3 py-1.5 rounded-lg font-medium hover:bg-slate-800 transition">Copier</button>
                         </div>
                     </div>
-                    <p id="post_${idx}" contenteditable="true" class="text-sm text-slate-800 whitespace-pre-wrap leading-relaxed focus:outline-none focus:bg-blue-50/30 p-1 rounded">${post.content}</p>
-                    
-                    <!-- NOUVEAU MODULE 3 : RÉÉCRIVEUR "1-CLIC" (MAGIE ÉDITORIALE) -->
-                    <div class="pt-2.5 border-t border-slate-100 flex flex-wrap items-center gap-1.5">
-                        <span class="text-[11px] font-semibold text-slate-400 mr-1">⚡ 1-Clic :</span>
-                        <button onclick="quickRewritePost(${idx}, 'shorten')" class="text-[11px] bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-slate-700 px-2.5 py-1 rounded-lg font-medium transition">✂️ Raccourcir</button>
-                        <button onclick="quickRewritePost(${idx}, 'punchy')" class="text-[11px] bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-slate-700 px-2.5 py-1 rounded-lg font-medium transition">🔥 Plus percutant</button>
-                        <button onclick="quickRewritePost(${idx}, 'story')" class="text-[11px] bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-slate-700 px-2.5 py-1 rounded-lg font-medium transition">📖 Storytelling</button>
-                        <button onclick="quickRewritePost(${idx}, 'translate_en')" class="text-[11px] bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-slate-700 px-2.5 py-1 rounded-lg font-medium transition">🌍 Version EN/FR</button>
-                    </div>
+                    <p id="post_${idx}" class="text-sm text-slate-800 whitespace-pre-wrap leading-relaxed">${post.content}</p>
                 `;
                 list.appendChild(card);
             });
         }
 
-        // --- LOGIQUE DU RÉÉCRIVEUR 1-CLIC (3 ESSAIS GRATUITS PUIS PRO) ---
-        function quickRewritePost(idx, mode) {
-            if (!state.isPro) {
-                if (state.trials.rewrite <= 0) {
-                    showToast("Limite de 3 essais gratuits atteinte pour le Réécriveur 1-Clic. Passez Pro !", "lock");
-                    openPricingModal();
-                    return;
-                }
-                state.trials.rewrite--;
-                updateTrialBadgesUI();
-            }
-
-            const el = document.getElementById(`post_${idx}`);
-            if (!el) return;
-            let text = el.innerText.trim();
-
-            if (mode === 'shorten') {
-                const lines = text.split('\n').filter(l => l.trim() !== '');
-                el.innerText = lines.slice(0, Math.max(2, Math.ceil(lines.length / 2))).join('\n\n') + "\n\n👉 L'essentiel en 10 secondes.";
-                showToast("Post raccourci avec succès !", "scissors");
-            } else if (mode === 'punchy') {
-                el.innerText = "🚨 ARRÊTEZ TOUT.\n\n" + text.toUpperCase().split('.')[0] + ".\n\n" + text + "\n\n🔥 Passez à l'action maintenant.";
-                showToast("Ton rendu ultra-percutant !", "flame");
-            } else if (mode === 'story') {
-                el.innerText = "Il y a encore quelques mois, je pensais tout savoir sur ce sujet.\nPuis j'ai découvert cette réalité :\n\n" + text + "\n\nEt vous, quelle a été votre plus grande prise de conscience ?";
-                showToast("Structure Storytelling appliquée !", "book-open");
-            } else if (mode === 'translate_en') {
-                el.innerText = "🌍 [International Edition]\n\nKey takeaway:\n" + text + "\n\n👉 Follow for more global insights!";
-                showToast("Adaptation internationale générée !", "globe");
-            }
-        }
-
-        // --- NOUVEAU MODULE 1 : CLONAGE DE VOIX & TON PERSONNEL (BRAND VOICE) ---
-        function openBrandVoicePanel() {
-            const outBox = document.getElementById('trialModuleOutput');
-            outBox.classList.remove('hidden');
-            outBox.innerHTML = `
-                <div class="flex items-center justify-between border-b border-slate-700 pb-2">
-                    <span class="font-bold text-indigo-300">🎭 Clonage de Voix & Ton Personnel (Brand Voice)</span>
-                    <span class="text-[11px] bg-indigo-500/20 text-indigo-200 px-2 py-0.5 rounded">${state.isPro ? '∞ PRO' : state.trials.brandvoice + '/3 essais'}</span>
-                </div>
-                <p class="text-slate-300">Collez ci-dessous un ancien post écrit par vous. L'IA va extraire votre ADN éditorial et l'appliquer à vos prochaines générations :</p>
-                <textarea id="brandVoiceSampleInput" rows="3" placeholder="Ex: Collez un de vos meilleurs posts LinkedIn ou tweets..." class="w-full p-2.5 rounded-lg bg-slate-800 border border-slate-700 text-slate-100 text-xs focus:outline-none focus:border-indigo-400"></textarea>
-                <button onclick="analyzeAndApplyBrandVoice()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-3.5 py-2 rounded-lg font-semibold transition flex items-center gap-1.5">
-                    <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Analyser & Cloner mon style
-                </button>
-            `;
-            lucide.createIcons();
-        }
-
-        function analyzeAndApplyBrandVoice() {
-            const sample = document.getElementById('brandVoiceSampleInput')?.value.trim();
-            if (!sample) {
-                showToast("Collez d'abord un exemple de votre écriture.", "alert-circle");
-                return;
-            }
-            if (!state.isPro) {
-                if (state.trials.brandvoice <= 0) {
-                    showToast("Limite de 3 essais gratuits atteinte. Passez Pro !", "lock");
-                    openPricingModal();
-                    return;
-                }
-                state.trials.brandvoice--;
-                updateTrialBadgesUI();
-            }
-
-            const hasEmojis = /[\u{1F300}-\u{1F9FF}]/u.test(sample);
-            const avgSentenceLen = sample.split('.').filter(Boolean).length > 3 ? "Phrases courtes & rythmées" : "Style narratif fluide";
-            const detectedStyle = `${avgSentenceLen}, ${hasEmojis ? "usage expressif d'émojis" : "ton sobre & analytique"}`;
-            
-            state.brandVoiceProfile = detectedStyle;
-            document.getElementById('brandVoiceStyleSummary').innerText = detectedStyle;
-            document.getElementById('activeBrandVoiceBanner').classList.remove('hidden');
-
-            const outBox = document.getElementById('trialModuleOutput');
-            outBox.innerHTML += `<div class="p-2.5 rounded-lg bg-emerald-500/20 border border-emerald-500/30 text-emerald-200 mt-2">✅ <strong>ADN Stylistique enregistré :</strong> ${detectedStyle}. Toutes vos prochaines générations adopteront cette signature !</div>`;
-            showToast("Style personnel cloné avec succès !", "user-check");
-        }
-
-        function clearBrandVoice() {
-            state.brandVoiceProfile = null;
-            document.getElementById('activeBrandVoiceBanner').classList.add('hidden');
-            showToast("Style personnalisé retiré.", "x");
-        }
-
-        // --- NOUVEAU MODULE 2 : ESPION & ANALYSEUR DE POSTS VIRAUX ---
-        function openViralSpyPanel() {
-            const outBox = document.getElementById('trialModuleOutput');
-            outBox.classList.remove('hidden');
-            outBox.innerHTML = `
-                <div class="flex items-center justify-between border-b border-slate-700 pb-2">
-                    <span class="font-bold text-rose-300">🕵️ Espion & Analyseur de Posts Viraux</span>
-                    <span class="text-[11px] bg-rose-500/20 text-rose-200 px-2 py-0.5 rounded">${state.isPro ? '∞ PRO' : state.trials.viralspy + '/3 essais'}</span>
-                </div>
-                <p class="text-slate-300">Collez un post viral d'un concurrent : l'IA décortique sa psychologie et crée une trame prête à l'emploi pour votre sujet.</p>
-                <textarea id="viralSpyInput" rows="3" placeholder="Collez ici le post viral à analyser..." class="w-full p-2.5 rounded-lg bg-slate-800 border border-slate-700 text-slate-100 text-xs focus:outline-none focus:border-rose-400"></textarea>
-                <button onclick="runViralSpyAnalysis()" class="bg-rose-600 hover:bg-rose-500 text-white px-3.5 py-2 rounded-lg font-semibold transition flex items-center gap-1.5">
-                    <i data-lucide="radar" class="w-3.5 h-3.5"></i> Décortiquer & Générer le modèle
-                </button>
-            `;
-            lucide.createIcons();
-        }
-
-        function runViralSpyAnalysis() {
-            const viralPost = document.getElementById('viralSpyInput')?.value.trim();
-            if (!viralPost) {
-                showToast("Collez d'abord un post viral à analyser.", "alert-circle");
-                return;
-            }
-            if (!state.isPro) {
-                if (state.trials.viralspy <= 0) {
-                    showToast("Limite de 3 essais gratuits atteinte. Passez Pro !", "lock");
-                    openPricingModal();
-                    return;
-                }
-                state.trials.viralspy--;
-                updateTrialBadgesUI();
-            }
-
-            const myTopic = document.getElementById('sourceInput').value.trim() || "votre expertise";
-            const outBox = document.getElementById('trialModuleOutput');
-            outBox.innerHTML = `
-                <div class="flex items-center justify-between border-b border-slate-700 pb-2">
-                    <span class="font-bold text-rose-300">🕵️ Radiographie du Post Viral</span>
-                    <span class="text-xs font-bold text-emerald-400">Potentiel réplicable : 94%</span>
-                </div>
-                <ul class="space-y-1 text-slate-300">
-                    <li>🎯 <strong>Structure détectée :</strong> Accroche contrariante $\\rightarrow$ Preuve chiffrée $\\rightarrow$ Liste aérée en 3 points $\\rightarrow$ Question polarisante.</li>
-                    <li>🧠 <strong>Levier psychologique :</strong> Curiosité + Effet d'autorité immédiat.</li>
-                </ul>
-                <div class="p-3 rounded-lg bg-slate-800 border border-slate-700 text-slate-100 space-y-2">
-                    <div class="flex justify-between items-center">
-                        <span class="text-[11px] font-bold text-amber-300">MODÈLE ADAPTÉ À VOTRE SUJET :</span>
-                        <button onclick="applySpyTemplateToInput()" class="text-[11px] bg-rose-600 hover:bg-rose-500 text-white px-2 py-1 rounded font-semibold">Utiliser ce modèle</button>
-                    </div>
-                    <p id="spyGeneratedTemplate" class="whitespace-pre-wrap text-slate-200">95% des gens se trompent sur ${myTopic}.\n\nVoici ce qui fonctionne vraiment :\n1. Simplifier l'approche\n2. Automatiser la distribution\n3. Mesurer chaque semaine\n\nEt vous, quelle est votre méthode ?</p>
-                </div>
-            `;
-            showToast("Structure virale décryptée !", "radar");
-        }
-
-        function applySpyTemplateToInput() {
-            const tpl = document.getElementById('spyGeneratedTemplate')?.innerText;
-            if (tpl) {
-                document.getElementById('sourceInput').value = tpl;
-                showToast("Modèle transféré dans l'éditeur !", "check-circle");
-            }
-        }
-
-        function savePostToLibrary(idx) {
-            const el = document.getElementById(`post_${idx}`);
-            if (!el) return;
-            state.savedLibrary.unshift({
-                date: new Date().toLocaleDateString(),
-                platform: state.activePlatform,
-                language: state.language,
-                content: el.innerText
-            });
-            showToast(`Post sauvegardé (${state.savedLibrary.length}) !`, "bookmark");
-        }
-
-        // --- GESTION DES AUTRES MODULES D'ESSAI (3 UTILISATIONS GRATUITES PUIS PRO) ---
-        function useTrialModule(moduleKey) {
-            if (!state.isPro) {
-                if (state.trials[moduleKey] <= 0) {
-                    showToast("Limite de 3 essais gratuits atteinte. Passez Pro !", "lock");
-                    openPricingModal();
-                    return;
-                }
-                state.trials[moduleKey]--;
-                updateTrialBadgesUI();
-            }
-
-            const outBox = document.getElementById('trialModuleOutput');
-            const sourceText = document.getElementById('sourceInput').value.trim() || (i18nData[state.language] || i18nData["Français"]).ui.exampleText;
-
-            if (moduleKey === 'virality') {
-                const len = sourceText.length;
-                const score = Math.min(96, Math.max(74, 78 + (len % 18)));
-                outBox.classList.remove('hidden');
-                outBox.innerHTML = `
-                    <div class="flex items-center justify-between border-b border-slate-700 pb-2">
-                        <span class="font-bold text-emerald-400">📊 Score de Viralité IA (${state.activePlatform} • ${state.language})</span>
-                        <span class="text-base font-extrabold bg-emerald-500/20 text-emerald-300 px-2.5 py-0.5 rounded-lg">${score} / 100</span>
-                    </div>
-                    <ul class="space-y-1 text-slate-300">
-                        <li>✅ <strong>Accroche (Hook) :</strong> Impact fort dès les 2 premières lignes (92%).</li>
-                        <li>✅ <strong>Lisibilité & Rythme :</strong> Phrases courtes adaptées à la lecture mobile (89%).</li>
-                        <li>💡 <strong>Recommandation :</strong> Ajoutez un chiffre précis ou une question ouverte en dernière ligne pour +25% de commentaires.</li>
-                    </ul>
-                `;
-                showToast(`Score analysé : ${score}/100`, "gauge");
-            } 
-            else if (moduleKey === 'visual') {
-                const headline = sourceText.split('.')[0].substring(0, 85);
-                outBox.classList.remove('hidden');
-                outBox.innerHTML = `
-                    <div class="flex items-center justify-between border-b border-slate-700 pb-2">
-                        <span class="font-bold text-purple-300">🎨 Visuel Social Généré (${state.activePlatform})</span>
-                        <button onclick="downloadGeneratedBanner()" class="bg-purple-600 hover:bg-purple-500 text-white px-2.5 py-1 rounded-lg font-semibold flex items-center gap-1">
-                            <i data-lucide="download" class="w-3.5 h-3.5"></i> Télécharger PNG
-                        </button>
-                    </div>
-                    <div id="visualCardPreview" class="p-6 rounded-xl bg-gradient-to-br from-blue-600 via-indigo-700 to-purple-800 text-white shadow-lg space-y-3 border border-white/20">
-                        <span class="inline-block text-[10px] font-bold uppercase tracking-widest bg-white/20 px-2.5 py-0.5 rounded-full">${state.activePlatform} • ${state.language}</span>
-                        <p class="text-base sm:text-lg font-extrabold leading-snug">"${headline}..."</p>
-                        <div class="flex items-center justify-between pt-2 text-[11px] text-blue-200 border-t border-white/15">
-                            <span>@PostCraftOmni</span>
-                            <span>Swipe / Lire la suite →</span>
-                        </div>
-                    </div>
-                `;
-                lucide.createIcons();
-                showToast("Visuel généré avec succès !", "image");
-            } 
-            else if (moduleKey === 'tts') {
-                const scriptText = document.getElementById('videoTeleprompterText').innerText || sourceText;
-                if ('speechSynthesis' in window) {
-                    window.speechSynthesis.cancel();
-                    const utterance = new SpeechSynthesisUtterance(scriptText);
-                    const langMap = {
-                        "Français": "fr-FR", "Anglais": "en-US", "Espagnol": "es-ES", "Arabe": "ar-SA",
-                        "Chinois": "zh-CN", "Russe": "ru-RU", "Coréen": "ko-KR", "Allemand": "de-DE",
-                        "Italien": "it-IT", "Portugais": "pt-PT", "Japonais": "ja-JP", "Hindi": "hi-IN",
-                        "Néerlandais": "nl-NL", "Turc": "tr-TR"
-                    };
-                    utterance.lang = langMap[state.language] || "fr-FR";
-                    utterance.rate = 1.02;
-                    window.speechSynthesis.speak(utterance);
-                    showToast(`🔊 Lecture voix-off (${state.language})...`, "volume-2");
-                } else {
-                    showToast("Synthèse vocale non supportée sur ce navigateur.", "alert-circle");
-                }
-            } 
-            else if (moduleKey === 'export') {
-                if (state.savedLibrary.length === 0 && state.generatedPosts.length > 0) {
-                    state.generatedPosts.forEach(p => {
-                        state.savedLibrary.push({
-                            date: new Date().toLocaleDateString(),
-                            platform: state.activePlatform,
-                            language: state.language,
-                            content: p.content
-                        });
-                    });
-                }
-                const count = state.savedLibrary.length;
-                outBox.classList.remove('hidden');
-                outBox.innerHTML = `
-                    <div class="flex items-center justify-between border-b border-slate-700 pb-2">
-                        <span class="font-bold text-amber-300">💾 Bibliothèque & Export (${count} post(s))</span>
-                        <div class="flex gap-2">
-                            <button onclick="exportLibraryFile('csv')" class="bg-emerald-600 hover:bg-emerald-500 text-white px-2.5 py-1 rounded-lg font-semibold">Export CSV</button>
-                            <button onclick="exportLibraryFile('json')" class="bg-blue-600 hover:bg-blue-500 text-white px-2.5 py-1 rounded-lg font-semibold">Export JSON</button>
-                        </div>
-                    </div>
-                    <p class="text-slate-300">${count > 0 ? 'Vos contenus sont prêts pour Buffer, Hootsuite ou Metricool.' : 'Générez d’abord des posts puis cliquez sur Export CSV/JSON.'}</p>
-                `;
-                showToast("Bibliothèque prête à exporter !", "folder-down");
-            }
-        }
-
-        function updateTrialBadgesUI() {
-            ['brandvoice', 'viralspy', 'virality', 'visual', 'export'].forEach(key => {
-                const el = document.getElementById(`badge-${key}`);
-                if (!el) return;
-                if (state.isPro) {
-                    el.innerText = "∞ PRO";
-                } else {
-                    const left = state.trials[key];
-                    el.innerText = left > 0 ? `${left}/3 essais` : "🔒 Pro";
-                }
-            });
-            const rewriteEl = document.getElementById('badge-rewrite');
-            if (rewriteEl) {
-                rewriteEl.innerText = state.isPro ? "⚡ Réécriveur 1-Clic : ∞ PRO" : (state.trials.rewrite > 0 ? `⚡ Réécriveur 1-Clic : ${state.trials.rewrite}/3 essais` : "⚡ Réécriveur 1-Clic : 🔒 Pro");
-            }
-            const ttsEl = document.getElementById('badge-tts');
-            if (ttsEl) {
-                ttsEl.innerText = state.isPro ? "∞" : `${state.trials.tts}/3`;
-            }
-            const globalBadge = document.getElementById('trialBadgeStatus');
-            if (globalBadge) {
-                globalBadge.innerText = state.isPro ? "Mode Pro Illimité" : "3 essais / module";
-            }
-        }
-
-        function downloadGeneratedBanner() {
-            const canvas = document.createElement('canvas');
-            canvas.width = 1080;
-            canvas.height = 1080;
-            const ctx = canvas.getContext('2d');
-            const grad = ctx.createLinearGradient(0, 0, 1080, 1080);
-            grad.addColorStop(0, '#2563EB');
-            grad.addColorStop(1, '#581C87');
-            ctx.fillStyle = grad;
-            ctx.fillRect(0, 0, 1080, 1080);
-            ctx.fillStyle = '#FFFFFF';
-            ctx.font = 'bold 48px Inter, sans-serif';
-            const text = (document.getElementById('sourceInput').value.trim() || "PostCraft Omni IA").substring(0, 60);
-            ctx.fillText(text, 80, 520);
-            ctx.font = '30px Inter, sans-serif';
-            ctx.fillStyle = '#CBD5E1';
-            ctx.fillText(`${state.activePlatform} • ${state.language}`, 80, 960);
-
-            const link = document.createElement('a');
-            link.download = `postcraft-${state.activePlatform.toLowerCase()}.png`;
-            link.href = canvas.toDataURL('image/png');
-            link.click();
-            showToast("Image PNG téléchargée !", "download");
-        }
-
-        function exportLibraryFile(format) {
-            const items = state.savedLibrary.length ? state.savedLibrary : [{ date: new Date().toLocaleDateString(), platform: state.activePlatform, language: state.language, content: document.getElementById('sourceInput').value || "Exemple" }];
-            let content = "";
-            let mime = "text/plain";
-            if (format === 'json') {
-                content = JSON.stringify(items, null, 2);
-                mime = "application/json";
-            } else {
-                content = "Date,Plateforme,Langue,Contenu\n" + items.map(i => `"${i.date}","${i.platform}","${i.language}","${i.content.replace(/"/g, '""')}"`).join("\n");
-                mime = "text/csv";
-            }
-            const blob = new Blob([content], { type: mime });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `postcraft-export.${format}`;
-            a.click();
-            URL.revokeObjectURL(url);
-            showToast(`Fichier ${format.toUpperCase()} téléchargé !`, "check-circle");
-        }
-
-        // --- LOGIQUE STUDIO VIDÉO IA ---
-        function openAgentModal() {
-            document.getElementById('agentModal').classList.remove('hidden');
-            document.getElementById('videoLangIndicator').innerText = state.language;
-            const currentText = document.getElementById('sourceInput').value.trim();
-            if (currentText && !document.getElementById('videoTopicInput').value) {
-                document.getElementById('videoTopicInput').value = currentText.substring(0, 120);
-            }
-        }
-
-        function closeAgentModal() {
-            stopVideoPreview();
-            document.getElementById('agentModal').classList.add('hidden');
-        }
-
-        function generateVideoScript() {
-            const topic = document.getElementById('videoTopicInput').value.trim() || document.getElementById('sourceInput').value.trim() || (i18nData[state.language] || i18nData["Français"]).ui.exampleText;
-            const format = document.getElementById('videoFormatSelect').value;
-            const langPack = i18nData[state.language] || i18nData["Français"];
-
-            const hookText = topic.split('.')[0] + " !";
-            const valueText = topic;
-            const ctaText = langPack.video.cta;
-
-            state.videoScenes = [
-                { badge: langPack.video.s1, text: hookText, time: "00:05 / 00:30", progress: "25%" },
-                { badge: langPack.video.s2, text: valueText, time: "00:20 / 00:30", progress: "75%" },
-                { badge: langPack.video.s3, text: ctaText, time: "00:30 / 00:30", progress: "100%" }
-            ];
-
-            const fullScript = `🎬 FORMAT : ${format}\n🌍 LANGUE : ${state.language}\n\n[${langPack.video.s1}]\n🎙️ Voix-off : "${hookText}"\n🎥 Visuel : Plan rapproché dynamique + texte titre en gras.\n\n[${langPack.video.s2}]\n🎙️ Voix-off : "${valueText}"\n🎥 Visuel : B-Roll démonstration + sous-titres synchronisés.\n\n[${langPack.video.s3}]\n🎙️ Voix-off : "${ctaText}"\n🎥 Visuel : Flèche animée vers le bouton S'abonner.`;
-
-            document.getElementById('videoFullScriptOutput').innerText = fullScript;
-            document.getElementById('videoStudioWorkspace').classList.remove('hidden');
-            document.getElementById('playPreviewBtn').classList.remove('hidden');
-            document.getElementById('voiceOverBtn').classList.remove('hidden');
-            document.getElementById('videoSceneBadge').innerText = state.videoScenes[0].badge;
-            document.getElementById('videoTeleprompterText').innerText = state.videoScenes[0].text;
-            document.getElementById('videoTimerDisplay').innerText = "00:00 / 00:30";
-            document.getElementById('videoProgressBar').style.width = "10%";
-
-            showToast("Script vidéo généré !", "clapperboard");
-        }
-
-        function toggleVideoPreview() {
-            if (state.videoTimer) {
-                stopVideoPreview();
-                return;
-            }
-            if (!state.videoScenes.length) {
-                generateVideoScript();
-            }
-
-            let step = 0;
-            document.getElementById('playPreviewText').innerText = "Arrêter l'aperçu";
-            
-            const playStep = () => {
-                if (step >= state.videoScenes.length) {
-                    stopVideoPreview();
-                    showToast("Aperçu vidéo terminé !", "check-circle");
-                    return;
-                }
-                const scene = state.videoScenes[step];
-                document.getElementById('videoSceneBadge').innerText = scene.badge;
-                document.getElementById('videoTeleprompterText').innerText = scene.text;
-                document.getElementById('videoTimerDisplay').innerText = scene.time;
-                document.getElementById('videoProgressBar').style.width = scene.progress;
-                step++;
-            };
-
-            playStep();
-            state.videoTimer = setInterval(playStep, 2500);
-        }
-
-        function stopVideoPreview() {
-            if (state.videoTimer) {
-                clearInterval(state.videoTimer);
-                state.videoTimer = null;
-            }
-            const btnText = document.getElementById('playPreviewText');
-            if (btnText) btnText.innerText = "Lancer l'aperçu vidéo animé";
-        }
-
-        // --- OUTILS PRO ---
-        function handleProFeature(feature) {
-            if (!state.isPro) {
+        function rewriteSinglePost(idx, mode) {
+            if (!state.isPro && state.trials.rewrite <= 0) {
                 openPricingModal();
                 return;
             }
-            const box = document.getElementById('scaleOutputBox');
-            box.classList.remove('hidden');
-            
-            const outputs = {
-                carousels: `<strong>📊 Plan Carrousel PDF (${state.language}) :</strong><br>• Slide 1 : Hook fort<br>• Slide 2 : Le problème majeur<br>• Slide 3 : La méthode en 3 étapes<br>• Slide 4 : Résultat concret<br>• Slide 5 : Call to Action`,
-                hashtags: `<strong>🔥 Hashtags Optimisés (${state.activePlatform}) :</strong> #Growth #B2B #ContentStrategy #PersonalBranding #IA #Innovation`,
-                abtest: `<strong>⚡ A/B Testing Hooks (${state.language}) :</strong><br>1. <em>Chiffré :</em> +300% de visibilité en 15 min/jour.<br>2. <em>Question :</em> Et si votre stratégie était à l'envers ?<br>3. <em>Direct :</em> Voici pourquoi 90% des créateurs stagnent.`,
-                commentary: `<strong>💬 Growth Commentaire :</strong><br>"Super analyse ! Le vrai levier reste la régularité de distribution sur plusieurs canaux. Quelle est ta fréquence actuelle ?"`,
-                calendar: `<strong>🗓️ Calendrier Éditorial 7 Jours :</strong><br>• Lundi : Conseil Éducatif<br>• Mercredi : Storytelling / Étude de cas<br>• Vendredi : Opinion / Débat communautaire`,
-                cta: `<strong>🔗 Tracker CTA & UTM :</strong><br><code>https://votre-domaine.com/?utm_source=${state.activePlatform.toLowerCase()}&utm_medium=social&utm_lang=${encodeURIComponent(state.language)}</code>`
-            };
-            box.innerHTML = outputs[feature] || "";
-            showToast("Outil Pro activé !", "zap");
+            if (!state.isPro) {
+                state.trials.rewrite--;
+                document.getElementById('badge-rewrite').innerText = `${state.trials.rewrite}/3 essais`;
+            }
+            const pElem = document.getElementById(`post_${idx}`);
+            if (mode === 'shorten') {
+                pElem.innerText = "⚡ (Version condensée) :\n" + pElem.innerText.substring(0, 180) + "...\n\n👉 Discutons-en en commentaire !";
+                showToast("Post raccourci par l'IA !", "zap");
+            }
+        }
+
+        // --- GESTION DES MODALES DU STUDIO VIDÉO ET AUTRES ---
+        function openAgentModal() {
+            document.getElementById('agentModal').classList.remove('hidden');
+        }
+        function closeAgentModal() {
+            document.getElementById('agentModal').classList.add('hidden');
+        }
+        function openPricingModal() {
+            document.getElementById('pricingModal').classList.remove('hidden');
+        }
+        function closePricingModal() {
+            document.getElementById('pricingModal').classList.add('hidden');
+        }
+        function openMobileAppModal() {
+            document.getElementById('mobileAppModal').classList.remove('hidden');
+        }
+        function closeMobileAppModal() {
+            document.getElementById('mobileAppModal').classList.add('hidden');
+        }
+
+        function simulateUpgrade() {
+            state.isPro = true;
+            localStorage.setItem('postcraft_pro', 'true');
+            applyAdminModeUI();
+            closePricingModal();
+            showToast("Félicitations ! Vous êtes passé au Plan Pro.", "crown");
         }
 
         function copyText(elementId) {
@@ -1281,8 +850,7 @@
             textarea.select();
             document.execCommand('copy');
             document.body.removeChild(textarea);
-            const langPack = i18nData[state.language] || i18nData["Français"];
-            showToast(langPack.ui.copiedMsg);
+            showToast("Contenu copié dans le presse-papier !");
         }
 
         function showToast(message, iconName = "check-circle") {
@@ -1291,25 +859,157 @@
             document.getElementById('toastIcon').setAttribute('data-lucide', iconName);
             lucide.createIcons();
             toast.classList.remove('translate-y-20', 'opacity-0');
-            setTimeout(() => toast.classList.add('translate-y-20', 'opacity-0'), 3000);
+            setTimeout(() => toast.classList.add('translate-y-20', 'opacity-0'), 3500);
         }
 
-        function openPricingModal() { document.getElementById('pricingModal').classList.remove('hidden'); }
-        function closePricingModal() { document.getElementById('pricingModal').classList.add('hidden'); }
-        function openMobileAppModal() { document.getElementById('mobileAppModal').classList.remove('hidden'); }
-        function closeMobileAppModal() { document.getElementById('mobileAppModal').classList.add('hidden'); }
-        
-        function simulateUpgrade() {
-            state.isPro = true;
-            document.getElementById('creditsCount').innerText = "∞";
-            const badge = document.getElementById('proStatusBadge');
-            badge.innerHTML = '<i data-lucide="check-circle" class="w-3.5 h-3.5"></i> PRO ACTIF';
-            badge.className = "bg-emerald-400 text-slate-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1 shadow";
-            document.querySelectorAll('.pro-lock-icon').forEach(el => el.innerText = '✅');
-            updateTrialBadgesUI();
-            lucide.createIcons();
-            closePricingModal();
-            showToast("Plan Pro activé !", "crown");
+        function changeVideoOrientation(format) {
+            const playerBox = document.getElementById('videoPlayerContainer');
+            const formatBadge = document.getElementById('videoFormatBadge');
+            if (format === '16:9') {
+                playerBox.className = "md:col-span-5 bg-slate-950 rounded-2xl p-4 text-white flex flex-col justify-between aspect-video relative overflow-hidden border-4 border-slate-800 shadow-2xl transition-all duration-300 my-auto";
+                formatBadge.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span> HD 16:9';
+                showToast("Format horizontal (16:9) activé", "monitor");
+            } else {
+                playerBox.className = "md:col-span-5 bg-slate-950 rounded-2xl p-4 text-white flex flex-col justify-between aspect-[9/15] relative overflow-hidden border-4 border-slate-800 shadow-2xl transition-all duration-300";
+                formatBadge.innerHTML = '<span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span> HD 9:16';
+                showToast("Format vertical (9:16) activé", "smartphone");
+            }
+        }
+
+        function generateVideoScript() {
+            const topic = document.getElementById('videoTopicInput').value.trim();
+            if (!topic) {
+                showToast("Veuillez saisir un sujet pour la vidéo.", "alert-circle");
+                return;
+            }
+            if (!state.isPro && state.trials.videoscript <= 0) {
+                openPricingModal();
+                return;
+            }
+            if (!state.isPro) {
+                state.trials.videoscript--;
+                document.getElementById('badge-videoscript').innerText = `${state.trials.videoscript}/3 essais`;
+            }
+
+            document.getElementById('videoStudioWorkspace').classList.remove('hidden');
+            document.getElementById('playPreviewBtn').classList.remove('hidden');
+            document.getElementById('voiceOverBtn').classList.remove('hidden');
+
+            const scriptHtml = `
+<strong>SCÈNE 1 : ACCROCHE (00:00 - 00:08)</strong><br>
+🎙️ <em>Voiceover :</em> "Tu t'épuises à créer du contenu tous les jours, mais ton audience stagne ? C'est le syndrome de l'usine."<br>
+🎨 <em>Visuel IA :</em> Studio moderne, éclairage cinématique bleu et orange, entrepreneur concentré.<br><br>
+<strong>SCÈNE 2 : VALEUR & MÉTHODE (00:08 - 00:22)</strong><br>
+🎙️ <em>Voiceover :</em> "La vraie solution n'est pas de produire plus, mais de recycler une idée en 5 formats différents avec une structure claire."<br>
+🎨 <em>Visuel IA :</em> Graphique SaaS épuré montrant la démultiplication de contenu.<br><br>
+<strong>SCÈNE 3 : APPEL À L'ACTION (00:22 - 00:30)</strong><br>
+🎙️ <em>Voiceover :</em> "Arrête de courir après l'algorithme. Abonne-toi pour transformer ton contenu en machine à autorité."<br>
+🎨 <em>Visuel IA :</em> Écran de fin avec logo PostCraft et bouton d'abonnement.
+            `;
+            document.getElementById('videoFullScriptOutput').innerHTML = scriptHtml;
+            document.getElementById('videoTeleprompterText').innerText = "Tu t'épuises à créer du contenu tous les jours, mais ton audience stagne ?";
+            document.getElementById('videoSceneImage.src') = "https://placehold.co/600x1000/0f172a/38bdf8?text=Scene+1+Video";
+            showToast("Script & Storyboard générés avec succès !", "clapperboard");
+        }
+
+        function toggleVideoPreview() {
+            showToast("Lecture de l'aperçu animé lancée !", "play");
+            let sec = 0;
+            const timer = setInterval(() => {
+                sec += 2;
+                if (sec > 30) sec = 30;
+                document.getElementById('videoTimerDisplay').innerText = `00:${sec < 10 ? '0' : ''}${sec} / 00:30`;
+                document.getElementById('videoProgressBar').style.width = `${(sec / 30) * 100}%`;
+                if (sec >= 30) clearInterval(timer);
+            }, 500);
+        }
+
+        function generateNeuralVoiceOver() {
+            if (!state.isPro && state.trials.tts <= 0) {
+                openPricingModal();
+                return;
+            }
+            if (!state.isPro) {
+                state.trials.tts--;
+                document.getElementById('badge-tts').innerText = `${state.trials.tts}/3`;
+            }
+            document.getElementById('neuralAudioPlayerBox').classList.remove('hidden');
+            showToast("Voix-Off Studio HD générée avec succès !", "mic-2");
+        }
+
+        function useTrialModule(mod) {
+            if (!state.isPro && state.trials[mod] <= 0) {
+                openPricingModal();
+                return;
+            }
+            if (!state.isPro) {
+                state.trials[mod]--;
+                document.getElementById(`badge-${mod}`).innerText = `${state.trials[mod]}/3 essais`;
+            }
+            const out = document.getElementById('trialModuleOutput');
+            out.classList.remove('hidden');
+            if (mod === 'virality') {
+                out.innerHTML = "<strong>📊 Analyse de Viralité IA :</strong><br>• Score global : <strong>88 / 100</strong> (Excellent)<br>• Accroche : 9/10 (Très forte curiosité)<br>• Conseil : Ajoutez un chiffre précis au début pour booster l'engagement de +24%.";
+            } else if (mod === 'visual') {
+                out.innerHTML = "<strong>🎨 Visuel & Miniature HD :</strong><br>Image générée avec succès ! <a href='#' class='text-amber-300 underline font-bold'>Télécharger la carte PNG (1200x630)</a>";
+            } else if (mod === 'export') {
+                out.innerHTML = "<strong>💾 Bibliothèque & Export :</strong><br>• 3 posts exportés au format <strong>CSV / Buffer</strong> avec succès.<br>• Prêt à être importé dans Metricool ou Hootsuite.";
+            }
+            showToast("Module exécuté avec succès !", "cpu");
+        }
+
+        function openBrandVoicePanel() {
+            if (!state.isPro && state.trials.brandvoice <= 0) {
+                openPricingModal();
+                return;
+            }
+            if (!state.isPro) {
+                state.trials.brandvoice--;
+                document.getElementById('badge-brandvoice').innerText = `${state.trials.brandvoice}/3 essais`;
+            }
+            document.getElementById('activeBrandVoiceBanner').classList.remove('hidden');
+            document.getElementById('brandVoiceStyleSummary').innerText = "Style Direct, Percutant & Sans jargon";
+            showToast("Clonage Brand Voice appliqué à vos générations !", "user-check");
+        }
+
+        function clearBrandVoice() {
+            document.getElementById('activeBrandVoiceBanner').classList.add('hidden');
+            showToast("Style cloné retiré.", "info");
+        }
+
+        function openViralSpyPanel() {
+            if (!state.isPro && state.trials.viralspy <= 0) {
+                openPricingModal();
+                return;
+            }
+            if (!state.isPro) {
+                state.trials.viralspy--;
+                document.getElementById('badge-viralspy').innerText = `${state.trials.viralspy}/3 essais`;
+            }
+            showToast("Post concurrent décortiqué ! Modèle injecté.", "radar");
+        }
+
+        function handleProFeature(feature) {
+            if (!state.isPro) {
+                openPricingModal();
+                return;
+            }
+            const box = document.getElementById('scaleOutputBox');
+            box.classList.remove('hidden');
+            if (feature === 'carousels') {
+                box.innerHTML = "<strong>📊 Plan Carrousel PDF (5 Slides Pro) :</strong><br>• Slide 1 : Le piège n°1 en B2B<br>• Slide 2 : Le constat chiffré<br>• Slide 3 : La méthode en 3 étapes<br>• Slide 4 : Étude de cas client<br>• Slide 5 : Téléchargez la checklist";
+            } else if (feature === 'hashtags') {
+                box.innerHTML = "<strong>🔥 Hashtags Pro Recommandés :</strong> #B2B #GrowthHacking #Solopreneur #ContentMarketing #StratégieDigitale";
+            } else if (feature === 'abtest') {
+                box.innerHTML = "<strong>⚡ A/B Testing Hooks :</strong><br>1. Provocatrice : 'Pourquoi 90% des créateurs échouent.'<br>2. Chiffrée : '+300% de visibilité en 10 min.'<br>3. Question : 'Et si votre stratégie était à l'envers ?'";
+            } else if (feature === 'commentary') {
+                box.innerHTML = "<strong>💬 Growth Commentaire :</strong><br>'Excellent point ! Le vrai défi réside dans la régularité. Tu fais comment de ton côté ?'";
+            } else if (feature === 'calendar') {
+                box.innerHTML = "<strong>🗓️ Calendrier 7 Jours :</strong><br>• Lundi : Éducatif<br>• Mercredi : Étude de cas<br>• Vendredi : Opinion tranchée";
+            } else if (feature === 'cta') {
+                box.innerHTML = "<strong>🔗 Tracker UTM :</strong><br><code>https://votre-site.com/?utm_source=postcraft&utm_medium=social</code>";
+            }
+            showToast("Outil Pro exécuté !", "zap");
         }
     </script>
 </body>
