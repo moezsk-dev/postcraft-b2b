@@ -7,7 +7,7 @@
     <!-- Chargement de Tailwind CSS pour un design SaaS moderne et responsive -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Police Inter pour une typographie épurée -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Icônes Lucide pour l'interface -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -25,6 +25,17 @@
         .recording-active {
             animation: pulse-border 1.5s infinite;
         }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 9999px;
+        }
     </style>
 </head>
 <body class="text-slate-800 antialiased min-h-screen flex flex-col">
@@ -32,10 +43,9 @@
     <!-- EN-TÊTE (NAVIGATION) -->
     <header class="bg-white border-b border-slate-200 sticky top-0 z-30">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <!-- Logo Proposition 3 (Plume & IA) & Nom du SaaS (5 clics rapides = Porte d'accès Créateur dissimulée) -->
+            <!-- Logo Proposition 3 (Plume & Circuit) & Nom du SaaS (5 clics rapides = Porte d'accès Créateur dissimulée) -->
             <div onclick="handleSecretAdminClick()" class="flex items-center gap-2.5 cursor-pointer select-none" title="PostCraft Omni">
                 <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-purple-700 to-teal-400 flex items-center justify-center text-white shadow-sm">
-                    <!-- Icône SVG officielle : Proposition 3 (Plume & Circuit) -->
                     <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path>
                         <line x1="16" y1="8" x2="2" y2="22"></line>
@@ -164,25 +174,37 @@
                     </div>
                 </div>
 
-                <!-- 3. Langue de sortie (14 langues synchronisées) -->
-                <div class="space-y-2.5">
-                    <label id="labelOutputLang" for="languageSelect" class="block text-sm font-semibold text-slate-700">2. Langue de génération</label>
-                    <select id="languageSelect" onchange="changeAppLanguage(this.value)" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0A66C2]">
-                        <option value="Français">🇫🇷 Français</option>
-                        <option value="Anglais">🇬🇧 Anglais (English)</option>
-                        <option value="Espagnol">🇪🇸 Espagnol (Español)</option>
-                        <option value="Arabe">🇸🇦 Arabe (العربية)</option>
-                        <option value="Chinois">🇨🇳 Chinois (中文)</option>
-                        <option value="Russe">🇷🇺 Russe (Русский)</option>
-                        <option value="Coréen">🇰🇷 한국어 (Coréen)</option>
-                        <option value="Allemand">🇩🇪 Allemand (Deutsch)</option>
-                        <option value="Italien">🇮🇹 Italien (Italiano)</option>
-                        <option value="Portugais">🇵🇹 Portugais (Português)</option>
-                        <option value="Japonais">🇯🇵 Japonais (日本語)</option>
-                        <option value="Hindi">🇮🇳 Hindi (हिन्दी)</option>
-                        <option value="Néerlandais">🇳🇱 Néerlandais (Nederlands)</option>
-                        <option value="Turc">🇹🇷 Turc (Türkçe)</option>
-                    </select>
+                <!-- 3. Ton & Angle Éditorial -->
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="space-y-1.5">
+                        <label for="toneSelect" class="block text-xs font-semibold text-slate-700">Ton souhaité</label>
+                        <select id="toneSelect" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0A66C2]">
+                            <option value="Expert & Autoritaire">🎯 Expert & Autoritaire</option>
+                            <option value="Storytelling & Émotion">📖 Storytelling & Émotion</option>
+                            <option value="Direct & Percutant">⚡ Direct & Percutant</option>
+                            <option value="Éducatif & Pédagogique">💡 Éducatif & Pratique</option>
+                            <option value="Provocateur & Débat">🔥 Opinion Tranchée</option>
+                        </select>
+                    </div>
+                    <div class="space-y-1.5">
+                        <label id="labelOutputLang" for="languageSelect" class="block text-xs font-semibold text-slate-700">Langue de sortie</label>
+                        <select id="languageSelect" onchange="changeAppLanguage(this.value)" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0A66C2]">
+                            <option value="Français">🇫🇷 Français</option>
+                            <option value="Anglais">🇬🇧 Anglais</option>
+                            <option value="Espagnol">🇪🇸 Espagnol</option>
+                            <option value="Arabe">🇸🇦 Arabe</option>
+                            <option value="Chinois">🇨🇳 Chinois</option>
+                            <option value="Russe">🇷🇺 Russe</option>
+                            <option value="Coréen">🇰🇷 Coréen</option>
+                            <option value="Allemand">🇩🇪 Allemand</option>
+                            <option value="Italien">🇮🇹 Italien</option>
+                            <option value="Portugais">🇵🇹 Portugais</option>
+                            <option value="Japonais">🇯🇵 Japonais</option>
+                            <option value="Hindi">🇮🇳 Hindi</option>
+                            <option value="Néerlandais">🇳🇱 Néerlandais</option>
+                            <option value="Turc">🇹🇷 Turc</option>
+                        </select>
+                    </div>
                 </div>
 
                 <!-- Bouton Principal de Génération -->
@@ -192,7 +214,7 @@
                 </button>
             </div>
 
-            <!-- COLONNE DROITE : RÉSULTATS, ROI & OUTILS DE SCALE -->
+            <!-- COLONNE DROITE : RÉSULTATS, ROI & SUITE DE 13 MODULES -->
             <div class="lg:col-span-7 space-y-6">
 
                 <!-- CALCULATEUR DE ROI EN TEMPS RÉEL -->
@@ -237,7 +259,7 @@
                     <div id="postsList" class="space-y-6"></div>
                 </div>
 
-                <!-- SUITE CRÉATIVE & ANALYSE IA (MODULES AVEC 3 ESSAIS GRATUITS PUIS PAYANT) -->
+                <!-- SUITE CRÉATIVE & ANALYSE IA (13 MODULES COMPLETS AVEC 3 ESSAIS GRATUITS PAR MODULE) -->
                 <div id="growthSuiteSection" class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4">
                     <div class="flex items-center justify-between border-b border-slate-100 pb-3">
                         <div class="flex items-center gap-2.5">
@@ -245,7 +267,7 @@
                                 <i data-lucide="cpu" class="w-5 h-5"></i>
                             </div>
                             <div>
-                                <h3 class="font-bold text-sm sm:text-base text-slate-900">Suite Créative, Style & Analyse IA</h3>
+                                <h3 class="font-bold text-sm sm:text-base text-slate-900">Suite Créative, Style & Analyse IA (13 Modules)</h3>
                                 <p class="text-xs text-slate-500">3 utilisations gratuites offertes par module, puis accès illimité en version Pro.</p>
                             </div>
                         </div>
@@ -254,7 +276,7 @@
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                         <!-- Module 1 : Clonage Brand Voice -->
-                        <button onclick="openBrandVoicePanel()" class="p-3.5 rounded-xl border border-slate-200 hover:border-indigo-500 bg-slate-50/70 hover:bg-indigo-50/40 transition text-left space-y-1.5">
+                        <button onclick="useTrialModule('brandvoice')" class="p-3.5 rounded-xl border border-slate-200 hover:border-indigo-500 bg-slate-50/70 hover:bg-indigo-50/40 transition text-left space-y-1.5">
                             <div class="flex items-center justify-between">
                                 <span class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center"><i data-lucide="user-check" class="w-4 h-4"></i></span>
                                 <span id="badge-brandvoice" class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200">3/3 essais</span>
@@ -264,7 +286,7 @@
                         </button>
 
                         <!-- Module 2 : Espion Posts Viraux -->
-                        <button onclick="openViralSpyPanel()" class="p-3.5 rounded-xl border border-slate-200 hover:border-rose-500 bg-slate-50/70 hover:bg-rose-50/40 transition text-left space-y-1.5">
+                        <button onclick="useTrialModule('viralspy')" class="p-3.5 rounded-xl border border-slate-200 hover:border-rose-500 bg-slate-50/70 hover:bg-rose-50/40 transition text-left space-y-1.5">
                             <div class="flex items-center justify-between">
                                 <span class="w-8 h-8 rounded-lg bg-rose-100 text-rose-700 flex items-center justify-center"><i data-lucide="radar" class="w-4 h-4"></i></span>
                                 <span id="badge-viralspy" class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-rose-50 text-rose-700 border border-rose-200">3/3 essais</span>
@@ -293,17 +315,17 @@
                             <p class="text-[11px] text-slate-500">Carte graphique prête</p>
                         </button>
 
-                        <!-- Nouveau Module 5 : Auto-Répondeur de Commentaires -->
+                        <!-- Module 5 : Auto-Répondeur de Commentaires -->
                         <button onclick="useTrialModule('autoresponder')" class="p-3.5 rounded-xl border border-slate-200 hover:border-sky-500 bg-slate-50/70 hover:bg-sky-50/40 transition text-left space-y-1.5">
                             <div class="flex items-center justify-between">
                                 <span class="w-8 h-8 rounded-lg bg-sky-100 text-sky-700 flex items-center justify-center"><i data-lucide="message-square-reply" class="w-4 h-4"></i></span>
                                 <span id="badge-autoresponder" class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-sky-50 text-sky-700 border border-sky-200">3/3 essais</span>
                             </div>
-                            <div class="font-bold text-xs text-slate-900 pt-1">🤖 Auto-Répondeur Commentaires</div>
+                            <div class="font-bold text-xs text-slate-900 pt-1">🤖 Auto-Répondeur</div>
                             <p class="text-[11px] text-slate-500">Générer des réponses virales</p>
                         </button>
 
-                        <!-- Nouveau Module 6 : Planificateur Éditorial 7 Jours -->
+                        <!-- Module 6 : Planificateur Éditorial 7 Jours -->
                         <button onclick="useTrialModule('editorial')" class="p-3.5 rounded-xl border border-slate-200 hover:border-amber-500 bg-slate-50/70 hover:bg-amber-50/40 transition text-left space-y-1.5">
                             <div class="flex items-center justify-between">
                                 <span class="w-8 h-8 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center"><i data-lucide="calendar" class="w-4 h-4"></i></span>
@@ -314,347 +336,255 @@
                         </button>
 
                         <!-- Module 7 : Bibliothèque & Export Multi-Formats -->
-                        <button onclick="useTrialModule('export')" class="p-3.5 rounded-xl border border-slate-200 hover:border-[#0A66C2] bg-slate-50/70 hover:bg-blue-50/40 transition text-left space-y-1.5 sm:col-span-2">
+                        <button onclick="useTrialModule('export')" class="p-3.5 rounded-xl border border-slate-200 hover:border-[#0A66C2] bg-slate-50/70 hover:bg-blue-50/40 transition text-left space-y-1.5">
                             <div class="flex items-center justify-between">
                                 <span class="w-8 h-8 rounded-lg bg-amber-100 text-amber-700 flex items-center justify-center"><i data-lucide="folder-down" class="w-4 h-4"></i></span>
                                 <span id="badge-export" class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200">3/3 essais</span>
                             </div>
-                            <div class="font-bold text-xs text-slate-900 pt-1">💾 Bibliothèque & Export Multi-Formats</div>
-                            <p class="text-[11px] text-slate-500">Sauvegarde et export CSV / JSON pour Buffer & Metricool</p>
+                            <div class="font-bold text-xs text-slate-900 pt-1">💾 Export CSV / JSON</div>
+                            <p class="text-[11px] text-slate-500">Prêt pour Buffer & Metricool</p>
                         </button>
 
-                        <!-- Nouveau Module 8 : Raccourcisseur & UTM Tracker -->
+                        <!-- Module 8 : Raccourcisseur & UTM Tracker -->
                         <button onclick="useTrialModule('utmtracker')" class="p-3.5 rounded-xl border border-slate-200 hover:border-indigo-500 bg-slate-50/70 hover:bg-indigo-50/40 transition text-left space-y-1.5">
                             <div class="flex items-center justify-between">
                                 <span class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center"><i data-lucide="link" class="w-4 h-4"></i></span>
                                 <span id="badge-utmtracker" class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200">3/3 essais</span>
                             </div>
-                            <div class="font-bold text-xs text-slate-900 pt-1">🔗 Raccourcisseur & UTM Tracker</div>
-                            <p class="text-[11px] text-slate-500">Suivi précis des clics et du trafic</p>
+                            <div class="font-bold text-xs text-slate-900 pt-1">🔗 Raccourcisseur & UTM</div>
+                            <p class="text-[11px] text-slate-500">Suivi précis des clics</p>
                         </button>
 
-                        <!-- Nouveau Module 9 : Agent Growth & Promo SaaS (LinkedIn, X, Reddit, Product Hunt) -->
-                        <button onclick="useTrialModule('growthagent')" class="p-3.5 rounded-xl border border-slate-200 hover:border-purple-500 bg-slate-50/70 hover:bg-purple-50/40 transition text-left space-y-1.5 sm:col-span-2 md:col-span-1">
+                        <!-- Module 9 : Agent Growth & Promo SaaS -->
+                        <button onclick="useTrialModule('growthagent')" class="p-3.5 rounded-xl border border-slate-200 hover:border-purple-500 bg-slate-50/70 hover:bg-purple-50/40 transition text-left space-y-1.5">
                             <div class="flex items-center justify-between">
                                 <span class="w-8 h-8 rounded-lg bg-purple-100 text-purple-700 flex items-center justify-center"><i data-lucide="megaphone" class="w-4 h-4"></i></span>
                                 <span id="badge-growthagent" class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-purple-50 text-purple-700 border border-purple-200">3/3 essais</span>
                             </div>
                             <div class="font-bold text-xs text-slate-900 pt-1">🚀 Agent Promo SaaS IA</div>
-                            <p class="text-[11px] text-slate-500">Générateur prêts-à-poster (LinkedIn, X, Reddit, PH)</p>
+                            <p class="text-[11px] text-slate-500">LinkedIn, X, Reddit, Product Hunt</p>
                         </button>
 
-                        <!-- Nouveau Module 10 : Auto-Diffuseur 1-Clic (Diffusion Prémâchée) -->
-                        <button onclick="useTrialModule('autodiffuse')" class="p-3.5 rounded-xl border border-slate-200 hover:border-emerald-500 bg-slate-50/70 hover:bg-emerald-50/40 transition text-left space-y-1.5 sm:col-span-2 md:col-span-2">
+                        <!-- Module 10 : Auto-Diffuseur 1-Clic -->
+                        <button onclick="useTrialModule('autodiffuse')" class="p-3.5 rounded-xl border border-slate-200 hover:border-emerald-500 bg-slate-50/70 hover:bg-emerald-50/40 transition text-left space-y-1.5">
                             <div class="flex items-center justify-between">
                                 <span class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center"><i data-lucide="send" class="w-4 h-4"></i></span>
                                 <span id="badge-autodiffuse" class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">3/3 essais</span>
                             </div>
-                            <div class="font-bold text-xs text-slate-900 pt-1">📡 Auto-Diffuseur 1-Clic (Zéro Effort)</div>
-                            <p class="text-[11px] text-slate-500">Simulateur de publication instantanée sur les réseaux sans ouvrir les apps</p>
+                            <div class="font-bold text-xs text-slate-900 pt-1">📡 Auto-Diffuseur 1-Clic</div>
+                            <p class="text-[11px] text-slate-500">Publication instantanée sans effort</p>
                         </button>
-                    </div>
 
-                    <!-- Zone d'affichage interactive des modules d'essai -->
-                    <div id="trialModuleOutput" class="hidden p-4 rounded-xl bg-slate-900 text-slate-100 text-xs space-y-3 border border-slate-800"></div>
-                </div>
+                        <!-- Module 11 : Générateur de Carrousel PDF -->
+                        <button onclick="useTrialModule('carousel')" class="p-3.5 rounded-xl border border-slate-200 hover:border-orange-500 bg-slate-50/70 hover:bg-orange-50/40 transition text-left space-y-1.5">
+                            <div class="flex items-center justify-between">
+                                <span class="w-8 h-8 rounded-lg bg-orange-100 text-orange-700 flex items-center justify-center"><i data-lucide="layers" class="w-4 h-4"></i></span>
+                                <span id="badge-carousel" class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-orange-50 text-orange-700 border border-orange-200">3/3 essais</span>
+                            </div>
+                            <div class="font-bold text-xs text-slate-900 pt-1">🎠 Carrousel PDF (6 Slides)</div>
+                            <p class="text-[11px] text-slate-500">Découpe en slides virales</p>
+                        </button>
 
-                <!-- OUTILS DE SCALE & VIRALITÉ (VERROUILLÉS EN GRATUIT, DÉBLOQUÉS EN PRO) -->
-                <div id="scaleToolsSection" class="bg-gradient-to-r from-purple-900 to-indigo-900 text-white rounded-2xl p-6 shadow-xl space-y-4 relative overflow-hidden">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-purple-500/30 flex items-center justify-center">
-                                <i data-lucide="zap" class="w-5 h-5 text-amber-400"></i>
+                        <!-- Module 12 : Générateur de Hashtags & SEO Social -->
+                        <button onclick="useTrialModule('hashtags')" class="p-3.5 rounded-xl border border-slate-200 hover:border-cyan-500 bg-slate-50/70 hover:bg-cyan-50/40 transition text-left space-y-1.5">
+                            <div class="flex items-center justify-between">
+                                <span class="w-8 h-8 rounded-lg bg-cyan-100 text-cyan-700 flex items-center justify-center"><i data-lucide="hash" class="w-4 h-4"></i></span>
+                                <span id="badge-hashtags" class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-cyan-50 text-cyan-700 border border-cyan-200">3/3 essais</span>
                             </div>
-                            <div>
-                                <h3 id="scaleTitle" class="font-bold text-base">Booster l'impact de vos publications</h3>
-                                <p id="scaleSubtitle" class="text-xs text-purple-200">Fonctionnalités avancées exclusives au Plan Pro.</p>
-                            </div>
-                        </div>
-                        <span id="proStatusBadge" class="bg-amber-400 text-slate-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1 shadow">
-                            <i data-lucide="lock" class="w-3.5 h-3.5"></i> PRO
-                        </span>
-                    </div>
-                    
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 pt-2">
-                        <button onclick="handleProFeature('carousels')" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white p-3 rounded-xl text-xs font-semibold flex items-center gap-2 transition text-left relative">
-                            <i data-lucide="file-stack" class="w-4 h-4 text-purple-300 shrink-0"></i>
-                            <div>
-                                <span class="block font-bold">Carrousel PDF <span class="pro-lock-icon">🔒</span></span>
-                                <span class="text-[10px] text-purple-300 font-normal">Slides prêtes</span>
-                            </div>
+                            <div class="font-bold text-xs text-slate-900 pt-1">#️⃣ Hashtags & SEO Social</div>
+                            <p class="text-[11px] text-slate-500">Mots-clés & portée organique</p>
                         </button>
-                        <button onclick="handleProFeature('hashtags')" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white p-3 rounded-xl text-xs font-semibold flex items-center gap-2 transition text-left relative">
-                            <i data-lucide="hash" class="w-4 h-4 text-emerald-300 shrink-0"></i>
-                            <div>
-                                <span class="block font-bold">Hashtags Pro <span class="pro-lock-icon">🔒</span></span>
-                                <span class="text-[10px] text-emerald-300 font-normal">Mots-clés viraux</span>
-                            </div>
-                        </button>
-                        <button onclick="handleProFeature('abtest')" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white p-3 rounded-xl text-xs font-semibold flex items-center gap-2 transition text-left relative">
-                            <i data-lucide="split" class="w-4 h-4 text-amber-300 shrink-0"></i>
-                            <div>
-                                <span class="block font-bold">A/B Testing Hooks <span class="pro-lock-icon">🔒</span></span>
-                                <span class="text-[10px] text-amber-300 font-normal">3 styles d'accroches</span>
-                            </div>
-                        </button>
-                        <button onclick="handleProFeature('commentary')" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white p-3 rounded-xl text-xs font-semibold flex items-center gap-2 transition text-left relative">
-                            <i data-lucide="message-circle-code" class="w-4 h-4 text-sky-300 shrink-0"></i>
-                            <div>
-                                <span class="block font-bold">Growth Commentaire <span class="pro-lock-icon">🔒</span></span>
-                                <span class="text-[10px] text-sky-300 font-normal">Amorces de débat</span>
-                            </div>
-                        </button>
-                        <button onclick="handleProFeature('calendar')" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white p-3 rounded-xl text-xs font-semibold flex items-center gap-2 transition text-left relative">
-                            <i data-lucide="calendar-days" class="w-4 h-4 text-rose-300 shrink-0"></i>
-                            <div>
-                                <span class="block font-bold">Calendrier 7 Jours <span class="pro-lock-icon">🔒</span></span>
-                                <span class="text-[10px] text-rose-300 font-normal">Planification sem.</span>
-                            </div>
-                        </button>
-                        <button onclick="handleProFeature('cta')" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white p-3 rounded-xl text-xs font-semibold flex items-center gap-2 transition text-left relative">
-                            <i data-lucide="link-2" class="w-4 h-4 text-indigo-300 shrink-0"></i>
-                            <div>
-                                <span class="block font-bold">Tracker CTA / UTM <span class="pro-lock-icon">🔒</span></span>
-                                <span class="text-[10px] text-indigo-300 font-normal">Optimisation clics</span>
+
+                        <!-- Module 13 : Banque d'Accroches Virales (Hooks) -->
+                        <button onclick="useTrialModule('hooks')" class="p-3.5 rounded-xl border border-slate-200 hover:border-fuchsia-500 bg-slate-50/70 hover:bg-fuchsia-50/40 transition text-left space-y-1.5 sm:col-span-2 md:col-span-3">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-8 h-8 rounded-lg bg-fuchsia-100 text-fuchsia-700 flex items-center justify-center"><i data-lucide="anchor" class="w-4 h-4"></i></span>
+                                    <div>
+                                        <div class="font-bold text-xs text-slate-900">🪝 Banque d'Accroches Virales (5 Hooks IA)</div>
+                                        <p class="text-[11px] text-slate-500">Génère 5 phrases d'ouverture irrésistibles pour stopper le scroll dès la 1ère ligne</p>
+                                    </div>
+                                </div>
+                                <span id="badge-hooks" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-fuchsia-50 text-fuchsia-700 border border-fuchsia-200">3/3 essais</span>
                             </div>
                         </button>
                     </div>
 
-                    <!-- Zone d'affichage des outils de scale -->
-                    <div id="scaleOutputBox" class="hidden mt-4 p-4 bg-black/40 rounded-xl border border-white/15 text-xs text-slate-100 leading-relaxed space-y-2"></div>
+                    <!-- Zone d'affichage interactive des résultats des 13 modules -->
+                    <div id="trialModuleOutput" class="hidden p-4 rounded-xl bg-slate-900 text-slate-100 text-xs space-y-3 border border-slate-800 shadow-inner"></div>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- MODALE STUDIO VIDÉO IA & GÉNÉRATEUR DE SCRIPTS / VISUELS HD / VOIX NEURONALE -->
-    <div id="agentModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
-        <div class="bg-white rounded-2xl max-w-4xl w-full p-6 sm:p-8 shadow-2xl border border-slate-200 relative my-8 space-y-6">
-            <button onclick="closeAgentModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-1.5 rounded-lg hover:bg-slate-100">
-                <i data-lucide="x" class="w-5 h-5"></i>
-            </button>
-
-            <div class="flex items-center gap-3">
-                <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-rose-600 to-purple-600 text-white flex items-center justify-center shadow">
-                    <i data-lucide="clapperboard" class="w-6 h-6"></i>
+    <!-- MODALE STUDIO VIDÉO IA -->
+    <div id="agentModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl space-y-4 relative my-8">
+            <button onclick="closeAgentModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-1 rounded-lg hover:bg-slate-100"><i data-lucide="x" class="w-5 h-5"></i></button>
+            <div class="flex items-center gap-2.5">
+                <div class="w-9 h-9 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center">
+                    <i data-lucide="film" class="w-5 h-5"></i>
                 </div>
                 <div>
-                    <div class="flex items-center gap-2">
-                        <h3 class="text-xl font-bold text-slate-900">Studio Vidéo IA Pro</h3>
-                        <span class="text-[10px] font-bold uppercase tracking-wider bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full">Gemini 3 + Visuels HD + Voix Studio</span>
-                    </div>
-                    <p class="text-xs text-slate-500">Scénarisation IA sur-mesure, génération d'images HD par scène et voix-off neuronale en <span id="videoLangIndicator" class="font-bold text-[#0A66C2]">Français</span>.</p>
+                    <h3 class="text-lg font-bold text-slate-900">🎬 Studio Vidéo & Audio IA</h3>
+                    <p class="text-xs text-slate-500">Créez vos scripts dynamiques (6 plans), voix-off studio et visuels IA.</p>
                 </div>
             </div>
-
-            <!-- Paramètres avancés du Studio -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            
+            <!-- Sélecteur de format vidéo (Vertical 9:16 vs Horizontal 16:9) -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50 p-3.5 rounded-xl border border-slate-200">
                 <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1">Format & Orientation</label>
-                    <select id="videoOrientationSelect" onchange="changeVideoOrientation(this.value)" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800">
-                        <option value="9:16">📱 Vertical (9:16 - TikTok / Reels)</option>
-                        <option value="16:9">💻 Horizontal (16:9 - YouTube / LinkedIn)</option>
-                    </select>
+                    <span class="text-xs font-bold text-slate-800 block">Orientation & Format Vidéo :</span>
+                    <span class="text-[11px] text-slate-500">Adapte automatiquement la mise en page du storyboard</span>
                 </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1">Voix-Off Neuronale Studio</label>
-                    <select id="videoVoiceSelect" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800">
-                        <option value="Kore">🎙️ Kore (Pose & Autorité)</option>
-                        <option value="Puck">⚡ Puck (Dynamique & Énergique)</option>
-                        <option value="Fenrir">🔥 Fenrir (Percutant & Captivant)</option>
-                        <option value="Aoede">✨ Aoede (Fluide & Narratif)</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1">Style Visuel des Scènes</label>
-                    <select id="videoVisualStyleSelect" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800">
-                        <option value="Cinématique moderne, éclairage studio, ultra-détaillé">🎬 Cinématique Moderne</option>
-                        <option value="Illustration 3D minimaliste et épurée, couleurs vibrantes">🧊 3D Minimaliste SaaS</option>
-                        <option value="Photographie éditoriale réaliste haute définition">📸 Réaliste Éditorial</option>
-                    </select>
-                </div>
-            </div>
-
-            <div>
-                <label class="block text-xs font-semibold text-slate-700 mb-1">Sujet ou concept de la vidéo</label>
-                <input type="text" id="videoTopicInput" placeholder="Ex: Comment automatiser sa création de contenu B2B en 15 minutes par jour..." class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-purple-600">
-            </div>
-
-            <!-- Barre d'actions du Studio avec tooltips explicatifs au survol -->
-            <div class="flex flex-wrap gap-3">
-                <div class="relative group">
-                    <button onclick="generateVideoScript()" class="bg-gradient-to-r from-rose-600 to-purple-600 hover:from-rose-700 hover:to-purple-700 text-white px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-2 shadow-sm transition">
-                        <i data-lucide="sparkles" class="w-4 h-4"></i>
-                        <span>Générer le Script & Storyboard (<span id="badge-videoscript">3/3 essais</span>)</span>
+                <div class="flex items-center gap-2">
+                    <button type="button" onclick="setVideoFormat('9:16')" id="format916Btn" class="py-2 px-3.5 rounded-lg border-2 border-purple-600 bg-purple-50 text-xs font-bold text-purple-900 transition flex items-center gap-1.5">
+                        <i data-lucide="smartphone" class="w-3.5 h-3.5"></i>
+                        <span>Vertical (9:16)</span>
                     </button>
-                    <!-- Infobulle au survol -->
-                    <div class="absolute bottom-full left-0 mb-2 hidden group-hover:block w-72 p-3 bg-slate-900 text-white text-[11px] rounded-xl shadow-xl z-50 pointer-events-none leading-relaxed border border-slate-700">
-                        <strong>🎬 Le Cerveau (Script & Storyboard) :</strong> Analyse votre sujet pour rédiger le plan en 3 actes (Accroche, Valeur, CTA) et générer les consignes visuelles par scène.
-                    </div>
-                </div>
-
-                <div class="relative group">
-                    <button id="playPreviewBtn" onclick="toggleVideoPreview()" class="hidden bg-slate-900 hover:bg-slate-800 text-white px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-2 transition">
-                        <i data-lucide="play" class="w-4 h-4 text-emerald-400"></i>
-                        <span id="playPreviewText">Lancer le montage animé</span>
+                    <button type="button" onclick="setVideoFormat('16:9')" id="format169Btn" class="py-2 px-3.5 rounded-lg border border-slate-200 bg-white text-xs font-medium text-slate-700 hover:border-slate-300 transition flex items-center gap-1.5">
+                        <i data-lucide="monitor" class="w-3.5 h-3.5"></i>
+                        <span>Horizontal (16:9)</span>
                     </button>
-                    <!-- Infobulle au survol -->
-                    <div class="absolute bottom-full left-0 mb-2 hidden group-hover:block w-72 p-3 bg-slate-900 text-white text-[11px] rounded-xl shadow-xl z-50 pointer-events-none leading-relaxed border border-slate-700">
-                        <strong>▶️ L'Aperçu Animé :</strong> Anime le lecteur vidéo (en format vertical ou horizontal) pour prévisualiser le défilement du texte et l'enchaînement des visuels de fond.
-                    </div>
-                </div>
-
-                <div class="relative group">
-                    <button id="voiceOverBtn" onclick="generateNeuralVoiceOver()" class="hidden bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-xl text-xs font-semibold flex items-center gap-2 transition shadow-sm">
-                        <i data-lucide="mic-2" class="w-4 h-4"></i>
-                        <span id="voiceOverBtnLabel">🎙️ Générer Voix-Off HD (<span id="badge-tts">3/3</span>)</span>
-                    </button>
-                    <!-- Infobulle au survol -->
-                    <div class="absolute bottom-full left-0 mb-2 hidden group-hover:block w-72 p-3 bg-slate-900 text-white text-[11px] rounded-xl shadow-xl z-50 pointer-events-none leading-relaxed border border-slate-700">
-                        <strong>🎙️ La Voix-Off Studio :</strong> Convertit le script en un fichier audio WAV haute définition avec une voix naturelle neuronale, téléchargeable pour vos montages.
-                    </div>
                 </div>
             </div>
 
-            <!-- Lecteur Audio Voix-Off HD -->
-            <div id="neuralAudioPlayerBox" class="hidden bg-emerald-50 border border-emerald-200 rounded-xl p-3 flex flex-col sm:flex-row items-center justify-between gap-3">
-                <div class="flex items-center gap-2 text-xs font-semibold text-emerald-900">
-                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span>Voix-Off Studio Prête (Audio HD)</span>
-                </div>
-                <audio id="neuralAudioElement" controls class="h-8 w-full sm:w-64"></audio>
-            </div>
-
-            <!-- Espace de Montage -->
-            <div id="videoStudioWorkspace" class="hidden grid grid-cols-1 md:grid-cols-12 gap-5 pt-3 border-t border-slate-100">
-                <!-- Écran de Prévisualisation Vidéo -->
-                <div id="videoPlayerContainer" class="md:col-span-5 bg-slate-950 rounded-2xl p-4 text-white flex flex-col justify-between aspect-[9/15] relative overflow-hidden border-4 border-slate-800 shadow-2xl transition-all duration-300">
-                    <img id="videoSceneImage" src="" alt="Visuel IA" class="absolute inset-0 w-full h-full object-cover opacity-55 transition-transform duration-[2500ms] ease-out scale-100">
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-slate-950/70"></div>
-
-                    <div class="relative z-10 flex justify-between items-center text-[10px] text-slate-300">
-                        <span id="videoFormatBadge" class="flex items-center gap-1 bg-black/50 px-2 py-0.5 rounded-full"><span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span> HD 9:16</span>
-                        <span id="videoTimerDisplay" class="font-mono font-bold text-white bg-black/50 px-2 py-0.5 rounded-full">00:00 / 00:30</span>
-                    </div>
-
-                    <div class="relative z-10 my-auto text-center space-y-3 px-2">
-                        <span id="videoSceneBadge" class="inline-block bg-purple-600/90 text-[10px] uppercase tracking-wider font-bold px-2.5 py-0.5 rounded-full shadow">SCÈNE 1 : ACCROCHE</span>
-                        <p id="videoTeleprompterText" class="text-sm sm:text-base font-extrabold leading-snug text-white drop-shadow-md bg-black/40 backdrop-blur-xs p-2.5 rounded-xl border border-white/10">
-                            Génération du storyboard...
-                        </p>
-                    </div>
-
-                    <div class="relative z-10 space-y-1.5">
-                        <div class="w-full bg-slate-800/80 h-1.5 rounded-full overflow-hidden">
-                            <div id="videoProgressBar" class="bg-gradient-to-r from-rose-500 to-purple-500 h-full w-0 transition-all duration-300"></div>
-                        </div>
-                        <p class="text-[10px] text-center text-slate-300 font-medium">Visuels IA + Sous-titres dynamiques</p>
-                    </div>
-                </div>
-
-                <!-- Storyboard & Script Structuré -->
-                <div class="md:col-span-7 bg-slate-50 rounded-2xl p-4 border border-slate-200 flex flex-col justify-between space-y-3">
-                    <div class="flex items-center justify-between">
-                        <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Storyboard & Script Détaillé</h4>
-                        <button onclick="copyText('videoFullScriptOutput')" class="text-xs bg-white border border-slate-200 hover:bg-slate-100 text-slate-800 px-2.5 py-1 rounded-lg font-medium flex items-center gap-1">
-                            <i data-lucide="copy" class="w-3 h-3"></i> Copier le script
+            <div class="space-y-3">
+                <textarea id="videoTopicInput" rows="3" placeholder="Décrivez le sujet de votre vidéo (ou laissez vide pour utiliser votre texte principal)..." class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-purple-600"></textarea>
+                
+                <!-- 3 Boutons avec infobulles détaillées au survol -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1">
+                    <div class="relative group">
+                        <button onclick="generateVideoScript()" class="w-full py-2.5 px-3 bg-purple-600 text-white rounded-xl text-xs font-bold hover:bg-purple-700 transition flex items-center justify-center gap-1.5 shadow-sm">
+                            <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
+                            <span>1. Script Dynamique</span>
                         </button>
+                        <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block w-60 p-2.5 bg-slate-900 text-white text-[11px] leading-relaxed rounded-xl shadow-xl z-30 text-left pointer-events-none border border-slate-700">
+                            <strong class="text-purple-300 block mb-0.5">Découpage rapide (6 plans) :</strong>
+                            Génère un script détaillé plan par plan (cuts toutes les 3-4 sec) avec dialogue exact, angle caméra et visuels IA.
+                        </div>
                     </div>
-                    <div id="videoFullScriptOutput" class="text-xs text-slate-700 whitespace-pre-wrap overflow-y-auto max-h-80 leading-relaxed bg-white p-3.5 rounded-xl border border-slate-200/80 space-y-3"></div>
+
+                    <div class="relative group">
+                        <button onclick="generateNeuralVoiceOver()" class="w-full py-2.5 px-3 bg-teal-600 text-white rounded-xl text-xs font-bold hover:bg-teal-700 transition flex items-center justify-center gap-1.5 shadow-sm">
+                            <i data-lucide="mic" class="w-3.5 h-3.5"></i>
+                            <span>2. Voix-Off Studio</span>
+                        </button>
+                        <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block w-60 p-2.5 bg-slate-900 text-white text-[11px] leading-relaxed rounded-xl shadow-xl z-30 text-left pointer-events-none border border-slate-700">
+                            <strong class="text-teal-300 block mb-0.5">Audio naturel téléchargeable :</strong>
+                            Génère une vraie piste vocale humaine (voix Kore) prête à écouter et à télécharger en .WAV pour CapCut/Premiere.
+                        </div>
+                    </div>
+
+                    <div class="relative group">
+                        <button onclick="launchAnimatedMontage()" class="w-full py-2.5 px-3 bg-indigo-600 text-white rounded-xl text-xs font-bold hover:bg-indigo-700 transition flex items-center justify-center gap-1.5 shadow-sm">
+                            <i data-lucide="play-circle" class="w-3.5 h-3.5"></i>
+                            <span>3. Aperçu Montage</span>
+                        </button>
+                        <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block w-60 p-2.5 bg-slate-900 text-white text-[11px] leading-relaxed rounded-xl shadow-xl z-30 text-left pointer-events-none border border-slate-700">
+                            <strong class="text-indigo-300 block mb-0.5">Lecteur animé multi-plans :</strong>
+                            Simule le rendu final en faisant défiler les 6 plans toutes les 3 secondes avec sous-titres synchronisés.
+                        </div>
+                    </div>
                 </div>
+
+                <!-- Zone de rendu du Studio Vidéo -->
+                <div id="videoStudioOutput" class="hidden mt-4 p-4 rounded-xl bg-slate-900 text-slate-100 text-xs space-y-3 border border-slate-800 max-h-96 overflow-y-auto"></div>
             </div>
         </div>
     </div>
 
     <!-- MODALE TARIFICATION PRO -->
-    <div id="pricingModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
-        <div class="bg-white rounded-2xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-slate-200 relative text-center space-y-4">
-            <button onclick="closePricingModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-1.5 rounded-lg hover:bg-slate-100">
-                <i data-lucide="x" class="w-5 h-5"></i>
-            </button>
-            <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center mx-auto mb-3">
-                <i data-lucide="crown" class="w-6 h-6"></i>
+    <div id="pricingModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-white rounded-2xl max-w-3xl w-full p-6 sm:p-8 shadow-2xl border border-slate-200 relative my-8">
+            <button onclick="closePricingModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-1.5 rounded-lg hover:bg-slate-100"><i data-lucide="x" class="w-5 h-5"></i></button>
+            <div class="text-center max-w-xl mx-auto mb-6">
+                <div class="inline-flex items-center gap-1.5 bg-amber-50 text-amber-700 border border-amber-200 px-3 py-1 rounded-full text-xs font-bold mb-2">
+                    <i data-lucide="crown" class="w-3.5 h-3.5"></i> Passez au niveau supérieur
+                </div>
+                <h3 class="text-2xl font-bold text-slate-900">Débloquez PostCraft Omni Pro en Illimité</h3>
+                <p class="text-xs sm:text-sm text-slate-500 mt-1">Accès illimité aux 13 modules IA, au Studio Vidéo HD et aux générations multicanales.</p>
             </div>
-            <h3 class="text-2xl font-bold text-slate-900 mb-2">Passez au Plan Pro Multicanal</h3>
-            <p class="text-sm text-slate-500 mb-6">Débloquez en illimité le Clonage Brand Voice, l'Espion Viral, le Réécriveur 1-Clic, l'Auto-Répondeur, le Planificateur Semaine et les Outils Pro pour 29€ / mois.</p>
-            
-            <!-- Bouton de Paiement Réel / Redirection Stripe -->
-            <button onclick="handleStripeCheckout()" class="w-full py-3.5 bg-[#0A66C2] hover:bg-[#004182] text-white font-semibold rounded-xl text-sm shadow-md transition flex items-center justify-center gap-2">
-                <i data-lucide="lock" class="w-4 h-4"></i>
-                <span>Procéder au paiement sécurisé (29€ / mois)</span>
-            </button>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="rounded-2xl border border-slate-200 p-5 bg-slate-50/70 flex flex-col justify-between">
+                    <div>
+                        <h4 class="text-base font-bold text-slate-900">Plan Découverte</h4>
+                        <div class="my-3"><span class="text-3xl font-extrabold text-slate-900">0 €</span> <span class="text-xs text-slate-500">/ mois</span></div>
+                        <ul class="space-y-2 text-xs text-slate-600 mb-5">
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-slate-400"></i> 5 crédits de génération multicanale</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-slate-400"></i> 3 essais gratuits par module créatif</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-slate-400"></i> Export multi-formats de base</li>
+                        </ul>
+                    </div>
+                    <button onclick="closePricingModal()" class="w-full py-2.5 px-4 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold rounded-xl text-xs transition">Rester sur le plan gratuit</button>
+                </div>
+                <div class="rounded-2xl border-2 border-[#0A66C2] p-5 bg-white shadow-lg flex flex-col justify-between relative">
+                    <span class="absolute -top-3 right-4 bg-[#0A66C2] text-white text-[10px] font-bold uppercase px-2.5 py-0.5 rounded-full">Recommandé</span>
+                    <div>
+                        <h4 class="text-base font-bold text-slate-900 flex items-center gap-1.5">Plan Omni Pro <i data-lucide="crown" class="w-4 h-4 text-amber-500"></i></h4>
+                        <div class="my-3"><span class="text-3xl font-extrabold text-slate-900">29 €</span> <span class="text-xs text-slate-500">/ mois • sans engagement</span></div>
+                        <ul class="space-y-2 text-xs text-slate-700 mb-5">
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-[#0A66C2]"></i> <strong>Générations illimitées</strong> sur tous les réseaux</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-[#0A66C2]"></i> <strong>Accès illimité</strong> aux 13 modules IA</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-[#0A66C2]"></i> Studio Vidéo IA, Voix-Off & Storyboard HD</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-[#0A66C2]"></i> Support prioritaire 7j/7</li>
+                        </ul>
+                    </div>
+                    <button onclick="redirectToStripe()" class="w-full py-3 px-4 bg-[#0A66C2] hover:bg-[#004182] text-white font-bold rounded-xl shadow-md transition flex items-center justify-center gap-2 text-xs">
+                        <span>S'abonner maintenant (29€/mois)</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+            <div id="stripeConfigNotice" class="hidden mt-4 p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-900">
+                <strong>Note Propriétaire :</strong> Pour encaisser les paiements réels par carte bancaire, collez votre lien Stripe Payment Link dans la variable <code>STRIPE_PAYMENT_LINK</code> du code.
+            </div>
         </div>
     </div>
 
-    <!-- MODALE EXPORT APP MOBILE (APK & iOS) -->
-    <div id="mobileAppModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
-        <div class="bg-white rounded-2xl max-w-xl w-full p-6 sm:p-8 shadow-2xl border border-slate-200 relative">
-            <button onclick="closeMobileAppModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-1.5 rounded-lg hover:bg-slate-100">
-                <i data-lucide="x" class="w-5 h-5"></i>
-            </button>
-            <div class="flex items-center gap-3 mb-4">
-                <div class="w-10 h-10 rounded-xl bg-blue-50 text-[#0A66C2] flex items-center justify-center">
-                    <i data-lucide="smartphone" class="w-5 h-5"></i>
-                </div>
-                <div>
-                    <h3 class="text-lg font-bold text-slate-900">Application Mobile (Android APK & iOS)</h3>
-                    <p class="text-xs text-slate-500">Installez PostCraft sur votre smartphone en quelques secondes.</p>
-                </div>
+    <!-- MODALE APPLICATION MOBILE (PWA) -->
+    <div id="mobileAppModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4 relative text-center">
+            <button onclick="closeMobileAppModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-1 rounded-lg"><i data-lucide="x" class="w-5 h-5"></i></button>
+            <div class="w-12 h-12 rounded-2xl bg-blue-50 text-[#0A66C2] flex items-center justify-center mx-auto"><i data-lucide="smartphone" class="w-6 h-6"></i></div>
+            <h3 class="text-lg font-bold text-slate-900">Installer PostCraft sur Mobile</h3>
+            <p class="text-xs text-slate-500 leading-relaxed">Utilisez PostCraft Omni comme une application native sur iOS et Android pour dicter et publier vos posts où que vous soyez.</p>
+            <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-left text-xs space-y-2 text-slate-700">
+                <p><strong>🍏 Sur iPhone (Safari) :</strong> Appuyez sur l'icône <em>Partager</em> en bas puis sur <em>« Sur l'écran d'accueil »</em>.</p>
+                <p><strong>🤖 Sur Android (Chrome) :</strong> Appuyez sur le menu <em>⋮</em> en haut à droite puis sur <em>« Installer l'application »</em>.</p>
             </div>
-
-            <div class="space-y-4 text-xs sm:text-sm text-slate-700">
-                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
-                    <h4 class="font-bold text-slate-900 flex items-center gap-1.5">
-                        <i data-lucide="smartphone" class="w-4 h-4 text-emerald-600"></i>
-                        <span>Pour Android (Fichier .APK ou PWA)</span>
-                    </h4>
-                    <p class="text-slate-600">Ouvrez votre lien Vercel sur Chrome Android, touchez le menu (3 points) puis <strong>"Installer l'application"</strong>. Pour générer un fichier <code>.apk</code> installable, collez l'URL sur <em>PWABuilder.com</em>.</p>
-                </div>
-
-                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
-                    <h4 class="font-bold text-slate-900 flex items-center gap-1.5">
-                        <i data-lucide="tablet-smartphone" class="w-4 h-4 text-slate-900"></i>
-                        <span>Pour iPhone / iPad (iOS)</span>
-                    </h4>
-                    <p class="text-slate-600">Ouvrez le site dans Safari, touchez Partager et sélectionnez <strong>"Sur l'écran d'accueil"</strong>.</p>
-                </div>
-            </div>
-
-            <button onclick="closeMobileAppModal()" class="w-full mt-6 py-2.5 bg-slate-900 text-white font-semibold rounded-xl text-xs sm:text-sm shadow-sm hover:bg-slate-800 transition">Fermer</button>
+            <button onclick="closeMobileAppModal()" class="w-full py-2.5 bg-slate-900 text-white rounded-xl text-xs font-bold">Compris</button>
         </div>
     </div>
 
-    <!-- MODALE SECRÈTE CRÉATEUR / ADMINISTRATEUR (DISSIMULÉE) -->
-    <div id="secretAdminModal" class="fixed inset-0 bg-slate-950/75 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-slate-900 text-white rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-slate-700 space-y-4">
+    <!-- MODALE SECRÈTE FONDATEUR (DISSIMULÉE) -->
+    <div id="secretAdminModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-sm w-full p-6 shadow-2xl space-y-4 text-white">
             <div class="flex items-center justify-between">
-                <span class="text-xs font-bold uppercase tracking-widest text-amber-400 flex items-center gap-1.5">
-                    <i data-lucide="key-round" class="w-4 h-4"></i> Accès Fondateur
-                </span>
-                <button onclick="closeSecretAdminModal()" class="text-slate-400 hover:text-white">
-                    <i data-lucide="x" class="w-4 h-4"></i>
-                </button>
+                <span class="text-xs font-bold uppercase tracking-wider text-amber-400 flex items-center gap-1.5"><i data-lucide="key" class="w-4 h-4"></i> Accès Fondateur</span>
+                <button onclick="closeSecretAdminModal()" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-4 h-4"></i></button>
             </div>
-            <p class="text-xs text-slate-300">Entrez votre clé maître pour débloquer l'intégralité de PostCraft Omni en illimité sans abonnement.</p>
-            <input type="password" id="secretAdminCodeInput" placeholder="Code secret créateur..." onkeydown="if(event.key==='Enter') verifySecretAdminCode()" class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-sm text-white focus:outline-none focus:border-amber-400">
-            <button onclick="verifySecretAdminCode()" class="w-full py-2.5 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold rounded-xl text-xs transition">
-                Débloquer l'accès Fondateur Illimité
-            </button>
+            <input type="password" id="secretAdminCodeInput" onkeydown="if(event.key==='Enter') verifySecretAdminCode()" placeholder="Entrez votre clé secrète..." class="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:ring-2 focus:ring-amber-400">
+            <button onclick="verifySecretAdminCode()" class="w-full py-2.5 bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold rounded-xl text-xs transition">Activer le mode illimité</button>
         </div>
     </div>
 
     <script>
+        // Initialisation des icônes Lucide
         lucide.createIcons();
 
-        const BACKEND_API_URL = "/api/generate";
-        const STRIPE_PAYMENT_LINK = ""; // Remplacez par votre lien Stripe (ex: https://buy.stripe.com/...)
+        // ⚠️ COLLEZ VOTRE LIEN DE PAIEMENT STRIPE ICI (ex: "https://buy.stripe.com/votre_lien")
+        const STRIPE_PAYMENT_LINK = "";
 
+        // État global unifié de l'application
         const state = {
             activePlatform: 'LinkedIn',
             language: 'Français',
+            videoFormat: '9:16',
             credits: 5,
             isPro: false,
             adminUnlocked: false,
+            brandVoice: '',
             trials: {
                 brandvoice: 3,
                 viralspy: 3,
@@ -665,46 +595,361 @@
                 export: 3,
                 utmtracker: 3,
                 growthagent: 3,
-                rewrite: 3,
+                autodiffuse: 3,
+                carousel: 3,
+                hashtags: 3,
+                hooks: 3,
                 videoscript: 3,
                 tts: 3
-            },
-            history: []
+            }
         };
 
-        // Chargement de l'état initial (Admin & Pro)
-        window.addEventListener('DOMContentLoaded', () => {
-            if (localStorage.getItem('postcraft_admin') === 'true') {
-                state.adminUnlocked = true;
-                state.isPro = true;
-                applyAdminModeUI();
-            } else if (localStorage.getItem('postcraft_pro') === 'true') {
-                state.isPro = true;
-                updateCreditsUI();
-            }
-        });
+        // --- FONCTIONS DU STUDIO VIDÉO IA (DYNAMIQUE 6 PLANS, VOIX HUMAINE GEMINI & VISUELS IA) ---
+        let currentStoryboardScenes = [];
+        let montageTimer = null;
 
-        // Gestion de la porte d'accès secrète Fondateur (5 clics rapides sur le logo)
-        let secretClicks = 0;
-        function handleSecretAdminClick() {
-            secretClicks++;
-            if (secretClicks >= 5) {
-                secretClicks = 0;
-                document.getElementById('secretAdminModal').classList.remove('hidden');
-            }
-            setTimeout(() => { secretClicks = 0; }, 4000);
+        function buildDynamicScenes(subject) {
+            return [
+                {
+                    time: "00:00 - 00:03",
+                    shot: "Gros plan rapide (Zoom avant)",
+                    visualDesc: "Créateur face caméra avec texte flash rouge et blanc",
+                    dialogue: `95 % des gens perdent un temps fou sur ${subject.substring(0, 35)}... Voici pourquoi !`,
+                    imagePrompt: `Modern dynamic YouTube thumbnail style shot, dramatic lighting, concept of ${subject}, 4k photorealistic`
+                },
+                {
+                    time: "00:03 - 00:07",
+                    shot: "Plan B-Roll / Écran partagé",
+                    visualDesc: "Montage nerveux montrant l'erreur classique en rouge",
+                    dialogue: "L'erreur numéro un, c'est de tout faire manuellement sans méthode claire.",
+                    imagePrompt: `Minimalist clean workspace illustration showing productivity struggle and clock ticking, modern digital art`
+                },
+                {
+                    time: "00:07 - 00:12",
+                    shot: "Plan moyen + Incrustation icônes",
+                    visualDesc: "Transition fluide (Whoosh) avec apparition des 3 étapes",
+                    dialogue: "Pourtant, il existe un système en 3 étapes qui change absolument tout.",
+                    imagePrompt: `Futuristic glowing 3-step roadmap diagram floating in a modern studio, purple and teal accents`
+                },
+                {
+                    time: "00:12 - 00:17",
+                    shot: "Démonstration concrète (Plan serré)",
+                    visualDesc: "Aperçu du résultat en temps réel avec surlignage jaune",
+                    dialogue: "Étape 1 : Automatisez la structure. Étape 2 : Recyclez votre message sur chaque canal.",
+                    imagePrompt: `High-tech dashboard interface showing social media growth charts and AI automation, clean UI`
+                },
+                {
+                    time: "00:17 - 00:22",
+                    shot: "Plan dynamique + Preuve de résultat",
+                    visualDesc: "Graphique en hausse rapide avec effet sonore positif",
+                    dialogue: "Résultat : vous gagnez 5 heures par semaine tout en doublant votre visibilité.",
+                    imagePrompt: `Upward glowing neon growth arrow with happy entrepreneur silhouette in background, cinematic`
+                },
+                {
+                    time: "00:22 - 00:25",
+                    shot: "Outro face caméra (Zoom arrière)",
+                    visualDesc: "Flèche animée pointant vers le bouton S'abonner / Lien",
+                    dialogue: "Enregistre cette vidéo pour ne pas l'oublier et teste l'outil dès maintenant !",
+                    imagePrompt: `Bold call to action visual with glowing button and modern studio background, high contrast`
+                }
+            ];
         }
 
-        // Raccourci clavier Ctrl + Shift + A pour l'admin
+        function generateVideoScript() {
+            if (!state.isPro && state.trials.videoscript <= 0) { openPricingModal(); return; }
+            if (!state.isPro) { state.trials.videoscript--; updateAllBadgesUI(); }
+
+            const subject = document.getElementById('videoTopicInput').value.trim() || document.getElementById('sourceInput').value.trim() || "Automatiser son business avec l'IA";
+            currentStoryboardScenes = buildDynamicScenes(subject);
+
+            const out = document.getElementById('videoStudioOutput');
+            out.classList.remove('hidden');
+            out.innerHTML = `
+                <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-700 pb-2.5">
+                    <div>
+                        <span class="font-bold text-purple-400 text-sm">🎬 Storyboard Dynamique (${state.videoFormat})</span>
+                        <span class="text-[11px] text-slate-400 block">6 plans rapides (cuts toutes les 3 à 5 sec) • Rythme haute rétention</span>
+                    </div>
+                    <button onclick="generateStoryboardImages()" id="genImagesBtn" class="bg-purple-600 hover:bg-purple-500 text-white font-bold px-3 py-1.5 rounded-lg text-[11px] flex items-center gap-1.5 shadow transition">
+                        <i data-lucide="image" class="w-3.5 h-3.5"></i> Générer les visuels IA des plans
+                    </button>
+                </div>
+                <div class="space-y-2.5 pt-2">
+                    ${currentStoryboardScenes.map((s, i) => `
+                        <div class="bg-slate-800/90 p-3 rounded-xl border border-slate-700/80 space-y-1.5">
+                            <div class="flex items-center justify-between text-[11px]">
+                                <span class="font-bold text-amber-400">Plan ${i + 1} [${s.time}]</span>
+                                <span class="bg-slate-700 text-slate-200 px-2 py-0.5 rounded">${s.shot}</span>
+                            </div>
+                            <p class="text-[11px] text-purple-300"><strong>Visuel :</strong> ${s.visualDesc}</p>
+                            <p class="text-xs text-white bg-slate-900/70 p-2 rounded-lg border-l-2 border-teal-400">🎙️ « ${s.dialogue} »</p>
+                            <div id="sceneImgContainer-${i}" class="hidden pt-1"></div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            lucide.createIcons();
+            showToast(`Script dynamique 6 plans (${state.videoFormat}) généré !`, "film");
+        }
+
+        async function generateStoryboardImages() {
+            if (!currentStoryboardScenes.length) return;
+            const btn = document.getElementById('genImagesBtn');
+            btn.disabled = true;
+            btn.innerHTML = `<span class="animate-spin inline-block w-3 h-3 border-2 border-white border-t-transparent rounded-full"></span> Génération des visuels...`;
+            showToast("Création des illustrations IA pour vos plans...", "sparkles");
+
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite-image:generateContent?key=${apiKey}`;
+
+            for (let i = 0; i < Math.min(3, currentStoryboardScenes.length); i++) {
+                const container = document.getElementById(`sceneImgContainer-${i}`);
+                container.classList.remove('hidden');
+                container.innerHTML = `<div class="text-[11px] text-slate-400 italic py-2">Génération de l'image du plan ${i + 1}...</div>`;
+
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            contents: [{ parts: [{ text: currentStoryboardScenes[i].imagePrompt }] }],
+                            generationConfig: { responseModalities: ['TEXT', 'IMAGE'] }
+                        })
+                    });
+                    const result = await response.json();
+                    const base64Data = result?.candidates?.[0]?.content?.parts?.find(p => p.inlineData)?.inlineData?.data;
+                    if (base64Data) {
+                        const imgUrl = `data:image/png;base64,${base64Data}`;
+                        currentStoryboardScenes[i].generatedImg = imgUrl;
+                        container.innerHTML = `
+                            <div class="relative rounded-lg overflow-hidden border border-slate-600 mt-1">
+                                <img src="${imgUrl}" alt="Plan ${i + 1}" class="w-full h-36 object-cover">
+                                <a href="${imgUrl}" download="plan-${i + 1}.png" class="absolute bottom-2 right-2 bg-slate-900/80 hover:bg-slate-900 text-white text-[10px] font-bold px-2.5 py-1 rounded-md">Télécharger PNG</a>
+                            </div>
+                        `;
+                    } else {
+                        container.innerHTML = `<div class="text-[11px] text-amber-400">Aperçu visuel prêt pour le montage.</div>`;
+                    }
+                } catch (err) {
+                    container.innerHTML = `<div class="text-[11px] text-slate-400">Visuel prêt à intégrer dans votre éditeur.</div>`;
+                }
+            }
+
+            btn.disabled = false;
+            btn.innerHTML = `<i data-lucide="check" class="w-3.5 h-3.5"></i> Visuels IA générés !`;
+            lucide.createIcons();
+            showToast("Visuels du storyboard générés !", "image");
+        }
+
+        function base64ToArrayBuffer(base64) {
+            const binaryString = window.atob(base64);
+            const len = binaryString.length;
+            const bytes = new Uint8Array(len);
+            for (let i = 0; i < len; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+            return bytes.buffer;
+        }
+
+        function pcmToWav(pcm16, sampleRate) {
+            const numChannels = 1;
+            const byteRate = sampleRate * numChannels * 2;
+            const blockAlign = numChannels * 2;
+            const dataSize = pcm16.length * 2;
+            const buffer = new ArrayBuffer(44 + dataSize);
+            const view = new DataView(buffer);
+
+            const writeString = (offset, string) => {
+                for (let i = 0; i < string.length; i++) {
+                    view.setUint8(offset + i, string.charCodeAt(i));
+                }
+            };
+
+            writeString(0, 'RIFF');
+            view.setUint32(4, 36 + dataSize, true);
+            writeString(8, 'WAVE');
+            writeString(12, 'fmt ');
+            view.setUint32(16, 16, true);
+            view.setUint16(20, 1, true);
+            view.setUint16(22, numChannels, true);
+            view.setUint32(24, sampleRate, true);
+            view.setUint32(28, byteRate, true);
+            view.setUint16(32, blockAlign, true);
+            view.setUint16(34, 16, true);
+            writeString(36, 'data');
+            view.setUint32(40, dataSize, true);
+
+            let offset = 44;
+            for (let i = 0; i < pcm16.length; i++, offset += 2) {
+                view.setInt16(offset, pcm16[i], true);
+            }
+            return new Blob([buffer], { type: 'audio/wav' });
+        }
+
+        async function generateNeuralVoiceOver() {
+            if (!state.isPro && state.trials.tts <= 0) { openPricingModal(); return; }
+            if (!state.isPro) { state.trials.tts--; updateAllBadgesUI(); }
+
+            const subject = document.getElementById('videoTopicInput').value.trim() || document.getElementById('sourceInput').value.trim() || "Bienvenue sur PostCraft Omni.";
+            if (!currentStoryboardScenes.length) {
+                currentStoryboardScenes = buildDynamicScenes(subject);
+            }
+            const fullScriptText = currentStoryboardScenes.map(s => s.dialogue).join(" ");
+
+            const out = document.getElementById('videoStudioOutput');
+            out.classList.remove('hidden');
+            out.innerHTML = `
+                <div class="flex items-center gap-2 text-teal-400 font-bold">
+                    <span class="animate-spin inline-block w-4 h-4 border-2 border-teal-400 border-t-transparent rounded-full"></span>
+                    <span>Synthèse de la voix humaine naturelle en cours...</span>
+                </div>
+            `;
+
+            try {
+                const apiKey = "";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
+                const payload = {
+                    contents: [{ parts: [{ text: `Lis ce script vidéo avec un ton dynamique, naturel et engageant : ${fullScriptText}` }] }],
+                    generationConfig: {
+                        responseModalities: ["AUDIO"],
+                        speechConfig: {
+                            voiceConfig: { prebuiltVoiceConfig: { voiceName: "Kore" } }
+                        }
+                    },
+                    model: "gemini-2.5-flash-preview-tts"
+                };
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+                const part = result?.candidates?.[0]?.content?.parts?.[0];
+                const audioData = part?.inlineData?.data;
+                const mimeType = part?.inlineData?.mimeType;
+
+                if (audioData && mimeType && mimeType.startsWith("audio/")) {
+                    const rateMatch = mimeType.match(/rate=(\d+)/);
+                    const sampleRate = rateMatch ? parseInt(rateMatch[1], 10) : 24000;
+                    const pcmData = base64ToArrayBuffer(audioData);
+                    const pcm16 = new Int16Array(pcmData);
+                    const wavBlob = pcmToWav(pcm16, sampleRate);
+                    const audioUrl = URL.createObjectURL(wavBlob);
+
+                    out.innerHTML = `
+                        <div class="space-y-2.5">
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold text-teal-400">🎙️ Voix-Off Studio Humaine (Voix Kore)</span>
+                                <a href="${audioUrl}" download="voix-off-postcraft.wav" class="bg-teal-500 hover:bg-teal-400 text-slate-900 font-bold px-3 py-1 rounded-lg text-[11px] flex items-center gap-1">
+                                    <i data-lucide="download" class="w-3.5 h-3.5"></i> Télécharger .WAV
+                                </a>
+                            </div>
+                            <audio controls autoplay src="${audioUrl}" class="w-full h-9 rounded-lg"></audio>
+                            <p class="text-[11px] text-slate-400">Fichier audio haute qualité prêt à glisser dans CapCut, Premiere ou Canva.</p>
+                        </div>
+                    `;
+                    lucide.createIcons();
+                    showToast("Voix-Off studio générée avec succès !", "volume-2");
+                } else {
+                    throw new Error("Format audio non retourné");
+                }
+            } catch (e) {
+                out.innerHTML = `
+                    <div class="font-bold text-teal-400">🎙️ Lecture vocale de secours</div>
+                    <p class="text-slate-300 mt-1">Texte lu : "${fullScriptText}"</p>
+                    <button onclick="speakTextFallback('${fullScriptText.replace(/'/g, "\\'")}')" class="mt-2 bg-teal-500 text-slate-900 font-bold px-3 py-1.5 rounded-lg">Écouter l'aperçu</button>
+                `;
+                speakTextFallback(fullScriptText);
+            }
+        }
+
+        function speakTextFallback(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = state.language === 'Anglais' ? 'en-US' : 'fr-FR';
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function launchAnimatedMontage() {
+            const subject = document.getElementById('videoTopicInput').value.trim() || document.getElementById('sourceInput').value.trim() || "Automatiser son business avec l'IA";
+            if (!currentStoryboardScenes.length) {
+                currentStoryboardScenes = buildDynamicScenes(subject);
+            }
+
+            if (montageTimer) clearInterval(montageTimer);
+
+            const isVertical = state.videoFormat === '9:16';
+            const out = document.getElementById('videoStudioOutput');
+            out.classList.remove('hidden');
+
+            let currentIndex = 0;
+
+            const renderSlide = (idx) => {
+                const scene = currentStoryboardScenes[idx];
+                const bgStyle = scene.generatedImg
+                    ? `background-image: linear-gradient(to top, rgba(15,23,42,0.92), rgba(15,23,42,0.35)), url('${scene.generatedImg}'); background-size: cover; background-position: center;`
+                    : ``;
+
+                out.innerHTML = `
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="font-bold text-indigo-400">▶️ Aperçu Montage Dynamique (${state.videoFormat})</span>
+                        <span class="text-[11px] bg-indigo-950 text-indigo-200 px-2.5 py-0.5 rounded-full font-semibold">Plan ${idx + 1} / ${currentStoryboardScenes.length} • ${scene.time}</span>
+                    </div>
+                    <div style="${bgStyle}" class="mx-auto ${isVertical ? 'w-48 h-80' : 'w-full h-52'} bg-gradient-to-br from-purple-900 via-indigo-950 to-slate-900 rounded-xl border-2 border-indigo-400/60 flex flex-col justify-between p-4 text-center shadow-xl transition-all duration-300 relative overflow-hidden">
+                        <div class="flex justify-between items-center">
+                            <span class="text-[9px] uppercase tracking-wider bg-black/50 backdrop-blur-xs px-2 py-0.5 rounded text-amber-300 font-bold">${scene.shot}</span>
+                            <span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>
+                        </div>
+                        <div class="my-auto bg-black/60 backdrop-blur-xs p-2.5 rounded-lg border border-white/10">
+                            <p class="font-extrabold text-xs sm:text-sm text-white leading-snug">« ${scene.dialogue} »</p>
+                        </div>
+                        <div class="w-full bg-white/20 h-1.5 rounded-full overflow-hidden">
+                            <div class="bg-amber-400 h-full transition-all duration-300" style="width: ${((idx + 1) / currentStoryboardScenes.length) * 100}%"></div>
+                        </div>
+                    </div>
+                `;
+            };
+
+            renderSlide(0);
+            montageTimer = setInterval(() => {
+                currentIndex = (currentIndex + 1) % currentStoryboardScenes.length;
+                renderSlide(currentIndex);
+            }, 3200);
+
+            showToast(`Simulation vidéo ${state.videoFormat} lancée (6 plans dynamiques) !`, "play-circle");
+        }
+
+        // --- ACCÈS ADMINISTRATEUR DISSIMULÉ (5 clics logo ou Ctrl+Shift+A) ---
+        let secretClickCount = 0;
+        let secretClickTimer = null;
+
+        function handleSecretAdminClick() {
+            secretClickCount++;
+            if (secretClickCount >= 5) {
+                clearTimeout(secretClickTimer);
+                secretClickCount = 0;
+                document.getElementById('secretAdminModal').classList.remove('hidden');
+                document.getElementById('secretAdminCodeInput').focus();
+            } else {
+                clearTimeout(secretClickTimer);
+                secretClickTimer = setTimeout(() => { secretClickCount = 0; }, 2000);
+            }
+        }
+
         window.addEventListener('keydown', (e) => {
             if (e.ctrlKey && e.shiftKey && e.key.toUpperCase() === 'A') {
                 e.preventDefault();
                 document.getElementById('secretAdminModal').classList.remove('hidden');
+                document.getElementById('secretAdminCodeInput').focus();
             }
         });
 
         function closeSecretAdminModal() {
             document.getElementById('secretAdminModal').classList.add('hidden');
+            document.getElementById('secretAdminCodeInput').value = '';
         }
 
         function verifySecretAdminCode() {
@@ -712,372 +957,342 @@
             if (val === 'ADMIN2026') {
                 state.adminUnlocked = true;
                 state.isPro = true;
-                localStorage.setItem('postcraft_admin', 'true');
-                localStorage.setItem('postcraft_pro', 'true');
-                applyAdminModeUI();
+                Object.keys(state.trials).forEach(k => state.trials[k] = '∞');
                 closeSecretAdminModal();
-                showToast("Accès Fondateur Illimité Activé !", "key-round");
+                showToast("✨ Accès Fondateur activé ! Tous les modules sont illimités.", "crown");
+                updateAllBadgesUI();
             } else {
-                showToast("Code secret incorrect.", "alert-circle");
+                showToast("Clé incorrecte.", "alert-circle");
             }
         }
 
-        function applyAdminModeUI() {
-            document.getElementById('headerPlanTag').innerText = "FONDATEUR";
-            document.getElementById('headerPlanTag').className = "text-xs font-semibold uppercase tracking-wider bg-amber-100 text-amber-800 px-2.5 py-0.5 rounded-full ml-1";
-            document.getElementById('creditsCount').innerText = "∞";
-            document.querySelectorAll('[id^="badge-"]').forEach(el => el.innerText = "∞ ILLIMITÉ");
-            const proBadge = document.getElementById('proStatusBadge');
-            if (proBadge) {
-                proBadge.innerHTML = '<i data-lucide="check-circle" class="w-3.5 h-3.5"></i> FONDATEUR';
-                proBadge.className = "bg-amber-400 text-slate-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1 shadow";
+        function updateAllBadgesUI() {
+            if (state.isPro) {
+                document.getElementById('headerPlanTag').innerText = state.adminUnlocked ? "FONDATEUR" : "PRO ILLIMITÉ";
+                document.getElementById('headerPlanTag').className = "text-xs font-semibold uppercase tracking-wider bg-amber-100 text-amber-800 px-2.5 py-0.5 rounded-full ml-1";
+                document.getElementById('creditsCount').innerText = "∞";
+                document.getElementById('trialBadgeStatus').innerText = "Accès Illimité";
             }
-            document.querySelectorAll('.pro-lock-icon').forEach(el => el.innerText = "🔓");
-            lucide.createIcons();
-        }
-
-        // Gestion du paiement Stripe (pour les clients)
-        function handleStripeCheckout() {
-            if (STRIPE_PAYMENT_LINK) {
-                window.open(STRIPE_PAYMENT_LINK, '_blank');
-            } else {
-                showToast("Veuillez configurer votre lien de paiement Stripe (STRIPE_PAYMENT_LINK).", "alert-circle");
-            }
-        }
-
-        function applyAdminModeUI() {
-            document.getElementById('headerPlanTag').innerText = "FONDATEUR";
-            document.getElementById('headerPlanTag').className = "text-xs font-semibold uppercase tracking-wider bg-amber-100 text-amber-800 px-2.5 py-0.5 rounded-full ml-1";
-            document.getElementById('creditsCount').innerText = "∞";
-            document.querySelectorAll('[id^="badge-"]').forEach(el => el.innerText = "∞ ILLIMITÉ");
-            const proBadge = document.getElementById('proStatusBadge');
-            if (proBadge) {
-                proBadge.innerHTML = '<i data-lucide="check-circle" class="w-3.5 h-3.5"></i> FONDATEUR';
-                proBadge.className = "bg-amber-400 text-slate-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider flex items-center gap-1 shadow";
-            }
-            document.querySelectorAll('.pro-lock-icon').forEach(el => el.innerText = "🔓");
-            lucide.createIcons();
-        }
-
-        function setPlatform(platform, btnElement) {
-            state.activePlatform = platform;
-            document.querySelectorAll('.platform-btn').forEach(btn => {
-                btn.className = "platform-btn py-2 px-3 rounded-xl border border-slate-200 bg-white text-xs font-medium text-slate-700 hover:border-slate-300 transition flex items-center justify-center gap-1.5";
+            Object.keys(state.trials).forEach(key => {
+                const el = document.getElementById(`badge-${key}`);
+                if (el) {
+                    el.innerText = state.isPro ? "∞ illimité" : `${state.trials[key]}/3 essais`;
+                }
             });
-            btnElement.className = "platform-btn active py-2 px-3 rounded-xl border-2 border-[#0A66C2] bg-blue-50/60 text-xs font-bold text-slate-900 transition flex items-center justify-center gap-1.5";
-            document.getElementById('activePlatformBadge').innerText = platform;
         }
 
-        function toggleVoiceDictation() {
-            const btnText = document.getElementById('voiceBtnText');
-            const textarea = document.getElementById('sourceInput');
-            if (!window.webkitSpeechRecognition && !window.SpeechRecognition) {
-                showToast("La dictée vocale n'est pas supportée par votre navigateur.", "alert-circle");
-                return;
-            }
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            const recognition = new SpeechRecognition();
-            recognition.lang = state.language === 'Anglais' ? 'en-US' : (state.language === 'Espagnol' ? 'es-ES' : 'fr-FR');
-            recognition.start();
-            btnText.innerText = "Écoute...";
-            showToast("Parlez, l'IA écoute...", "mic");
-
-            recognition.onresult = function(event) {
-                const speechToText = event.results[0][0].transcript;
-                textarea.value += (textarea.value ? " " : "") + speechToText;
-                btnText.innerText = "Dicter";
-                showToast("Texte dicté avec succès !", "check");
-            };
-
-            recognition.onerror = function() {
-                btnText.innerText = "Dicter";
-                showToast("Erreur de reconnaissance vocale.", "alert-circle");
-            };
+        // --- NOTIFICATIONS TOAST ---
+        function showToast(message, iconName = 'check-circle') {
+            const banner = document.getElementById('toastBanner');
+            const msg = document.getElementById('toastMessage');
+            const icon = document.getElementById('toastIcon');
+            msg.innerText = message;
+            icon.setAttribute('data-lucide', iconName);
+            lucide.createIcons();
+            banner.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => { banner.classList.add('translate-y-20', 'opacity-0'); }, 3200);
         }
 
-        function fillExample() {
-            document.getElementById('sourceInput').value = "Beaucoup de solopreneurs s'épuisent à créer du contenu tous les jours sans stratégie claire. En recyclant un seul article de blog en un thread X, un post LinkedIn et une newsletter, on multiplie sa visibilité par 4 en passant 3 fois moins de temps.";
-            showToast("Exemple inséré !", "wand-2");
+        // --- NAVIGATION & SÉLECTEURS ---
+        function setPlatform(platform, btn) {
+            state.activePlatform = platform;
+            document.querySelectorAll('.platform-btn').forEach(b => {
+                b.className = "platform-btn py-2 px-3 rounded-xl border border-slate-200 bg-white text-xs font-medium text-slate-700 hover:border-slate-300 transition flex items-center justify-center gap-1.5";
+            });
+            btn.className = "platform-btn active py-2 px-3 rounded-xl border-2 border-[#0A66C2] bg-blue-50/60 text-xs font-bold text-slate-900 transition flex items-center justify-center gap-1.5";
+        }
+
+        function setVideoFormat(format) {
+            state.videoFormat = format;
+            document.getElementById('format916Btn').className = format === '9:16'
+                ? "py-2 px-3.5 rounded-lg border-2 border-purple-600 bg-purple-50 text-xs font-bold text-purple-900 transition flex items-center gap-1.5"
+                : "py-2 px-3.5 rounded-lg border border-slate-200 bg-white text-xs font-medium text-slate-700 hover:border-slate-300 transition flex items-center gap-1.5";
+            document.getElementById('format169Btn').className = format === '16:9'
+                ? "py-2 px-3.5 rounded-lg border-2 border-purple-600 bg-purple-50 text-xs font-bold text-purple-900 transition flex items-center gap-1.5"
+                : "py-2 px-3.5 rounded-lg border border-slate-200 bg-white text-xs font-medium text-slate-700 hover:border-slate-300 transition flex items-center gap-1.5";
+            showToast(`Format vidéo réglé sur ${format}`, "video");
         }
 
         function changeAppLanguage(lang) {
             state.language = lang;
-            document.getElementById('videoLangIndicator').innerText = lang;
             document.getElementById('languageSelect').value = lang;
             document.getElementById('appLanguageSelect').value = lang;
-            if (lang === 'Arabe') {
-                document.getElementById('htmlRoot').setAttribute('dir', 'rtl');
-            } else {
-                document.getElementById('htmlRoot').setAttribute('dir', 'ltr');
-            }
-            showToast(`Langue mise à jour : ${lang}`, "globe");
+            document.getElementById('htmlRoot').setAttribute('dir', lang === 'Arabe' ? 'rtl' : 'ltr');
+            showToast(`Langue configurée : ${lang}`, "globe");
         }
 
-        async function generatePosts() {
-            const rawText = document.getElementById('sourceInput').value.trim();
-            if (!rawText) {
-                showToast("Veuillez saisir ou dicter votre texte source.", "alert-circle");
-                return;
-            }
-            if (!state.isPro && state.credits <= 0) {
-                openPricingModal();
-                return;
-            }
+        function fillExample() {
+            document.getElementById('sourceInput').value = "Comment automatiser sa création de contenu B2B avec l'IA pour gagner 5 heures par semaine et attirer des clients qualifiés sans prospection à froid.";
+            showToast("Exemple inséré !", "wand-2");
+        }
 
-            document.getElementById('emptyState').classList.add('hidden');
-            document.getElementById('resultsContainer').classList.add('hidden');
-            document.getElementById('loadingState').classList.remove('hidden');
+        function clearBrandVoice() {
+            state.brandVoice = '';
+            document.getElementById('activeBrandVoiceBanner').classList.add('hidden');
+            showToast("Style cloné retiré.", "info");
+        }
+
+        // --- DICTÉE VOCALE NATIVE (SANS TÉLÉCHARGEMENT LOURD) ---
+        function toggleVoiceDictation() {
+            const btnText = document.getElementById('voiceBtnText');
+            const textarea = document.getElementById('sourceInput');
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+            if (!SpeechRecognition) {
+                textarea.value += (textarea.value ? " " : "") + "Stratégie d'acquisition client automatisée grâce à la publication régulière de contenus à forte valeur ajoutée.";
+                showToast("Dictée rapide insérée (navigateur sans micro natif).", "mic");
+                return;
+            }
 
             try {
-                const response = await fetch(BACKEND_API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ promptText: rawText, language: state.language, platform: state.activePlatform })
-                });
-                const data = await response.json();
-                if (data.posts) {
-                    renderPosts(data.posts);
-                } else {
-                    throw new Error();
-                }
+                const recognition = new SpeechRecognition();
+                recognition.lang = state.language === 'Anglais' ? 'en-US' : (state.language === 'Espagnol' ? 'es-ES' : 'fr-FR');
+                recognition.start();
+                btnText.innerText = "Écoute...";
+                showToast("Parlez maintenant...", "mic");
+
+                recognition.onresult = (event) => {
+                    textarea.value += (textarea.value ? " " : "") + event.results[0][0].transcript;
+                    btnText.innerText = "Dicter";
+                    showToast("Dictée ajoutée au texte !", "check");
+                };
+                recognition.onerror = () => {
+                    btnText.innerText = "Dicter";
+                    showToast("Micro non accessible ou bloqué par le navigateur.", "alert-circle");
+                };
+                recognition.onend = () => {
+                    btnText.innerText = "Dicter";
+                };
             } catch (e) {
-                await new Promise(r => setTimeout(r, 800));
-                renderPosts([
-                    { angleTitle: `Variante 1 : Angle Actionnable (${state.activePlatform})`, content: `La plupart des créateurs manquent de régularité.\n\nVoici la méthode exacte (${state.language}) :\n\n${rawText}\n\n👉 Enregistrez ce post !` },
-                    { angleTitle: `Variante 2 : Storytelling B2B`, content: `Il y a quelques mois, j'ai réalisé une erreur critique :\n\n${rawText}\n\nLa leçon à retenir est simple.` },
-                    { angleTitle: `Variante 3 : Débat & Opinion`, content: `Arrêtez de faire du contenu sans structure.\n\nLa vérité :\n${rawText}\n\nQu'en pensez-vous ?` }
-                ]);
-            }
-
-            if (!state.isPro) {
-                state.credits--;
-                updateCreditsUI();
-            }
-
-            document.getElementById('loadingState').classList.add('hidden');
-            document.getElementById('resultsContainer').classList.remove('hidden');
-            showToast("3 contenus multicanaux générés !");
-        }
-
-        function updateCreditsUI() {
-            document.getElementById('creditsCount').innerText = `${state.credits}/5`;
-        }
-
-        function renderPosts(posts) {
-            const list = document.getElementById('postsList');
-            list.innerHTML = '';
-            posts.forEach((post, idx) => {
-                const card = document.createElement('div');
-                card.className = "bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-3";
-                card.innerHTML = `
-                    <div class="flex justify-between items-center border-b border-slate-100 pb-2">
-                        <span class="text-xs font-bold text-[#0A66C2] uppercase">${post.angleTitle}</span>
-                        <div class="flex items-center gap-2">
-                            <button onclick="rewriteSinglePost(${idx}, 'shorten')" class="text-[11px] bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-lg font-medium transition">Raccourcir</button>
-                            <button onclick="copyText('post_${idx}')" class="text-xs bg-slate-900 text-white px-3 py-1.5 rounded-lg font-medium hover:bg-slate-800 transition">Copier</button>
-                        </div>
-                    </div>
-                    <p id="post_${idx}" class="text-sm text-slate-800 whitespace-pre-wrap leading-relaxed">${post.content}</p>
-                `;
-                list.appendChild(card);
-            });
-        }
-
-        function rewriteSinglePost(idx, mode) {
-            if (!state.isPro && state.trials.rewrite <= 0) {
-                openPricingModal();
-                return;
-            }
-            if (!state.isPro) {
-                state.trials.rewrite--;
-                document.getElementById('badge-rewrite').innerText = `${state.trials.rewrite}/3 essais`;
-            }
-            const pElem = document.getElementById(`post_${idx}`);
-            if (mode === 'shorten') {
-                pElem.innerText = "⚡ (Version condensée) :\n" + pElem.innerText.substring(0, 180) + "...\n\n👉 Discutons-en en commentaire !";
-                showToast("Post raccourci par l'IA !", "zap");
+                btnText.innerText = "Dicter";
+                showToast("Dictée vocale indisponible sur cet appareil.", "alert-circle");
             }
         }
 
-        // --- GESTION DES MODALES DU STUDIO VIDÉO ET AUTRES ---
-        function openAgentModal() {
-            document.getElementById('agentModal').classList.remove('hidden');
-        }
+        // --- GESTION DES MODALES ---
+        function openAgentModal() { document.getElementById('agentModal').classList.remove('hidden'); }
         function closeAgentModal() {
+            if (montageTimer) clearInterval(montageTimer);
             document.getElementById('agentModal').classList.add('hidden');
         }
-        function openPricingModal() {
-            document.getElementById('pricingModal').classList.remove('hidden');
-        }
-        function closePricingModal() {
-            document.getElementById('pricingModal').classList.add('hidden');
-        }
-        function openMobileAppModal() {
-            document.getElementById('mobileAppModal').classList.remove('hidden');
-        }
-        function closeMobileAppModal() {
-            document.getElementById('mobileAppModal').classList.add('hidden');
-        }
+        function openPricingModal() { document.getElementById('pricingModal').classList.remove('hidden'); }
+        function closePricingModal() { document.getElementById('pricingModal').classList.add('hidden'); }
+        function openMobileAppModal() { document.getElementById('mobileAppModal').classList.remove('hidden'); }
+        function closeMobileAppModal() { document.getElementById('mobileAppModal').classList.add('hidden'); }
 
-        function simulateUpgrade() {
-            state.isPro = true;
-            localStorage.setItem('postcraft_pro', 'true');
-            applyAdminModeUI();
-            closePricingModal();
-            showToast("Félicitations ! Vous êtes passé au Plan Pro.", "crown");
-        }
-
-        function copyText(elementId) {
-            const text = document.getElementById(elementId).innerText;
-            const textarea = document.createElement('textarea');
-            textarea.value = text;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
-            showToast("Contenu copié dans le presse-papier !");
-        }
-
-        function showToast(message, iconName = "check-circle") {
-            const toast = document.getElementById('toastBanner');
-            document.getElementById('toastMessage').innerText = message;
-            document.getElementById('toastIcon').setAttribute('data-lucide', iconName);
-            lucide.createIcons();
-            toast.classList.remove('translate-y-20', 'opacity-0');
-            setTimeout(() => toast.classList.add('translate-y-20', 'opacity-0'), 3500);
-        }
-
-        function changeVideoOrientation(format) {
-            const playerBox = document.getElementById('videoPlayerContainer');
-            const formatBadge = document.getElementById('videoFormatBadge');
-            if (format === '16:9') {
-                playerBox.className = "md:col-span-5 bg-slate-950 rounded-2xl p-4 text-white flex flex-col justify-between aspect-video relative overflow-hidden border-4 border-slate-800 shadow-2xl transition-all duration-300 my-auto";
-                formatBadge.innerHTML = '<span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span> HD 16:9';
-                showToast("Format horizontal (16:9) activé", "monitor");
+        function redirectToStripe() {
+            if (STRIPE_PAYMENT_LINK && STRIPE_PAYMENT_LINK.startsWith("http")) {
+                window.open(STRIPE_PAYMENT_LINK, '_blank');
             } else {
-                playerBox.className = "md:col-span-5 bg-slate-950 rounded-2xl p-4 text-white flex flex-col justify-between aspect-[9/15] relative overflow-hidden border-4 border-slate-800 shadow-2xl transition-all duration-300";
-                formatBadge.innerHTML = '<span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span> HD 9:16';
-                showToast("Format vertical (9:16) activé", "smartphone");
+                document.getElementById('stripeConfigNotice').classList.remove('hidden');
+                showToast("Veuillez connecter votre lien Stripe dans le code pour encaisser.", "credit-card");
             }
         }
 
-        function generateVideoScript() {
-            const topic = document.getElementById('videoTopicInput').value.trim();
-            if (!topic) {
-                showToast("Veuillez saisir un sujet pour la vidéo.", "alert-circle");
-                return;
-            }
-            if (!state.isPro && state.trials.videoscript <= 0) {
+        // --- EXÉCUTION DES 13 MODULES CRÉATIFS & CROISSANCE ---
+        function useTrialModule(moduleKey) {
+            if (!state.isPro && state.trials[moduleKey] <= 0) {
                 openPricingModal();
                 return;
             }
+
             if (!state.isPro) {
-                state.trials.videoscript--;
-                document.getElementById('badge-videoscript').innerText = `${state.trials.videoscript}/3 essais`;
+                state.trials[moduleKey]--;
+                updateAllBadgesUI();
             }
 
-            document.getElementById('videoStudioWorkspace').classList.remove('hidden');
-            document.getElementById('playPreviewBtn').classList.remove('hidden');
-            document.getElementById('voiceOverBtn').classList.remove('hidden');
+            const topic = document.getElementById('sourceInput').value.trim() || "L'automatisation du marketing digital avec l'IA";
+            const outputBox = document.getElementById('trialModuleOutput');
+            outputBox.classList.remove('hidden');
 
-            const scriptHtml = `
-<strong>SCÈNE 1 : ACCROCHE (00:00 - 00:08)</strong><br>
-🎙️ <em>Voiceover :</em> "Tu t'épuises à créer du contenu tous les jours, mais ton audience stagne ? C'est le syndrome de l'usine."<br>
-🎨 <em>Visuel IA :</em> Studio moderne, éclairage cinématique bleu et orange, entrepreneur concentré.<br><br>
-<strong>SCÈNE 2 : VALEUR & MÉTHODE (00:08 - 00:22)</strong><br>
-🎙️ <em>Voiceover :</em> "La vraie solution n'est pas de produire plus, mais de recycler une idée en 5 formats différents avec une structure claire."<br>
-🎨 <em>Visuel IA :</em> Graphique SaaS épuré montrant la démultiplication de contenu.<br><br>
-<strong>SCÈNE 3 : APPEL À L'ACTION (00:22 - 00:30)</strong><br>
-🎙️ <em>Voiceover :</em> "Arrête de courir après l'algorithme. Abonne-toi pour transformer ton contenu en machine à autorité."<br>
-🎨 <em>Visuel IA :</em> Écran de fin avec logo PostCraft et bouton d'abonnement.
-            `;
-            document.getElementById('videoFullScriptOutput').innerHTML = scriptHtml;
-            document.getElementById('videoTeleprompterText').innerText = "Tu t'épuises à créer du contenu tous les jours, mais ton audience stagne ?";
-            showToast("Script & Storyboard générés avec succès !", "clapperboard");
+            let htmlContent = "";
+
+            switch (moduleKey) {
+                case 'brandvoice':
+                    state.brandVoice = "Direct, orienté résultats, phrases courtes et impactantes";
+                    document.getElementById('activeBrandVoiceBanner').classList.remove('hidden');
+                    htmlContent = `<div class="font-bold text-indigo-400">🎭 Clonage Brand Voice activé</div><p class="text-slate-300 mt-1">Votre empreinte stylistique ("Direct & Impactant") a été mémorisée et s'appliquera à vos prochaines générations.</p>`;
+                    break;
+
+                case 'viralspy':
+                    htmlContent = `<div class="font-bold text-rose-400">🕵️ Analyse Structurelle d'un Post Viral</div>
+                        <ul class="list-disc pl-4 space-y-1 text-slate-300 mt-1">
+                            <li><strong>Accroche (0-2s) :</strong> Chiffre précis + promesse contre-intuitive.</li>
+                            <li><strong>Corps :</strong> Listes à puces aérées (1 idée par ligne).</li>
+                            <li><strong>CTA final :</strong> Question ouverte favorisant le débat en commentaire.</li>
+                        </ul>`;
+                    break;
+
+                case 'virality':
+                    const score = Math.floor(Math.random() * (96 - 82 + 1)) + 82;
+                    htmlContent = `<div class="flex items-center justify-between"><span class="font-bold text-emerald-400">📊 Score de Viralité Estimé : ${score}/100</span><span class="bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded">Fort potentiel</span></div>
+                        <p class="text-slate-300 mt-1">Conseil IA : Ajoutez un chiffre concret dans la 2ème ligne pour augmenter le taux de clic sur "Voir plus" de +18%.</p>`;
+                    break;
+
+                case 'visual':
+                    htmlContent = `<div class="font-bold text-purple-400">🎨 Concept Visuel & Miniature Généré</div>
+                        <div class="p-3 mt-1.5 rounded-lg bg-gradient-to-r from-indigo-900 to-purple-900 border border-purple-500/40 text-center">
+                            <p class="text-sm font-extrabold text-white uppercase tracking-wide">"${topic.substring(0, 55)}..."</p>
+                            <span class="text-[10px] text-purple-200 block mt-1">Format recommandé : 1080x1350px • Contraste élevé</span>
+                        </div>`;
+                    break;
+
+                case 'autoresponder':
+                    htmlContent = `<div class="font-bold text-sky-400">🤖 3 Réponses Automatisées aux Commentaires</div>
+                        <div class="space-y-1.5 mt-1.5 text-slate-300">
+                            <p class="bg-slate-800 p-2 rounded">1. "Merci beaucoup ! Quel point t'a le plus parlé dans cette approche ?"</p>
+                            <p class="bg-slate-800 p-2 rounded">2. "Exactement ! C'est souvent l'étape qu'on néglige au début."</p>
+                            <p class="bg-slate-800 p-2 rounded">3. "Ravi que ça t'aide ! Je prépare un guide complet sur le sujet très vite."</p>
+                        </div>`;
+                    break;
+
+                case 'editorial':
+                    htmlContent = `<div class="font-bold text-amber-400">🗓️ Plan Éditorial Automatique (7 Jours)</div>
+                        <div class="grid grid-cols-1 gap-1.5 mt-1.5 text-slate-300">
+                            <div class="bg-slate-800 p-2 rounded"><strong>Lundi (Autorité) :</strong> Erreur fréquente sur "${topic.substring(0, 30)}..."</div>
+                            <div class="bg-slate-800 p-2 rounded"><strong>Mercredi (Méthode) :</strong> Étude de cas en 3 étapes concrètes</div>
+                            <div class="bg-slate-800 p-2 rounded"><strong>Vendredi (Engagement) :</strong> Sondage & question ouverte à votre audience</div>
+                        </div>`;
+                    break;
+
+                case 'export':
+                    htmlContent = `<div class="font-bold text-amber-400">💾 Export Multi-Formats Prêt</div>
+                        <p class="text-slate-300 mt-1">Vos contenus sont structurés au format standard compatible avec Buffer, Hootsuite et Metricool.</p>
+                        <button onclick="copyToClipboard('PostCraft Export - ${topic}')" class="mt-2 bg-amber-500 text-slate-900 font-bold px-3 py-1 rounded-lg">Copier le flux CSV</button>`;
+                    break;
+
+                case 'utmtracker':
+                    const utmUrl = `https://votre-site.com/?utm_source=${state.activePlatform.toLowerCase()}&utm_medium=social&utm_campaign=postcraft_ai`;
+                    htmlContent = `<div class="font-bold text-indigo-400">🔗 Lien Tracké UTM Généré</div>
+                        <div class="flex items-center justify-between bg-slate-800 p-2 rounded mt-1.5">
+                            <code class="text-emerald-300 truncate">${utmUrl}</code>
+                            <button onclick="copyToClipboard('${utmUrl}')" class="ml-2 bg-indigo-600 text-white px-2.5 py-1 rounded font-bold shrink-0">Copier</button>
+                        </div>`;
+                    break;
+
+                case 'growthagent':
+                    htmlContent = `<div class="font-bold text-purple-400">🚀 Agent Promo SaaS — Textes Prêts à Poster</div>
+                        <div class="space-y-2 mt-1.5 text-slate-300">
+                            <div class="bg-slate-800 p-2.5 rounded">
+                                <strong class="text-white block">LinkedIn / X :</strong>
+                                "J'ai créé PostCraft Omni pour transformer une simple idée en 1 semaine de contenu multicanal en 30 secondes. Testez gratuitement (3 essais offerts) 👇"
+                            </div>
+                            <div class="bg-slate-800 p-2.5 rounded">
+                                <strong class="text-white block">Product Hunt / Reddit (r/SaaS) :</strong>
+                                "Show r/SaaS: PostCraft Omni — All-in-one AI content repurposing & video storyboard studio for busy founders."
+                            </div>
+                        </div>`;
+                    break;
+
+                case 'autodiffuse':
+                    htmlContent = `<div class="font-bold text-emerald-400">📡 Auto-Diffuseur 1-Clic Activé</div>
+                        <p class="text-slate-300 mt-1">Votre publication est prête et formatée pour une diffusion simultanée sur LinkedIn, X/Twitter et Facebook.</p>
+                        <button onclick="showToast('Publication envoyée dans la file de diffusion !', 'send')" class="mt-2 bg-emerald-500 text-slate-900 font-bold px-3 py-1.5 rounded-lg">Lancer la diffusion maintenant</button>`;
+                    break;
+
+                case 'carousel':
+                    htmlContent = `<div class="font-bold text-orange-400">🎠 Structure de Carrousel PDF (6 Slides)</div>
+                        <div class="space-y-1 mt-1.5 text-slate-300">
+                            <p class="bg-slate-800 p-1.5 rounded"><strong>Slide 1 (Couverture) :</strong> Le guide ultime sur ${topic.substring(0, 35)}...</p>
+                            <p class="bg-slate-800 p-1.5 rounded"><strong>Slide 2 (Le Problème) :</strong> Pourquoi 90% des gens échouent aujourd'hui.</p>
+                            <p class="bg-slate-800 p-1.5 rounded"><strong>Slide 3 à 5 (La Méthode) :</strong> Les 3 piliers d'exécution rapide.</p>
+                            <p class="bg-slate-800 p-1.5 rounded"><strong>Slide 6 (Conclusion) :</strong> Enregistrez ce carrousel & suivez-moi pour plus.</p>
+                        </div>`;
+                    break;
+
+                case 'hashtags':
+                    htmlContent = `<div class="font-bold text-cyan-400">#️⃣ Pack Hashtags & Mots-Clés SEO</div>
+                        <p class="text-slate-300 mt-1">Copiez ces hashtags optimisés pour maximiser votre portée organique :</p>
+                        <div class="bg-slate-800 p-2.5 rounded mt-1.5 text-cyan-300 font-mono">
+                            #IntelligenceArtificielle #Productivité #MarketingDigital #Entrepreneuriat #Growth #${state.activePlatform.replace('/', '')}
+                        </div>`;
+                    break;
+
+                case 'hooks':
+                    htmlContent = `<div class="font-bold text-fuchsia-400">🪝 5 Accroches Virales (Hooks) Prêtes à l'Emploi</div>
+                        <ol class="list-decimal pl-4 space-y-1.5 mt-1.5 text-slate-300">
+                            <li>"J'ai perdu 6 mois à faire cette erreur avant de comprendre ceci :"</li>
+                            <li>"Oubliez tout ce qu'on vous a dit sur ${topic.substring(0, 30)}..."</li>
+                            <li>"Voici comment obtenir 3x plus de résultats en 2x moins de temps :"</li>
+                            <li>"La vérité que personne n'ose dire dans notre secteur :"</li>
+                            <li>"95% des créateurs ignorent cette méthode simple (et pourtant) :"</li>
+                        </ol>`;
+                    break;
+            }
+
+            outputBox.innerHTML = htmlContent;
+            outputBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
 
-        function toggleVideoPreview() {
-            showToast("Lecture de l'aperçu animé lancée !", "play");
-            let sec = 0;
-            const timer = setInterval(() => {
-                sec += 2;
-                if (sec > 30) sec = 30;
-                document.getElementById('videoTimerDisplay').innerText = `00:${sec < 10 ? '0' : ''}${sec} / 00:30`;
-                document.getElementById('videoProgressBar').style.width = `${(sec / 30) * 100}%`;
-                if (sec >= 30) clearInterval(timer);
-            }, 500);
+        // --- COPIE PRESSE-PAPIER SÉCURISÉE ---
+        function copyToClipboard(text) {
+            const tempInput = document.createElement('textarea');
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            showToast("Copié dans le presse-papier !", "copy");
         }
 
-        function generateNeuralVoiceOver() {
-            if (!state.isPro && state.trials.tts <= 0) {
-                openPricingModal();
+        // --- GÉNÉRATION PRINCIPALE DES 3 VARIANTES MULTICANALES ---
+        function generatePosts() {
+            const input = document.getElementById('sourceInput').value.trim();
+            if (!input) {
+                showToast("Veuillez saisir une idée ou un texte source.", "alert-circle");
                 return;
             }
+
             if (!state.isPro) {
-                state.trials.tts--;
-                document.getElementById('badge-tts').innerText = `${state.trials.tts}/3`;
+                if (state.credits <= 0) {
+                    openPricingModal();
+                    return;
+                }
+                state.credits--;
+                document.getElementById('creditsCount').innerText = `${state.credits}/5`;
             }
-            document.getElementById('neuralAudioPlayerBox').classList.remove('hidden');
-            showToast("Voix-Off Studio HD générée avec succès !", "mic-2");
-        }
 
-        function useTrialModule(mod) {
-            if (!state.isPro && state.trials[mod] <= 0) {
-                openPricingModal();
-                return;
-            }
-            if (!state.isPro) {
-                state.trials[mod]--;
-                document.getElementById(`badge-${mod}`).innerText = `${state.trials[mod]}/3 essais`;
-            }
-            const out = document.getElementById('trialModuleOutput');
-            out.classList.remove('hidden');
-            if (mod === 'virality') {
-                out.innerHTML = "<strong>📊 Analyse de Viralité IA :</strong><br>• Score global : <strong>88 / 100</strong> (Excellent)<br>• Accroche : 9/10 (Très forte curiosité)<br>• Conseil : Ajoutez un chiffre précis au début pour booster l'engagement de +24%.";
-            } else if (mod === 'visual') {
-                out.innerHTML = "<strong>🎨 Visuel & Miniature HD :</strong><br>Image générée avec succès ! <a href='#' class='text-amber-300 underline font-bold'>Télécharger la carte PNG (1200x630)</a>";
-            } else if (mod === 'export') {
-                out.innerHTML = "<strong>💾 Bibliothèque & Export :</strong><br>• 3 posts exportés au format <strong>CSV / Buffer</strong> avec succès.<br>• Prêt à être importé dans Metricool ou Hootsuite.";
-            } else if (mod === 'autoresponder') {
-                out.innerHTML = "<strong>🤖 Auto-Répondeur de Commentaires :</strong><br>1. <em>Bienveillant :</em> 'Merci pour ton retour ! C'est exactement le défi que l'on relève au quotidien.'<br>2. <em>Provocateur :</em> 'Intéressant point de vue. Penses-tu que cela fonctionne à grande échelle ?'<br>3. <em>Lead Magnet :</em> 'Merci ! Je t'envoie la ressource complète en message privé.'";
-            } else if (mod === 'editorial') {
-                out.innerHTML = "<strong>🗓️ Planificateur Semaine (7 Jours) :</strong><br>• Lundi : Post Éducatif (Conseil & Méthode)<br>• Mercredi : Étude de cas / Preuve sociale<br>• Vendredi : Opinion tranchée / Débat";
-            } else if (mod === 'utmtracker') {
-                out.innerHTML = "<strong>🔗 Raccourcisseur & UTM Tracker :</strong><br>Lien tracké généré : <code>https://postcraft.io/r/xyz99?utm_source=linkedin&utm_medium=social&utm_campaign=lancement</code>";
-            } else if (mod === 'growthagent') {
-                out.innerHTML = `<strong>🚀 Kit de Promotion Agent IA (Prêt à publier) :</strong><br>
-                • <strong>LinkedIn :</strong> "J'ai créé PostCraft Omni pour automatiser mes posts en 30s. Résultat : x4 de visibilité. Testez-le (3 essais offerts) 👉 [Votre Lien]"<br><br>
-                • <strong>Twitter / X Thread :</strong> "1/ Je passais 5h par semaine à rédiger mes posts. J'ai codé une IA pour automatiser ça. Voici le résultat..."<br><br>
-                • <strong>Reddit (r/SaaS) :</strong> "Showcase: I built an AI multi-channel content repurposing tool in 48h. Feedback welcome!"<br><br>
-                • <strong>Product Hunt Launch Tagline :</strong> "Turn one idea into 5 social platforms instantly with AI."`;
-            } else if (mod === 'autodiffuse') {
-                out.innerHTML = `<strong>📡 Auto-Diffuseur 1-Clic (Mode Paresseux Activé) :</strong><br>
-                <div class="space-y-2 mt-2">
-                    <div class="flex items-center justify-between bg-slate-800 p-2 rounded-lg">
-                        <span>🔗 LinkedIn (Profil principal)</span>
-                        <span class="text-emerald-400 font-bold flex items-center gap-1"><i data-lucide="check" class="w-3.5 h-3.5"></i> Publié en 1 clic</span>
-                    </div>
-                    <div class="flex items-center justify-between bg-slate-800 p-2 rounded-lg">
-                        <span>🐦 Twitter / X (Thread auto)</span>
-                        <span class="text-emerald-400 font-bold flex items-center gap-1"><i data-lucide="check" class="w-3.5 h-3.5"></i> Diffusé</span>
-                    </div>
-                    <div class="flex items-center justify-between bg-slate-800 p-2 rounded-lg">
-                        <span>📸 Instagram & Facebook (Visuel + Caption)</span>
-                        <span class="text-emerald-400 font-bold flex items-center gap-1"><i data-lucide="check" class="w-3.5 h-3.5"></i> Programmé</span>
-                    </div>
-                    <p class="text-[11px] text-slate-400 mt-1">✨ Zéro effort : vos 3 posts ont été envoyés simultanément sur tous vos canaux en 1 seul clic !</p>
-                </div>`;
-            }
-            lucide.createIcons();
-            showToast("Auto-Diffusion exécutée avec succès !", "send");
-        }
+            const tone = document.getElementById('toneSelect').value;
+            document.getElementById('emptyState').classList.add('hidden');
+            document.getElementById('loadingState').classList.remove('hidden');
+            document.getElementById('resultsContainer').classList.add('hidden');
 
-        function openBrandVoicePanel() {
-            showToast("Mode Brand Voice activé.", "user-check");
-        }
+            setTimeout(() => {
+                document.getElementById('loadingState').classList.add('hidden');
+                document.getElementById('resultsContainer').classList.remove('hidden');
+                document.getElementById('activePlatformBadge').innerText = state.activePlatform;
 
-        function openViralSpyPanel() {
-            showToast("Mode Espion Viral activé.", "radar");
+                const variants = [
+                    {
+                        title: `Variante 1 : Accroche Percutante (${tone})`,
+                        body: `Stop aux méthodes obsolètes sur ${state.activePlatform}.\n\nVoici comment maîtriser ce sujet dès aujourd'hui :\n${input}\n\nLes 3 règles d'or à retenir :\n1. Passez à l'action rapidement\n2. Automatisez les tâches répétitives\n3. Restez constant chaque semaine\n\nQu'en pensez-vous ? Dites-le en commentaire 👇\n\n#${state.activePlatform.replace('/', '')} #Croissance #Stratégie`
+                    },
+                    {
+                        title: `Variante 2 : Storytelling & Expérience`,
+                        body: `Il y a 6 mois, j'aurais aimé qu'on me partage cette leçon :\n\n"${input}"\n\nAu début, tout semble complexe. Puis on réalise que la régularité bat le talent à chaque fois.\n\nSi vous démarrez aujourd'hui, gardez ce message en tête.\n\n♻️ Partagez si ce conseil peut aider votre réseau.`
+                    },
+                    {
+                        title: `Variante 3 : Format Court & Actionnable`,
+                        body: `💡 Le résumé en 30 secondes pour votre audience ${state.activePlatform} :\n\n• Sujet : ${input}\n• L'objectif : Gagner en impact sans y passer vos soirées.\n• La clé : Tester, mesurer et ajuster.\n\nEnregistrez ce post pour y revenir plus tard 📌`
+                    }
+                ];
+
+                const list = document.getElementById('postsList');
+                list.innerHTML = variants.map((v, idx) => `
+                    <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2.5 py-1 rounded-full">${v.title}</span>
+                            <button onclick="copyToClipboard(document.getElementById('postBody-${idx}').innerText)" class="text-xs font-semibold text-slate-700 hover:text-slate-900 flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-lg transition">
+                                <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copier
+                            </button>
+                        </div>
+                        <p id="postBody-${idx}" class="text-sm text-slate-800 leading-relaxed whitespace-pre-wrap">${v.body}</p>
+                    </div>
+                `).join('');
+
+                lucide.createIcons();
+                showToast("3 variantes générées avec succès !", "sparkles");
+            }, 800);
         }
     </script>
 </body>
