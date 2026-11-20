@@ -530,14 +530,14 @@
                             <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-[#0A66C2]"></i> Support prioritaire 7j/7</li>
                         </ul>
                     </div>
-                    <button onclick="redirectToStripe()" class="w-full py-3 px-4 bg-[#0A66C2] hover:bg-[#004182] text-white font-bold rounded-xl shadow-md transition flex items-center justify-center gap-2 text-xs">
+                    <button onclick="redirectToCheckout()" class="w-full py-3 px-4 bg-[#0A66C2] hover:bg-[#004182] text-white font-bold rounded-xl shadow-md transition flex items-center justify-center gap-2 text-xs">
                         <span>S'abonner maintenant (29€/mois)</span>
                         <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </button>
                 </div>
             </div>
             <div id="stripeConfigNotice" class="hidden mt-4 p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-900">
-                <strong>Note Propriétaire :</strong> Pour encaisser les paiements réels par carte bancaire, collez votre lien Stripe Payment Link dans la variable <code>STRIPE_PAYMENT_LINK</code> du code.
+                <strong>Note Propriétaire :</strong> Pour encaisser les paiements réels par carte bancaire, collez votre lien de paiement dans la variable <code>CHECKOUT_PAYMENT_LINK</code> du code.
             </div>
         </div>
     </div>
@@ -573,8 +573,8 @@
         // Initialisation des icônes Lucide
         lucide.createIcons();
 
-        // ⚠️ COLLEZ VOTRE LIEN DE PAIEMENT STRIPE ICI (ex: "https://buy.stripe.com/votre_lien")
-        const STRIPE_PAYMENT_LINK = "";
+        // Lien de paiement actif Dodo Payments
+        const CHECKOUT_PAYMENT_LINK = "https://checkout.dodopayments.com/buy/pdt_0NsMQrCHPQaa7UPki5KLS?quantity=1";
 
         // État global unifié de l'application
         const state = {
@@ -1080,12 +1080,12 @@
         function openMobileAppModal() { document.getElementById('mobileAppModal').classList.remove('hidden'); }
         function closeMobileAppModal() { document.getElementById('mobileAppModal').classList.add('hidden'); }
 
-        function redirectToStripe() {
-            if (STRIPE_PAYMENT_LINK && STRIPE_PAYMENT_LINK.startsWith("http")) {
-                window.open(STRIPE_PAYMENT_LINK, '_blank');
+        function redirectToCheckout() {
+            if (CHECKOUT_PAYMENT_LINK && CHECKOUT_PAYMENT_LINK.startsWith("http")) {
+                window.open(CHECKOUT_PAYMENT_LINK, '_blank');
             } else {
                 document.getElementById('stripeConfigNotice').classList.remove('hidden');
-                showToast("Veuillez connecter votre lien Stripe dans le code pour encaisser.", "credit-card");
+                showToast("Veuillez connecter votre lien de paiement dans le code pour encaisser.", "credit-card");
             }
         }
 
