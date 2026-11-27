@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PostCraft Omni — Studio de Création &amp; Automatisation B2B</title>
+  <title>PostCraft Omni — Studio de Création, Montage IA &amp; Automatisation B2B</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -16,26 +16,42 @@
   </style>
 </head>
 <body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col">
-  <!-- Barre supérieure -->
+  <!-- En-tête avec logo plume/création, accès rapide Studio/Agent, 14 langues, crédits & Pro -->
   <header class="bg-white border-b border-slate-200 sticky top-0 z-30">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-600 via-blue-600 to-purple-600 flex items-center justify-center text-white shadow-sm">
-          <i data-lucide="sparkles" class="w-5 h-5" aria-hidden="true"></i>
+        <div id="brandLogoBox" class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-600 via-blue-600 to-purple-600 flex items-center justify-center text-white shadow-sm">
+          <i data-lucide="feather" class="w-5 h-5" aria-hidden="true"></i>
         </div>
         <div>
           <div class="flex items-center gap-2">
             <span class="font-bold text-lg tracking-tight text-slate-900">PostCraft Omni</span>
-            <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200">B2B Studio</span>
+            <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200">AI Studio</span>
           </div>
-          <p class="text-xs text-slate-500 hidden sm:block">Génération multicanale, simulation ROI &amp; studio vidéo IA</p>
+          <p class="text-xs text-slate-500 hidden sm:block">Génération multicanale, montage/script IA, voix-off &amp; ROI</p>
         </div>
       </div>
 
-      <div class="flex items-center gap-3">
-        <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-100 border border-slate-200 text-sm">
+      <div class="flex items-center gap-2">
+        <a
+          id="jumpVideoStudioLink"
+          href="#videoStudioSection"
+          class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-purple-50 text-purple-800 hover:bg-purple-100 border border-purple-200 transition"
+        >
+          <i data-lucide="clapperboard" class="w-3.5 h-3.5" aria-hidden="true"></i>
+          <span>Montage &amp; Script IA</span>
+        </a>
+
+        <label for="uiLangSelect" class="sr-only">Langue de l'interface</label>
+        <select
+          id="uiLangSelect"
+          aria-label="Langue de l'interface"
+          class="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1.5 text-xs sm:text-sm font-medium text-slate-700 outline-none focus:border-indigo-600 cursor-pointer"
+        ></select>
+
+        <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 border border-slate-200 text-xs sm:text-sm">
           <i data-lucide="zap" class="w-4 h-4 text-amber-500" aria-hidden="true"></i>
-          <span class="text-slate-600 hidden sm:inline">Crédits :</span>
+          <span class="text-slate-600 hidden lg:inline">Crédits :</span>
           <span id="creditsCount" class="font-bold text-slate-900">5/5</span>
         </div>
 
@@ -43,7 +59,7 @@
           id="openProModalBtn"
           type="button"
           aria-label="Passer au plan Pro"
-          class="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 active:scale-[0.99] transition shadow-sm cursor-pointer"
+          class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 active:scale-[0.99] transition shadow-sm cursor-pointer"
         >
           <i data-lucide="crown" class="w-4 h-4" aria-hidden="true"></i>
           <span>Passer Pro</span>
@@ -52,74 +68,76 @@
     </div>
   </header>
 
-  <!-- Zone principale -->
   <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-      <!-- Colonne gauche & centrale : Studio de génération -->
-      <section class="lg:col-span-8 space-y-6" aria-label="Studio de génération de contenu">
+      <section class="lg:col-span-8 space-y-6" aria-label="Studio de création et génération IA">
+        <!-- Module 1 & 2 : Brief, Dictée/Voix-off, Cible ICP & Plateformes -->
         <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-6">
           <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 border-b border-slate-100 pb-4">
             <div>
-              <h1 class="text-xl font-bold text-slate-900">Créer une campagne multicanale</h1>
-              <p class="text-sm text-slate-500">Rédigez votre idée clé, choisissez vos canaux, le ton et la langue.</p>
+              <h1 id="mainTitle" class="text-xl font-bold text-slate-900">Créer une campagne multicanale</h1>
+              <p class="text-sm text-slate-500">Rédigez ou dictez votre idée, choisissez vos canaux (LinkedIn, X, Facebook, Instagram, TikTok, Newsletter, WhatsApp), la cible, le ton et les 14 langues.</p>
             </div>
             <span id="charCounter" class="text-xs font-medium text-slate-500">0 / 500 caractères</span>
           </div>
 
-          <!-- Sélection des plateformes -->
+          <!-- Plateformes cibles -->
           <div>
             <label class="block text-sm font-semibold text-slate-700 mb-2.5">Plateformes cibles</label>
-            <div id="platformGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <button
-                type="button"
-                data-platform="LinkedIn"
-                aria-pressed="true"
-                class="platform-btn flex items-center gap-2.5 p-3 rounded-xl border-2 border-indigo-600 bg-indigo-50/70 text-indigo-900 font-medium text-sm transition cursor-pointer"
-              >
-                <i data-lucide="linkedin" class="w-4 h-4 text-indigo-600" aria-hidden="true"></i>
+            <div id="platformGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+              <button type="button" data-platform="LinkedIn" aria-pressed="true" class="platform-btn flex items-center gap-2 p-2.5 rounded-xl border-2 border-indigo-600 bg-indigo-50/70 text-indigo-900 font-medium text-xs sm:text-sm transition cursor-pointer">
+                <i data-lucide="linkedin" class="w-4 h-4 text-indigo-600 shrink-0" aria-hidden="true"></i>
                 <span>LinkedIn</span>
               </button>
-
-              <button
-                type="button"
-                data-platform="X (Twitter)"
-                aria-pressed="true"
-                class="platform-btn flex items-center gap-2.5 p-3 rounded-xl border-2 border-indigo-600 bg-indigo-50/70 text-indigo-900 font-medium text-sm transition cursor-pointer"
-              >
-                <i data-lucide="share-2" class="w-4 h-4 text-indigo-600" aria-hidden="true"></i>
+              <button type="button" data-platform="X / Twitter" aria-pressed="true" class="platform-btn flex items-center gap-2 p-2.5 rounded-xl border-2 border-indigo-600 bg-indigo-50/70 text-indigo-900 font-medium text-xs sm:text-sm transition cursor-pointer">
+                <i data-lucide="share-2" class="w-4 h-4 text-indigo-600 shrink-0" aria-hidden="true"></i>
                 <span>X / Twitter</span>
               </button>
-
-              <button
-                type="button"
-                data-platform="TikTok / Reels"
-                aria-pressed="false"
-                class="platform-btn flex items-center gap-2.5 p-3 rounded-xl border border-slate-200 bg-white hover:border-slate-300 text-slate-700 font-medium text-sm transition cursor-pointer"
-              >
-                <i data-lucide="video" class="w-4 h-4 text-purple-600" aria-hidden="true"></i>
+              <button type="button" data-platform="Facebook" aria-pressed="false" class="platform-btn flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 bg-white hover:border-slate-300 text-slate-700 font-medium text-xs sm:text-sm transition cursor-pointer">
+                <i data-lucide="globe" class="w-4 h-4 text-blue-600 shrink-0" aria-hidden="true"></i>
+                <span>Facebook</span>
+              </button>
+              <button type="button" data-platform="Instagram" aria-pressed="false" class="platform-btn flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 bg-white hover:border-slate-300 text-slate-700 font-medium text-xs sm:text-sm transition cursor-pointer">
+                <i data-lucide="camera" class="w-4 h-4 text-pink-600 shrink-0" aria-hidden="true"></i>
+                <span>Instagram</span>
+              </button>
+              <button type="button" data-platform="TikTok / Reels" aria-pressed="false" class="platform-btn flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 bg-white hover:border-slate-300 text-slate-700 font-medium text-xs sm:text-sm transition cursor-pointer">
+                <i data-lucide="video" class="w-4 h-4 text-purple-600 shrink-0" aria-hidden="true"></i>
                 <span>TikTok / Reels</span>
               </button>
-
-              <button
-                type="button"
-                data-platform="Newsletter B2B"
-                aria-pressed="false"
-                class="platform-btn flex items-center gap-2.5 p-3 rounded-xl border border-slate-200 bg-white hover:border-slate-300 text-slate-700 font-medium text-sm transition cursor-pointer"
-              >
-                <i data-lucide="mail" class="w-4 h-4 text-blue-600" aria-hidden="true"></i>
+              <button type="button" data-platform="Newsletter" aria-pressed="false" class="platform-btn flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 bg-white hover:border-slate-300 text-slate-700 font-medium text-xs sm:text-sm transition cursor-pointer">
+                <i data-lucide="mail" class="w-4 h-4 text-indigo-500 shrink-0" aria-hidden="true"></i>
                 <span>Newsletter</span>
+              </button>
+              <button type="button" data-platform="WhatsApp" aria-pressed="false" class="platform-btn flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 bg-white hover:border-slate-300 text-slate-700 font-medium text-xs sm:text-sm transition cursor-pointer">
+                <i data-lucide="message-circle" class="w-4 h-4 text-emerald-600 shrink-0" aria-hidden="true"></i>
+                <span>WhatsApp</span>
               </button>
             </div>
           </div>
 
-          <!-- Ton & Langue -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- Cible B2B (ICP), Ton, Langue sortie & Langue voix-off -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
             <div>
-              <label for="toneSelect" class="block text-sm font-semibold text-slate-700 mb-1.5">Ton éditorial</label>
+              <label for="icpSelect" class="block text-xs font-semibold text-slate-700 mb-1.5">Cible B2B (ICP)</label>
+              <select
+                id="icpSelect"
+                aria-label="Choisir la cible B2B"
+                class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-xs sm:text-sm text-slate-800 focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/20 outline-none transition"
+              >
+                <option value="Fondateurs & CEO SaaS">Fondateurs &amp; CEO SaaS</option>
+                <option value="Agences Marketing & Studio">Agences Marketing &amp; Studio</option>
+                <option value="Équipes Sales & Growth">Équipes Sales &amp; Growth</option>
+                <option value="PME & Consultants">PME &amp; Consultants</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="toneSelect" class="block text-xs font-semibold text-slate-700 mb-1.5">Ton éditorial</label>
               <select
                 id="toneSelect"
                 aria-label="Choisir le ton éditorial"
-                class="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-800 focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/20 outline-none transition"
+                class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-xs sm:text-sm text-slate-800 focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/20 outline-none transition"
               >
                 <option value="Professionnel & Autoritaire">Professionnel &amp; Autoritaire</option>
                 <option value="Direct & Orienté Conversion">Direct &amp; Orienté Conversion</option>
@@ -129,54 +147,148 @@
             </div>
 
             <div>
-              <label for="languageSelect" class="block text-sm font-semibold text-slate-700 mb-1.5">Langue de sortie</label>
+              <label for="languageSelect" class="block text-xs font-semibold text-slate-700 mb-1.5">Langue de sortie (14)</label>
               <select
                 id="languageSelect"
                 aria-label="Choisir la langue de sortie"
-                class="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-800 focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/20 outline-none transition"
-              >
-                <option value="Français">Français</option>
-                <option value="English">English</option>
-              </select>
+                class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-xs sm:text-sm text-slate-800 focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/20 outline-none transition"
+              ></select>
+            </div>
+
+            <div>
+              <label for="voiceLangSelect" class="block text-xs font-semibold text-slate-700 mb-1.5">Langue voix-off (14)</label>
+              <select
+                id="voiceLangSelect"
+                aria-label="Choisir la langue de voix-off"
+                class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-xs sm:text-sm text-slate-800 focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/20 outline-none transition"
+              ></select>
             </div>
           </div>
 
-          <!-- Champ idée / brief -->
+          <!-- Champ idée + Enregistrement vocal + Écoute voix-off -->
           <div>
-            <label for="briefInput" class="block text-sm font-semibold text-slate-700 mb-1.5">
-              Votre idée, produit ou message clé (max. 500 caractères)
-            </label>
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-1.5">
+              <label for="briefInput" class="block text-sm font-semibold text-slate-700">
+                Votre idée, produit ou message clé (max. 500 caractères)
+              </label>
+              <div class="flex items-center gap-2">
+                <button
+                  id="recordVoiceBtn"
+                  type="button"
+                  aria-pressed="false"
+                  class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border border-slate-300 bg-slate-50 hover:bg-slate-100 text-slate-800 transition cursor-pointer"
+                >
+                  <i data-lucide="mic" class="w-3.5 h-3.5 text-rose-600" aria-hidden="true"></i>
+                  <span id="recordVoiceLabel">Enregistrer la voix</span>
+                </button>
+
+                <button
+                  id="speakBriefBtn"
+                  type="button"
+                  class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border border-indigo-200 bg-indigo-50 hover:bg-indigo-100 text-indigo-800 transition cursor-pointer"
+                >
+                  <i data-lucide="volume-2" class="w-3.5 h-3.5 text-indigo-700" aria-hidden="true"></i>
+                  <span>Écouter la voix-off</span>
+                </button>
+              </div>
+            </div>
+
             <textarea
               id="briefInput"
               rows="4"
               maxlength="500"
-              aria-label="Saisir votre idée ou brief marketing"
-              placeholder="Ex. : Automatiser la création de posts et scripts vidéo pour agences et fondateurs B2B en quelques minutes..."
+              aria-label="Saisir ou enregistrer votre idée ou brief marketing"
+              placeholder="Ex. : Automatiser la création de posts, scripts vidéo et déclinaisons B2B en quelques minutes..."
               class="w-full rounded-xl border border-slate-300 bg-white p-3.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/20 outline-none transition resize-y"
             ></textarea>
+            <p id="voiceStatusText" class="mt-1 text-xs text-slate-500 hidden"></p>
             <p id="inputError" class="mt-1.5 text-xs font-medium text-rose-600 hidden" role="alert"></p>
           </div>
 
-          <!-- Bouton Générer -->
-          <div class="flex flex-wrap items-center justify-between gap-4 pt-2">
-            <span class="text-xs text-slate-500">Coût : <strong>1 crédit</strong> par génération (inclut brouillons + plan d'action).</span>
+          <!-- Bouton Générer + Exports (.TXT / .MD / .JSON) + Payload Make.com -->
+          <div class="pt-3 border-t border-slate-100 flex flex-col gap-3">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <span class="text-xs text-slate-500">Coût : <strong>1 crédit</strong> par génération (inclut cartes A/B, montage/script vidéo &amp; export).</span>
+              <button
+                id="generateBtn"
+                type="button"
+                aria-label="Générer les contenus"
+                class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-600/25 active:scale-[0.99] transition shadow-sm cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+              >
+                <i id="generateIcon" data-lucide="wand-2" class="w-4 h-4" aria-hidden="true"></i>
+                <span id="generateLabel">Générer</span>
+              </button>
+            </div>
 
-            <button
-              id="generateBtn"
-              type="button"
-              aria-label="Générer les contenus"
-              class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-600/25 active:scale-[0.99] transition shadow-sm cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
-            >
-              <i id="generateIcon" data-lucide="wand-2" class="w-4 h-4" aria-hidden="true"></i>
-              <span id="generateLabel">Générer</span>
-            </button>
+            <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-100">
+              <span class="text-xs font-semibold text-slate-600 mr-1">Export &amp; Workflow :</span>
+              <button type="button" data-export-format="txt" class="export-file-btn inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-800 transition cursor-pointer">
+                <i data-lucide="file-text" class="w-3.5 h-3.5 text-indigo-600" aria-hidden="true"></i>
+                <span>Fichier .TXT</span>
+              </button>
+              <button type="button" data-export-format="md" class="export-file-btn inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-800 transition cursor-pointer">
+                <i data-lucide="file-code" class="w-3.5 h-3.5 text-purple-600" aria-hidden="true"></i>
+                <span>Fichier .MD</span>
+              </button>
+              <button type="button" data-export-format="json" class="export-file-btn inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-800 transition cursor-pointer">
+                <i data-lucide="braces" class="w-3.5 h-3.5 text-emerald-700" aria-hidden="true"></i>
+                <span>Fichier .JSON</span>
+              </button>
+              <button id="copyMakePayloadBtn" type="button" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-50 hover:bg-indigo-100 text-indigo-800 border border-indigo-200 transition cursor-pointer">
+                <i data-lucide="workflow" class="w-3.5 h-3.5 text-indigo-700" aria-hidden="true"></i>
+                <span>Copier Payload Make.com</span>
+              </button>
+            </div>
           </div>
         </div>
 
-        <!-- Zone des résultats -->
+        <!-- Module 3 : Studio Montage & Script Vidéo IA (découpage horodaté + voix-off) -->
+        <div id="videoStudioSection" class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
+            <div class="flex items-center gap-2">
+              <i data-lucide="clapperboard" class="w-5 h-5 text-purple-600" aria-hidden="true"></i>
+              <h2 class="text-base font-bold text-slate-900">Studio Montage &amp; Script Vidéo IA (Découpage horodaté)</h2>
+            </div>
+            <div class="flex items-center gap-2">
+              <button
+                id="copyVideoScriptBtn"
+                type="button"
+                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-800 transition cursor-pointer"
+              >
+                <i data-lucide="copy" class="w-3.5 h-3.5" aria-hidden="true"></i>
+                <span>Copier montage / sous-titres</span>
+              </button>
+              <button
+                id="playVideoScriptBtn"
+                type="button"
+                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-purple-600 hover:bg-purple-700 text-white transition cursor-pointer"
+              >
+                <i data-lucide="play" class="w-3.5 h-3.5" aria-hidden="true"></i>
+                <span>Lire en voix-off</span>
+              </button>
+            </div>
+          </div>
+
+          <div id="videoTimelineGrid" class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+            <div class="rounded-xl bg-purple-50/60 border border-purple-200/80 p-3.5 space-y-1">
+              <span class="font-bold text-purple-900 block">00:00 – 00:05 • Plan 1 (Hook)</span>
+              <p id="scene1Text" class="text-slate-700 leading-relaxed">Accroche visuelle rapide + énoncé de l'idée principale.</p>
+            </div>
+            <div class="rounded-xl bg-indigo-50/60 border border-indigo-200/80 p-3.5 space-y-1">
+              <span class="font-bold text-indigo-900 block">00:05 – 00:20 • Plan 2 (Démonstration)</span>
+              <p id="scene2Text" class="text-slate-700 leading-relaxed">Montage dynamique montrant la solution et le gain de temps concret.</p>
+            </div>
+            <div class="rounded-xl bg-slate-50 border border-slate-200 p-3.5 space-y-1">
+              <span class="font-bold text-slate-900 block">00:20 – 00:30 • Plan 3 (CTA)</span>
+              <p id="scene3Text" class="text-slate-700 leading-relaxed">Appel à l'action clair vers PostCraft Omni ou l'offre Pro.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Module 4 : Cartes de contenu générées avec variantes d'accroches A/B/C -->
         <div id="resultsSection" class="space-y-4">
           <div class="flex items-center justify-between">
-            <h2 class="text-lg font-bold text-slate-900">Cartes de contenu générées</h2>
+            <h2 class="text-lg font-bold text-slate-900">Cartes de contenu générées (Accroches A / B / C)</h2>
             <span id="resultsMeta" class="text-xs text-slate-500">En attente de génération</span>
           </div>
 
@@ -184,7 +296,7 @@
             <div class="md:col-span-2 bg-white border border-dashed border-slate-300 rounded-2xl p-8 text-center text-slate-500">
               <i data-lucide="layers" class="w-8 h-8 mx-auto mb-2 text-slate-400" aria-hidden="true"></i>
               <p class="font-medium text-slate-700">Aucun contenu généré pour le moment</p>
-              <p class="text-sm mt-1">Sélectionnez vos plateformes, entrez un message de moins de 500 caractères et cliquez sur <strong>Générer</strong>.</p>
+              <p class="text-sm mt-1">Sélectionnez vos plateformes, entrez ou dictez un message de moins de 500 caractères et cliquez sur <strong>Générer</strong>.</p>
             </div>
           </div>
         </div>
@@ -198,7 +310,7 @@
               <i data-lucide="trending-up" class="w-4 h-4 text-indigo-600" aria-hidden="true"></i>
               <span>Simulateur d'Impact ROI</span>
             </h2>
-            <span class="text-xs font-semibold px-2 py-0.5 rounded bg-emerald-50 text-emerald-700">Estimation</span>
+            <span class="text-xs font-semibold px-2 py-0.5 rounded bg-emerald-50 text-emerald-700">ROI Mensuel</span>
           </div>
 
           <div class="space-y-4">
@@ -207,14 +319,7 @@
                 <label for="postsPerWeekRange">Publications / semaine</label>
                 <span id="postsPerWeekVal" class="font-bold text-slate-900">10 posts</span>
               </div>
-              <input
-                id="postsPerWeekRange"
-                type="range"
-                min="2"
-                max="35"
-                value="10"
-                class="w-full accent-indigo-600 cursor-pointer"
-              />
+              <input id="postsPerWeekRange" type="range" min="2" max="35" value="10" class="w-full accent-indigo-600 cursor-pointer" />
             </div>
 
             <div>
@@ -222,31 +327,26 @@
                 <label for="hourlyRateRange">Valeur horaire estimée (€/h)</label>
                 <span id="hourlyRateVal" class="font-bold text-slate-900">45 €/h</span>
               </div>
-              <input
-                id="hourlyRateRange"
-                type="range"
-                min="15"
-                max="150"
-                step="5"
-                value="45"
-                class="w-full accent-indigo-600 cursor-pointer"
-              />
+              <input id="hourlyRateRange" type="range" min="15" max="150" step="5" value="45" class="w-full accent-indigo-600 cursor-pointer" />
             </div>
           </div>
 
           <div class="grid grid-cols-2 gap-3 pt-2 border-t border-slate-100">
             <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80">
               <p class="text-xs text-slate-500">Temps économisé / mois</p>
-              <p id="roiHours" class="text-xl font-extrabold text-slate-900 mt-0.5">26.7 h</p>
+              <p id="roiHours" class="text-xl font-extrabold text-slate-900 mt-0.5">18.1 h</p>
             </div>
             <div class="p-3.5 rounded-xl bg-indigo-50/70 border border-indigo-200/80">
               <p class="text-xs text-indigo-700">Valeur estimée / mois</p>
-              <p id="roiValue" class="text-xl font-extrabold text-indigo-700 mt-0.5">1 200 €</p>
+              <p id="roiValue" class="text-xl font-extrabold text-indigo-700 mt-0.5">812 €</p>
             </div>
           </div>
+
+          <p class="text-xs text-slate-500 bg-slate-50 rounded-lg p-3 border border-slate-100 leading-relaxed">
+            <strong>À quoi ça sert :</strong> Estime les heures récupérées chaque mois (base <strong>25 min</strong> × posts/semaine × 4,33 ÷ 60) et leur équivalent financier (<strong>Heures × €/h</strong>) pour comparer le gain à l'abonnement Pro (29 €/mois).
+          </p>
         </div>
 
-        <!-- Carte Offre Pro -->
         <div class="bg-gradient-to-br from-slate-900 via-indigo-950 to-purple-950 text-white rounded-2xl p-6 shadow-md space-y-4">
           <div class="flex items-center justify-between">
             <span class="text-xs font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-white/10 text-indigo-200">Offre Pro</span>
@@ -301,12 +401,7 @@
           </span>
           <h2 id="proModalTitle" class="text-xl font-bold text-slate-900 mt-2">Passer au plan Pro</h2>
         </div>
-        <button
-          id="closeProModalBtn"
-          type="button"
-          aria-label="Fermer la fenêtre"
-          class="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 cursor-pointer"
-        >
+        <button id="closeProModalBtn" type="button" aria-label="Fermer la fenêtre" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 cursor-pointer">
           <i data-lucide="x" class="w-5 h-5" aria-hidden="true"></i>
         </button>
       </div>
@@ -314,17 +409,6 @@
       <p id="proModalReason" class="text-sm text-slate-600">
         Passez à l'offre Pro (<strong>29€/mois</strong>) pour continuer à générer des campagnes complètes sans limite de crédits.
       </p>
-
-      <div class="rounded-xl bg-slate-50 border border-slate-200 p-4 space-y-2 text-sm text-slate-700">
-        <div class="flex items-center gap-2">
-          <i data-lucide="check" class="w-4 h-4 text-indigo-600" aria-hidden="true"></i>
-          <span>Accès complet aux formats LinkedIn, X, Vidéo &amp; Newsletter</span>
-        </div>
-        <div class="flex items-center gap-2">
-          <i data-lucide="check" class="w-4 h-4 text-indigo-600" aria-hidden="true"></i>
-          <span>Paiement sécurisé via Dodo Payments</span>
-        </div>
-      </div>
 
       <div class="flex flex-col sm:flex-row gap-3 pt-1">
         <a
@@ -337,63 +421,116 @@
           <i data-lucide="external-link" class="w-4 h-4" aria-hidden="true"></i>
         </a>
 
-        <button
-          id="resetDemoCreditsBtn"
-          type="button"
-          class="py-3 px-4 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100 border border-slate-200 transition cursor-pointer"
-        >
+        <button id="resetDemoCreditsBtn" type="button" class="py-3 px-4 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100 border border-slate-200 transition cursor-pointer">
           Recharger démo (5/5)
         </button>
       </div>
     </div>
   </div>
 
-  <!-- Toast de notification -->
-  <div
-    id="toastContainer"
-    class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"
-    aria-live="polite"
-  ></div>
+  <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none" aria-live="polite"></div>
 
   <script>
     (function () {
       const MAX_CREDITS = 5;
       const MAX_CHARS = 500;
+      const MINUTES_SAVED_PER_POST = 25;
+      const WEEKS_PER_MONTH = 4.33;
       const DODO_CHECKOUT_URL = "https://checkout.dodopayments.com/buy/pdt_0NsMQrCHPQaa7UPki5KLS?quantity=1";
+
+      // Format demandé : code avant le nom, drapeau du pays symbole après le nom
+      const LANGUAGES_14 = [
+        { code: "fr", abbr: "FR", name: "Français", flag: "🇫🇷", voice: "fr-FR", rtl: false },
+        { code: "en", abbr: "EN", name: "English", flag: "🇬🇧", voice: "en-US", rtl: false },
+        { code: "ar", abbr: "AR", name: "العربية", flag: "🇸🇦", voice: "ar-SA", rtl: true },
+        { code: "es", abbr: "ES", name: "Español", flag: "🇪🇸", voice: "es-ES", rtl: false },
+        { code: "de", abbr: "DE", name: "Deutsch", flag: "🇩🇪", voice: "de-DE", rtl: false },
+        { code: "it", abbr: "IT", name: "Italiano", flag: "🇮🇹", voice: "it-IT", rtl: false },
+        { code: "pt", abbr: "PT", name: "Português", flag: "🇵🇹", voice: "pt-PT", rtl: false },
+        { code: "nl", abbr: "NL", name: "Nederlands", flag: "🇳🇱", voice: "nl-NL", rtl: false },
+        { code: "pl", abbr: "PL", name: "Polski", flag: "🇵🇱", voice: "pl-PL", rtl: false },
+        { code: "ru", abbr: "RU", name: "Русский", flag: "🇷🇺", voice: "ru-RU", rtl: false },
+        { code: "ja", abbr: "JA", name: "日本語", flag: "🇯🇵", voice: "ja-JP", rtl: false },
+        { code: "ko", abbr: "KO", name: "한국어", flag: "🇰🇷", voice: "ko-KR", rtl: false },
+        { code: "zh", abbr: "ZH", name: "中文", flag: "🇨🇳", voice: "zh-CN", rtl: false },
+        { code: "tr", abbr: "TR", name: "Türkçe", flag: "🇹🇷", voice: "tr-TR", rtl: false }
+      ];
 
       let credits = MAX_CREDITS;
       let isGenerating = false;
+      let isRecording = false;
+      let recognition = null;
+      let latestGeneratedCards = [];
 
-      // Éléments DOM
+      const uiLangSelectEl = document.getElementById("uiLangSelect");
       const creditsCountEl = document.getElementById("creditsCount");
       const charCounterEl = document.getElementById("charCounter");
       const briefInputEl = document.getElementById("briefInput");
       const inputErrorEl = document.getElementById("inputError");
+      const voiceStatusTextEl = document.getElementById("voiceStatusText");
+      const recordVoiceBtnEl = document.getElementById("recordVoiceBtn");
+      const recordVoiceLabelEl = document.getElementById("recordVoiceLabel");
+      const speakBriefBtnEl = document.getElementById("speakBriefBtn");
+      const icpSelectEl = document.getElementById("icpSelect");
       const toneSelectEl = document.getElementById("toneSelect");
       const languageSelectEl = document.getElementById("languageSelect");
+      const voiceLangSelectEl = document.getElementById("voiceLangSelect");
       const generateBtnEl = document.getElementById("generateBtn");
       const generateLabelEl = document.getElementById("generateLabel");
       const generateIconEl = document.getElementById("generateIcon");
+      const scene1TextEl = document.getElementById("scene1Text");
+      const scene2TextEl = document.getElementById("scene2Text");
+      const scene3TextEl = document.getElementById("scene3Text");
+      const copyVideoScriptBtnEl = document.getElementById("copyVideoScriptBtn");
+      const playVideoScriptBtnEl = document.getElementById("playVideoScriptBtn");
+      const copyMakePayloadBtnEl = document.getElementById("copyMakePayloadBtn");
       const resultsContainerEl = document.getElementById("resultsContainer");
       const resultsMetaEl = document.getElementById("resultsMeta");
       const platformButtons = Array.from(document.querySelectorAll(".platform-btn"));
+      const exportButtons = Array.from(document.querySelectorAll(".export-file-btn"));
 
-      // Modale Pro
       const proModalEl = document.getElementById("proModal");
       const proModalReasonEl = document.getElementById("proModalReason");
       const openProModalBtn = document.getElementById("openProModalBtn");
       const closeProModalBtn = document.getElementById("closeProModalBtn");
       const resetDemoCreditsBtn = document.getElementById("resetDemoCreditsBtn");
 
-      // Simulateur ROI
       const postsPerWeekRangeEl = document.getElementById("postsPerWeekRange");
       const hourlyRateRangeEl = document.getElementById("hourlyRateRange");
       const postsPerWeekValEl = document.getElementById("postsPerWeekVal");
       const hourlyRateValEl = document.getElementById("hourlyRateVal");
       const roiHoursEl = document.getElementById("roiHours");
       const roiValueEl = document.getElementById("roiValue");
-
       const toastContainerEl = document.getElementById("toastContainer");
+
+      function formatLangLabel(lang) {
+        return `${lang.abbr} ${lang.name} ${lang.flag}`;
+      }
+
+      function populate14Languages() {
+        LANGUAGES_14.forEach((lang) => {
+          const formatted = formatLangLabel(lang);
+
+          const uiOpt = document.createElement("option");
+          uiOpt.value = lang.code;
+          uiOpt.textContent = formatted;
+          uiLangSelectEl.appendChild(uiOpt);
+
+          const outOpt = document.createElement("option");
+          outOpt.value = formatted;
+          outOpt.textContent = formatted;
+          languageSelectEl.appendChild(outOpt);
+
+          const voiceOpt = document.createElement("option");
+          voiceOpt.value = lang.voice;
+          voiceOpt.textContent = `${formatted} (${lang.voice})`;
+          voiceLangSelectEl.appendChild(voiceOpt);
+        });
+
+        uiLangSelectEl.value = "fr";
+        languageSelectEl.value = formatLangLabel(LANGUAGES_14[0]);
+        voiceLangSelectEl.value = LANGUAGES_14[0].voice;
+      }
 
       function refreshIcons() {
         if (window.lucide && typeof window.lucide.createIcons === "function") {
@@ -408,17 +545,83 @@
           warning: "bg-amber-950 text-amber-100 border-amber-700",
           error: "bg-rose-950 text-rose-100 border-rose-700"
         };
-
         const toast = document.createElement("div");
         toast.className = `pointer-events-auto max-w-sm px-4 py-3 rounded-xl border shadow-lg text-sm font-medium transition ${styles[type] || styles.info}`;
         toast.textContent = message;
         toastContainerEl.appendChild(toast);
-
         setTimeout(() => {
           toast.style.opacity = "0";
-          toast.style.transform = "translateY(6px)";
           setTimeout(() => toast.remove(), 250);
-        }, 3400);
+        }, 3200);
+      }
+
+      function applyUILanguage(code) {
+        const selected = LANGUAGES_14.find((l) => l.code === code) || LANGUAGES_14[0];
+        document.documentElement.lang = selected.code;
+        document.documentElement.dir = selected.rtl ? "rtl" : "ltr";
+      }
+
+      function speakText(text, langCode) {
+        const clean = (text || "").trim();
+        if (!clean) {
+          showToast("Aucun texte à lire en voix-off.", "warning");
+          return;
+        }
+        if (!("speechSynthesis" in window)) {
+          showToast("La synthèse vocale n'est pas disponible sur ce navigateur.", "warning");
+          return;
+        }
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(clean);
+        utterance.lang = langCode || voiceLangSelectEl.value || "fr-FR";
+        window.speechSynthesis.speak(utterance);
+        showToast(`Lecture voix-off (${utterance.lang}).`, "info");
+      }
+
+      function toggleVoiceRecording() {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRecognition) {
+          showToast("Reconnaissance vocale non supportée ici. Saisissez votre texte directement.", "warning");
+          return;
+        }
+        if (isRecording && recognition) {
+          recognition.stop();
+          return;
+        }
+        recognition = new SpeechRecognition();
+        recognition.lang = voiceLangSelectEl.value || "fr-FR";
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+
+        recognition.onstart = () => {
+          isRecording = true;
+          recordVoiceBtnEl.setAttribute("aria-pressed", "true");
+          recordVoiceLabelEl.textContent = "Arrêter l'enregistrement";
+          voiceStatusTextEl.textContent = `Écoute en cours (${recognition.lang})...`;
+          voiceStatusTextEl.classList.remove("hidden");
+        };
+
+        recognition.onresult = (event) => {
+          const transcript = event.results[0][0].transcript;
+          const current = briefInputEl.value;
+          const sep = current && !current.endsWith(" ") ? " " : "";
+          briefInputEl.value = (current + sep + transcript).slice(0, MAX_CHARS);
+          validateBrief();
+          voiceStatusTextEl.textContent = "Transcription ajoutée dans la case d'idée.";
+        };
+
+        recognition.onerror = () => {
+          showToast("Erreur lors de l'enregistrement vocal.", "error");
+        };
+
+        recognition.onend = () => {
+          isRecording = false;
+          recordVoiceBtnEl.setAttribute("aria-pressed", "false");
+          recordVoiceLabelEl.textContent = "Enregistrer la voix";
+          setTimeout(() => voiceStatusTextEl.classList.add("hidden"), 2500);
+        };
+
+        recognition.start();
       }
 
       function updateCreditsUI() {
@@ -456,7 +659,6 @@
       function validateBrief() {
         const raw = briefInputEl.value;
         const trimmed = raw.trim();
-
         charCounterEl.textContent = `${raw.length} / ${MAX_CHARS} caractères`;
 
         if (raw.length > MAX_CHARS) {
@@ -464,60 +666,57 @@
           inputErrorEl.classList.remove("hidden");
           return false;
         }
-
         if (!trimmed) {
-          inputErrorEl.textContent = "Veuillez saisir une idée ou un message clé avant de générer.";
+          inputErrorEl.textContent = "Veuillez saisir ou enregistrer une idée avant de générer.";
           inputErrorEl.classList.remove("hidden");
           return false;
         }
-
         inputErrorEl.classList.add("hidden");
         inputErrorEl.textContent = "";
         return true;
       }
 
-      function buildCardContent(platform, brief, tone, lang) {
-        const isEnglish = lang === "English";
-        const cleanBrief = brief.trim();
-
-        if (isEnglish) {
-          const hooks = {
-            "LinkedIn": `Why ${tone.toLowerCase()} execution wins in B2B`,
-            "X (Twitter)": `Fast B2B insight (${tone.toLowerCase()})`,
-            "TikTok / Reels": `3-scene video script: ${tone}`,
-            "Newsletter B2B": `Weekly B2B playbook: ${tone}`
-          };
-          const body =
-            platform === "TikTok / Reels"
-              ? `[0:00-0:05] Hook: "${cleanBrief}"\n[0:05-0:20] Show how to automate repetitive tasks & save hours.\n[0:20-0:30] CTA: Try PostCraft Omni or upgrade to Pro.`
-              : `${cleanBrief}\n\nTurn raw ideas into structured, multi-channel assets without manual bottlenecks. Built for teams that value speed, consistency, and measurable ROI.`;
-          const tags = `#B2B #Automation #SaaS #PostCraftOmni #Growth`;
-          return { title: hooks[platform] || platform, body, tags };
-        }
-
-        const hooksFr = {
-          "LinkedIn": `Ce que change une approche ${tone.toLowerCase()} en B2B`,
-          "X (Twitter)": `Format court — Ton ${tone.toLowerCase()}`,
-          "TikTok / Reels": `Script vidéo 30s (${tone})`,
-          "Newsletter B2B": `À la une de votre newsletter (${tone})`
+      function buildCardVariants(platform, brief, icp, tone, lang) {
+        const clean = brief.trim();
+        const hooks = {
+          A: `${platform} (${icp}) — Angle direct : ${clean.slice(0, 65)}${clean.length > 65 ? "…" : ""}`,
+          B: `Et si ${icp.toLowerCase()} automatisaient ce point dès cette semaine ?`,
+          C: `Jusqu'à 25 min gagnées par publication pour ${icp.toLowerCase()} (${tone})`
         };
-
-        const bodyFr =
-          platform === "TikTok / Reels"
-            ? `[0s - 5s] Accroche : "${cleanBrief}"\n[5s - 20s] Démonstration : automatiser la création de contenus et gagner des heures chaque semaine.\n[20s - 30s] Appel à l'action : tester PostCraft Omni ou passer en Pro.`
-            : `${cleanBrief}\n\nPassez d'une idée brute à des déclinaisons prêtes à publier sans perdre d'heures en mise en forme. Idéal pour garder un rythme régulier et un ROI clair.`;
-
-        const tagsFr = `#B2B #Automatisation #Productivité #SaaS #PostCraftOmni`;
-        return { title: hooksFr[platform] || platform, body: bodyFr, tags: tagsFr };
+        const body = `${clean}\n\nCible : ${icp} • Ton : ${tone} • Langue : ${lang}.\nDéclinaison prête à adapter et publier avec un message clair orienté résultat.`;
+        const tags = `#PostCraftOmni #B2B #Automatisation #Growth`;
+        return { hooks, body, tags };
       }
 
-      function renderResultCards(platforms, brief, tone, lang) {
+      function updateVideoTimeline(brief, icp, tone) {
+        const clean = (brief || "Votre idée clé").trim();
+        scene1TextEl.textContent = `[00:00–00:05] Accroche (${tone}) : "${clean}"`;
+        scene2TextEl.textContent = `[00:05–00:20] Démonstration pour ${icp} : structuration multi-canal & gain de temps.`;
+        scene3TextEl.textContent = `[00:20–00:30] Appel à l'action : essayez PostCraft Omni ou passez en Pro (29€/mois).`;
+      }
+
+      function getFullVideoScriptText() {
+        return `${scene1TextEl.textContent}\n${scene2TextEl.textContent}\n${scene3TextEl.textContent}`;
+      }
+
+      function renderResultCards(platforms, brief, icp, tone, lang) {
         resultsContainerEl.innerHTML = "";
-        resultsMetaEl.textContent = `${platforms.length} format(s) • Ton : ${tone} • ${lang}`;
+        latestGeneratedCards = [];
+        resultsMetaEl.textContent = `${platforms.length} canal(aux) • ${icp} • ${lang}`;
 
         platforms.forEach((platform) => {
-          const item = buildCardContent(platform, brief, tone, lang);
-          const fullTextToCopy = `${item.title}\n\n${item.body}\n\n${item.tags}`;
+          const data = buildCardVariants(platform, brief, icp, tone, lang);
+          let activeVariant = "A";
+
+          const cardEntry = {
+            platform,
+            get hook() {
+              return data.hooks[activeVariant];
+            },
+            body: data.body,
+            tags: data.tags
+          };
+          latestGeneratedCards.push(cardEntry);
 
           const card = document.createElement("article");
           card.className = "bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex flex-col justify-between gap-4";
@@ -532,24 +731,45 @@
           platformBadge.className = "inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200";
           platformBadge.textContent = platform;
 
-          const langBadge = document.createElement("span");
-          langBadge.className = "text-xs font-medium text-slate-400";
-          langBadge.textContent = lang;
-
-          badgeRow.appendChild(platformBadge);
-          badgeRow.appendChild(langBadge);
+          const variantGroup = document.createElement("div");
+          variantGroup.className = "inline-flex items-center gap-1";
 
           const titleEl = document.createElement("h3");
-          titleEl.className = "font-bold text-slate-900 text-base";
-          titleEl.textContent = item.title;
+          titleEl.className = "font-bold text-slate-900 text-sm sm:text-base";
+          titleEl.textContent = data.hooks.A;
+
+          ["A", "B", "C"].forEach((key) => {
+            const vBtn = document.createElement("button");
+            vBtn.type = "button";
+            vBtn.textContent = key;
+            vBtn.className =
+              key === "A"
+                ? "px-2 py-0.5 rounded text-xs font-bold bg-indigo-600 text-white cursor-pointer"
+                : "px-2 py-0.5 rounded text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 cursor-pointer";
+            vBtn.addEventListener("click", () => {
+              activeVariant = key;
+              titleEl.textContent = data.hooks[key];
+              Array.from(variantGroup.children).forEach((child, idx) => {
+                const k = ["A", "B", "C"][idx];
+                child.className =
+                  k === key
+                    ? "px-2 py-0.5 rounded text-xs font-bold bg-indigo-600 text-white cursor-pointer"
+                    : "px-2 py-0.5 rounded text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200 cursor-pointer";
+              });
+            });
+            variantGroup.appendChild(vBtn);
+          });
+
+          badgeRow.appendChild(platformBadge);
+          badgeRow.appendChild(variantGroup);
 
           const bodyEl = document.createElement("p");
           bodyEl.className = "text-sm text-slate-600 whitespace-pre-line leading-relaxed";
-          bodyEl.textContent = item.body;
+          bodyEl.textContent = data.body;
 
           const tagsEl = document.createElement("p");
           tagsEl.className = "text-xs font-semibold text-indigo-600 pt-1";
-          tagsEl.textContent = item.tags;
+          tagsEl.textContent = data.tags;
 
           topRow.appendChild(badgeRow);
           topRow.appendChild(titleEl);
@@ -562,13 +782,14 @@
           const copyBtn = document.createElement("button");
           copyBtn.type = "button";
           copyBtn.className = "inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 transition cursor-pointer";
-          copyBtn.innerHTML = `<i data-lucide="copy" class="w-3.5 h-3.5" aria-hidden="true"></i><span>Copier la carte</span>`;
+          copyBtn.innerHTML = `<i data-lucide="copy" class="w-3.5 h-3.5" aria-hidden="true"></i><span>Copier (${platform})</span>`;
           copyBtn.addEventListener("click", async () => {
+            const textToCopy = `${data.hooks[activeVariant]}\n\n${data.body}\n\n${data.tags}`;
             try {
-              await navigator.clipboard.writeText(fullTextToCopy);
-              showToast(`Contenu ${platform} copié dans le presse-papiers.`, "success");
+              await navigator.clipboard.writeText(textToCopy);
+              showToast(`Carte ${platform} (Accroche ${activeVariant}) copiée.`, "success");
             } catch {
-              showToast("Impossible de copier automatiquement. Sélectionnez le texte manuellement.", "warning");
+              showToast("Copie automatique indisponible.", "warning");
             }
           });
 
@@ -587,7 +808,90 @@
           resultsContainerEl.appendChild(card);
         });
 
+        updateVideoTimeline(brief, icp, tone);
         refreshIcons();
+      }
+
+      function buildExportPayload() {
+        const brief = briefInputEl.value.trim();
+        const icp = icpSelectEl.value;
+        const tone = toneSelectEl.value;
+        const lang = languageSelectEl.value;
+        const voiceLang = voiceLangSelectEl.value;
+        const platforms = getSelectedPlatforms();
+
+        const cards =
+          latestGeneratedCards.length > 0
+            ? latestGeneratedCards.map((c) => ({ platform: c.platform, title: c.hook, body: c.body, tags: c.tags }))
+            : platforms.map((p) => {
+                const v = buildCardVariants(p, brief, icp, tone, lang);
+                return { platform: p, title: v.hooks.A, body: v.body, tags: v.tags };
+              });
+
+        return {
+          app: "PostCraft Omni",
+          generatedAt: new Date().toISOString(),
+          icp,
+          tone,
+          outputLanguage: lang,
+          voiceLanguage: voiceLang,
+          brief,
+          videoScript: getFullVideoScriptText(),
+          cards
+        };
+      }
+
+      function exportCampaignFile(format) {
+        const brief = briefInputEl.value.trim();
+        if (!brief) {
+          showToast("Saisissez ou enregistrez d'abord une idée avant d'exporter.", "warning");
+          return;
+        }
+        const payload = buildExportPayload();
+        let content = "";
+        let mime = "text/plain;charset=utf-8";
+        let filename = `postcraft-omni-campagne.${format}`;
+
+        if (format === "json") {
+          content = JSON.stringify(payload, null, 2);
+          mime = "application/json;charset=utf-8";
+        } else if (format === "md") {
+          content = [
+            `# PostCraft Omni — Campagne`,
+            `- **Cible (ICP)** : ${payload.icp}`,
+            `- **Ton** : ${payload.tone}`,
+            `- **Langue** : ${payload.outputLanguage} | **Voix-off** : ${payload.voiceLanguage}`,
+            ``,
+            `## Montage & Script Vidéo IA`,
+            payload.videoScript,
+            ``,
+            `## Cartes de contenu`,
+            ...payload.cards.flatMap((c) => [`### ${c.platform} — ${c.title}`, c.body, c.tags, ``])
+          ].join("\n");
+          mime = "text/markdown;charset=utf-8";
+        } else {
+          content = [
+            `POSTCRAFT OMNI — EXPORT DE CAMPAGNE`,
+            `Cible : ${payload.icp} | Ton : ${payload.tone} | Langue : ${payload.outputLanguage}`,
+            ``,
+            `--- MONTAGE & SCRIPT VIDÉO IA ---`,
+            payload.videoScript,
+            ``,
+            `--- CARTES DE CONTENU ---`,
+            ...payload.cards.flatMap((c) => [`[${c.platform}] ${c.title}`, c.body, c.tags, ``])
+          ].join("\n");
+        }
+
+        const blob = new Blob([content], { type: mime });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+        showToast(`Fichier ${filename} téléchargé.`, "success");
       }
 
       function setLoadingState(loading) {
@@ -607,14 +911,12 @@
 
       async function handleGenerateClick() {
         if (isGenerating) return;
-
         if (!validateBrief()) {
           showToast("Vérifiez votre texte avant de lancer la génération.", "warning");
           return;
         }
-
         if (credits <= 0) {
-          showToast("Vous avez atteint votre limite de crédits gratuits (0/5).", "error");
+          showToast("Limite de crédits gratuits atteinte (0/5).", "error");
           openProModal(
             `Vos crédits gratuits sont épuisés (<strong>0/5</strong>). Passez au plan Pro à <strong>29€/mois</strong> pour continuer sans interruption.`
           );
@@ -622,36 +924,34 @@
         }
 
         setLoadingState(true);
-
         const platforms = getSelectedPlatforms();
         const brief = briefInputEl.value.trim();
+        const icp = icpSelectEl.value;
         const tone = toneSelectEl.value;
         const lang = languageSelectEl.value;
 
-        await new Promise((resolve) => setTimeout(resolve, 650));
+        await new Promise((resolve) => setTimeout(resolve, 600));
 
         credits = Math.max(0, credits - 1);
         updateCreditsUI();
-        renderResultCards(platforms, brief, tone, lang);
+        renderResultCards(platforms, brief, icp, tone, lang);
         setLoadingState(false);
 
-        showToast(`1 crédit utilisé. Il vous reste ${credits}/${MAX_CREDITS} crédits.`, "success");
+        showToast(`1 crédit utilisé. Il reste ${credits}/${MAX_CREDITS} crédits.`, "success");
 
         if (credits === 0) {
           setTimeout(() => {
             openProModal(
               `Vous venez d'utiliser votre dernier crédit (<strong>0/5</strong>). Débloquez l'accès illimité avec le plan Pro à <strong>29€/mois</strong>.`
             );
-          }, 450);
+          }, 400);
         }
       }
 
       function updateROI() {
         const postsPerWeek = Number(postsPerWeekRangeEl.value);
         const hourlyRate = Number(hourlyRateRangeEl.value);
-
-        // Estimation : ~40 minutes économisées par lot de posts générés/structurés
-        const hoursPerMonth = ((postsPerWeek * 4.33 * 40) / 60);
+        const hoursPerMonth = (postsPerWeek * WEEKS_PER_MONTH * MINUTES_SAVED_PER_POST) / 60;
         const valuePerMonth = Math.round(hoursPerMonth * hourlyRate);
 
         postsPerWeekValEl.textContent = `${postsPerWeek} posts`;
@@ -660,18 +960,87 @@
         roiValueEl.textContent = `${valuePerMonth.toLocaleString("fr-FR")} €`;
       }
 
-      // Événements plateformes
+      function runSelfCheck() {
+        const requiredIds = [
+          "brandLogoBox",
+          "jumpVideoStudioLink",
+          "uiLangSelect",
+          "creditsCount",
+          "openProModalBtn",
+          "platformGrid",
+          "icpSelect",
+          "toneSelect",
+          "languageSelect",
+          "voiceLangSelect",
+          "briefInput",
+          "recordVoiceBtn",
+          "speakBriefBtn",
+          "generateBtn",
+          "copyMakePayloadBtn",
+          "videoStudioSection",
+          "scene1Text",
+          "scene2Text",
+          "scene3Text",
+          "copyVideoScriptBtn",
+          "playVideoScriptBtn",
+          "resultsContainer",
+          "postsPerWeekRange",
+          "hourlyRateRange",
+          "roiHours",
+          "roiValue",
+          "proModal"
+        ];
+        const missing = requiredIds.filter((id) => !document.getElementById(id));
+        const langsCountOk =
+          uiLangSelectEl.options.length === 14 &&
+          languageSelectEl.options.length === 14 &&
+          voiceLangSelectEl.options.length === 14;
+        const platformsCountOk = platformButtons.length === 7;
+        const checkoutOk = Array.from(document.querySelectorAll('a[href*="checkout.dodopayments.com"]')).length > 0;
+        if (missing.length > 0 || !langsCountOk || !platformsCountOk || !checkoutOk) {
+          console.warn("PostCraft Omni Self-Check warning:", { missing, langsCountOk, platformsCountOk, checkoutOk });
+        }
+      }
+
+      populate14Languages();
+      uiLangSelectEl.addEventListener("change", () => applyUILanguage(uiLangSelectEl.value));
+      recordVoiceBtnEl.addEventListener("click", toggleVoiceRecording);
+      speakBriefBtnEl.addEventListener("click", () => speakText(briefInputEl.value, voiceLangSelectEl.value));
+      playVideoScriptBtnEl.addEventListener("click", () => speakText(getFullVideoScriptText(), voiceLangSelectEl.value));
+      copyVideoScriptBtnEl.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(getFullVideoScriptText());
+          showToast("Script de montage & sous-titres copiés.", "success");
+        } catch {
+          showToast("Copie automatique indisponible.", "warning");
+        }
+      });
+
+      exportButtons.forEach((btn) => {
+        btn.addEventListener("click", () => exportCampaignFile(btn.dataset.exportFormat));
+      });
+
+      copyMakePayloadBtnEl.addEventListener("click", async () => {
+        if (!briefInputEl.value.trim()) {
+          showToast("Saisissez ou enregistrez d'abord une idée pour générer le payload.", "warning");
+          return;
+        }
+        try {
+          await navigator.clipboard.writeText(JSON.stringify(buildExportPayload(), null, 2));
+          showToast("Payload JSON prêt pour Make.com copié.", "success");
+        } catch {
+          showToast("Copie automatique indisponible.", "warning");
+        }
+      });
+
       platformButtons.forEach((btn) => {
         btn.addEventListener("click", () => {
           const isSelected = btn.getAttribute("aria-pressed") === "true";
           const nextState = !isSelected;
           btn.setAttribute("aria-pressed", String(nextState));
-
-          if (nextState) {
-            btn.className = "platform-btn flex items-center gap-2.5 p-3 rounded-xl border-2 border-indigo-600 bg-indigo-50/70 text-indigo-900 font-medium text-sm transition cursor-pointer";
-          } else {
-            btn.className = "platform-btn flex items-center gap-2.5 p-3 rounded-xl border border-slate-200 bg-white hover:border-slate-300 text-slate-700 font-medium text-sm transition cursor-pointer";
-          }
+          btn.className = nextState
+            ? "platform-btn flex items-center gap-2 p-2.5 rounded-xl border-2 border-indigo-600 bg-indigo-50/70 text-indigo-900 font-medium text-xs sm:text-sm transition cursor-pointer"
+            : "platform-btn flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 bg-white hover:border-slate-300 text-slate-700 font-medium text-xs sm:text-sm transition cursor-pointer";
         });
       });
 
@@ -694,11 +1063,12 @@
       postsPerWeekRangeEl.addEventListener("input", updateROI);
       hourlyRateRangeEl.addEventListener("input", updateROI);
 
-      // Initialisation
+      applyUILanguage("fr");
       updateCreditsUI();
       validateBrief();
       updateROI();
       refreshIcons();
+      runSelfCheck();
     })();
   </script>
 </body>
