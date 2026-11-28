@@ -130,31 +130,48 @@
             <label class="block text-sm font-semibold text-slate-700 mb-2.5">Plateformes cibles</label>
             <div id="platformGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
               <button type="button" data-platform="LinkedIn" aria-pressed="true" class="platform-btn flex items-center gap-2 p-2.5 rounded-xl border-2 border-indigo-600 bg-indigo-50/70 text-indigo-900 font-medium text-xs sm:text-sm transition cursor-pointer">
-                <i data-lucide="linkedin" class="w-4 h-4 text-[#0A66C2] shrink-0" aria-hidden="true"></i>
+                <svg class="w-4 h-4 text-[#0A66C2] shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M19 3A2 2 0 0 1 21 5V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3H19M8.34 17.34V10.67H6.12V17.34H8.34M7.23 9.76C8.01 9.76 8.5 9.24 8.5 8.59C8.48 7.93 8.01 7.43 7.25 7.43C6.48 7.43 6 7.93 6 8.59C6 9.24 6.47 9.76 7.22 9.76H7.23M17.88 17.34V13.57C17.88 11.55 16.8 10.61 15.36 10.61C14.21 10.61 13.7 11.24 13.41 11.69V10.67H11.19C11.22 11.27 11.19 17.34 11.19 17.34H13.41V13.62C13.41 13.42 13.43 13.22 13.49 13.08C13.65 12.68 14.01 12.27 14.62 12.27C15.41 12.27 15.66 12.87 15.66 13.75V17.34H17.88Z"/>
+                </svg>
                 <span>LinkedIn</span>
               </button>
               <button type="button" data-platform="X / Twitter" aria-pressed="true" class="platform-btn flex items-center gap-2 p-2.5 rounded-xl border-2 border-indigo-600 bg-indigo-50/70 text-indigo-900 font-medium text-xs sm:text-sm transition cursor-pointer">
-                <i data-lucide="twitter" class="w-4 h-4 text-slate-900 shrink-0" aria-hidden="true"></i>
+                <svg class="w-4 h-4 text-slate-900 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
                 <span>X / Twitter</span>
               </button>
               <button type="button" data-platform="Facebook" aria-pressed="false" class="platform-btn flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 bg-white/90 hover:border-slate-300 text-slate-700 font-medium text-xs sm:text-sm transition cursor-pointer">
-                <i data-lucide="facebook" class="w-4 h-4 text-[#1877F2] shrink-0" aria-hidden="true"></i>
+                <svg class="w-4 h-4 text-[#1877F2] shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M22 12A10 10 0 1 0 10.45 21.88V14.89H7.9V12H10.45V9.8C10.45 7.28 11.95 5.89 14.24 5.89C15.34 5.89 16.49 6.09 16.49 6.09V8.56H15.22C13.97 8.56 13.58 9.34 13.58 10.13V12H16.37L15.92 14.89H13.58V21.88A10 10 0 0 0 22 12Z"/>
+                </svg>
                 <span>Facebook</span>
               </button>
               <button type="button" data-platform="Instagram" aria-pressed="false" class="platform-btn flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 bg-white/90 hover:border-slate-300 text-slate-700 font-medium text-xs sm:text-sm transition cursor-pointer">
-                <i data-lucide="instagram" class="w-4 h-4 text-[#E4405F] shrink-0" aria-hidden="true"></i>
+                <svg class="w-4 h-4 text-[#E4405F] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <rect x="2.5" y="2.5" width="19" height="19" rx="5"/>
+                  <circle cx="12" cy="12" r="4"/>
+                  <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/>
+                </svg>
                 <span>Instagram</span>
               </button>
               <button type="button" data-platform="TikTok / Reels" aria-pressed="false" class="platform-btn flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 bg-white/90 hover:border-slate-300 text-slate-700 font-medium text-xs sm:text-sm transition cursor-pointer">
-                <i data-lucide="video" class="w-4 h-4 text-purple-600 shrink-0" aria-hidden="true"></i>
+                <svg class="w-4 h-4 text-slate-900 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07Z"/>
+                </svg>
                 <span>TikTok / Reels</span>
               </button>
               <button type="button" data-platform="Newsletter" aria-pressed="false" class="platform-btn flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 bg-white/90 hover:border-slate-300 text-slate-700 font-medium text-xs sm:text-sm transition cursor-pointer">
-                <i data-lucide="mail" class="w-4 h-4 text-indigo-500 shrink-0" aria-hidden="true"></i>
+                <svg class="w-4 h-4 text-indigo-600 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <rect x="2.5" y="4.5" width="19" height="15" rx="2.5"/>
+                  <path d="m3.5 6 8.5 6.5L20.5 6"/>
+                </svg>
                 <span>Newsletter</span>
               </button>
               <button type="button" data-platform="WhatsApp" aria-pressed="false" class="platform-btn flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 bg-white/90 hover:border-slate-300 text-slate-700 font-medium text-xs sm:text-sm transition cursor-pointer">
-                <i data-lucide="message-circle" class="w-4 h-4 text-[#25D366] shrink-0" aria-hidden="true"></i>
+                <svg class="w-4 h-4 text-[#25D366] shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M12.04 2A9.9 9.9 0 0 0 2.12 11.9c0 1.74.46 3.44 1.33 4.94L2 22l5.3-1.39a9.92 9.92 0 0 0 4.74 1.2h.01c5.48 0 9.94-4.44 9.94-9.91A9.87 9.87 0 0 0 12.04 2Zm5.8 14.08c-.24.68-1.41 1.3-1.94 1.38-.5.08-1.13.11-1.82-.11-.42-.13-.96-.31-1.65-.61-2.9-1.25-4.79-4.18-4.94-4.37-.15-.2-1.18-1.57-1.18-3 0-1.43.75-2.13 1.01-2.42.27-.29.59-.36.78-.36h.56c.18 0 .42-.07.66.5.24.58.83 2.02.9 2.17.08.15.13.32.03.52-.1.2-.15.32-.3.5-.15.17-.31.39-.45.52-.15.15-.3.31-.13.6.17.3.76 1.25 1.63 2.02 1.12 1 2.06 1.31 2.36 1.46.3.15.47.12.64-.07.17-.2.74-.86.94-1.15.2-.3.4-.25.67-.15.27.1 1.73.81 2.03.96.3.15.5.22.57.34.08.12.08.7-.16 1.38Z"/>
+                </svg>
                 <span>WhatsApp</span>
               </button>
             </div>
@@ -281,7 +298,7 @@
           <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
             <div class="flex items-center gap-2">
               <i data-lucide="clapperboard" class="w-5 h-5 text-purple-600" aria-hidden="true"></i>
-              <h2 class="text-base font-bold text-slate-900">Studio Montage &amp; Script Vidéo IA (Découpage horodaté)</h2>
+              <h2 id="videoStudioTitle" class="text-base font-bold text-slate-900">Studio Montage &amp; Script Vidéo IA (Découpage horodaté)</h2>
             </div>
             <div class="flex items-center gap-2">
               <button
@@ -290,7 +307,7 @@
                 class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-800 transition cursor-pointer"
               >
                 <i data-lucide="copy" class="w-3.5 h-3.5" aria-hidden="true"></i>
-                <span>Copier montage / sous-titres</span>
+                <span id="copyVideoScriptLabel">Copier montage / sous-titres</span>
               </button>
               <button
                 id="playVideoScriptBtn"
@@ -298,22 +315,22 @@
                 class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-purple-600 hover:bg-purple-700 text-white transition cursor-pointer"
               >
                 <i data-lucide="play" class="w-3.5 h-3.5" aria-hidden="true"></i>
-                <span>Lire en voix-off</span>
+                <span id="playVideoScriptLabel">Lire en voix-off</span>
               </button>
             </div>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
             <div class="rounded-xl bg-purple-50/70 border border-purple-200/80 p-3.5 space-y-1">
-              <span class="font-bold text-purple-900 block">00:00 – 00:05 • Plan 1 (Hook)</span>
+              <span id="scene1Badge" class="font-bold text-purple-900 block">00:00 – 00:05 • Plan 1 (Hook)</span>
               <p id="scene1Text" class="text-slate-700 leading-relaxed">Accroche visuelle rapide + énoncé de l'idée principale.</p>
             </div>
             <div class="rounded-xl bg-indigo-50/70 border border-indigo-200/80 p-3.5 space-y-1">
-              <span class="font-bold text-indigo-900 block">00:05 – 00:20 • Plan 2 (Démonstration)</span>
+              <span id="scene2Badge" class="font-bold text-indigo-900 block">00:05 – 00:20 • Plan 2 (Démonstration)</span>
               <p id="scene2Text" class="text-slate-700 leading-relaxed">Montage dynamique montrant la solution et le gain de temps concret.</p>
             </div>
             <div class="rounded-xl bg-slate-50/90 border border-slate-200 p-3.5 space-y-1">
-              <span class="font-bold text-slate-900 block">00:20 – 00:30 • Plan 3 (CTA)</span>
+              <span id="scene3Badge" class="font-bold text-slate-900 block">00:20 – 00:30 • Plan 3 (CTA)</span>
               <p id="scene3Text" class="text-slate-700 leading-relaxed">Appel à l'action clair vers PostCraft Omni ou l'offre Pro.</p>
             </div>
           </div>
@@ -526,6 +543,21 @@
         fr: {
           mainTitle: "Créer une campagne multicanale",
           proBtn: "Passer Pro",
+          jumpVideo: "Montage & Script IA",
+          speakBrief: "Écouter la voix-off",
+          recordVoice: "Enregistrer la voix",
+          videoStudioTitle: "Studio Montage & Script Vidéo IA (Découpage horodaté)",
+          copyVideoScript: "Copier montage / sous-titres",
+          playVideoScript: "Lire en voix-off",
+          scene1Badge: "00:00 – 00:05 • Plan 1 (Hook)",
+          scene2Badge: "00:05 – 00:20 • Plan 2 (Démonstration)",
+          scene3Badge: "00:20 – 00:30 • Plan 3 (CTA)",
+          scene1Default: "Accroche visuelle rapide + énoncé de l'idée principale.",
+          scene2Default: "Montage dynamique montrant la solution et le gain de temps concret.",
+          scene3Default: "Appel à l'action clair vers PostCraft Omni ou l'offre Pro.",
+          scene1Gen: (tone, brief) => `[00:00–00:05] Accroche (${tone}) : "${brief}"`,
+          scene2Gen: (icp) => `[00:05–00:20] Démonstration pour ${icp} : structuration multi-canal & gain de temps.`,
+          scene3Gen: () => `[00:20–00:30] Appel à l'action : essayez PostCraft Omni ou passez en Pro (29€/mois).`,
           roiTitle: "Simulateur d'Impact ROI",
           roiBadge: "ROI Mensuel",
           postsPerWeek: "Publications / semaine",
@@ -543,6 +575,21 @@
         en: {
           mainTitle: "Create a multi-channel campaign",
           proBtn: "Go Pro",
+          jumpVideo: "AI Editing & Script",
+          speakBrief: "Listen voice-over",
+          recordVoice: "Record voice",
+          videoStudioTitle: "AI Video Editing & Script Studio (Timestamped Cut)",
+          copyVideoScript: "Copy cut / subtitles",
+          playVideoScript: "Play voice-over",
+          scene1Badge: "00:00 – 00:05 • Shot 1 (Hook)",
+          scene2Badge: "00:05 – 00:20 • Shot 2 (Demo)",
+          scene3Badge: "00:20 – 00:30 • Shot 3 (CTA)",
+          scene1Default: "Fast visual hook + core message statement.",
+          scene2Default: "Dynamic cut showcasing the solution and concrete time saved.",
+          scene3Default: "Clear call-to-action towards PostCraft Omni or the Pro plan.",
+          scene1Gen: (tone, brief) => `[00:00–00:05] Hook (${tone}): "${brief}"`,
+          scene2Gen: (icp) => `[00:05–00:20] Demo for ${icp}: multi-channel structuring & time saved.`,
+          scene3Gen: () => `[00:20–00:30] Call to action: try PostCraft Omni or upgrade to Pro (€29/month).`,
           roiTitle: "ROI Impact Simulator",
           roiBadge: "Monthly ROI",
           postsPerWeek: "Posts / week",
@@ -560,6 +607,21 @@
         ar: {
           mainTitle: "إنشاء حملة متعددة القنوات",
           proBtn: "الترقية إلى Pro",
+          jumpVideo: "استوديو المونتاج والسكريبت",
+          speakBrief: "استماع للتعليق الصوتي",
+          recordVoice: "تسجيل الصوت",
+          videoStudioTitle: "استوديو المونتاج وسكريبت الفيديو بالذكاء الاصطناعي (تقطيع زمني)",
+          copyVideoScript: "نسخ المونتاج / الترجمة",
+          playVideoScript: "تشغيل التعليق الصوتي",
+          scene1Badge: "00:00 – 00:05 • اللقطة 1 (الخطاف)",
+          scene2Badge: "00:05 – 00:20 • اللقطة 2 (العرض التوضيحي)",
+          scene3Badge: "00:20 – 00:30 • اللقطة 3 (الدعوة لاتخاذ إجراء)",
+          scene1Default: "خطاف بصري سريع + عرض الفكرة الرئيسية بوضوح.",
+          scene2Default: "مونتاج ديناميكي يوضح الحل وتوفير الوقت الفعلي.",
+          scene3Default: "دعوة واضحة لاتخاذ إجراء نحو PostCraft Omni أو باقة Pro.",
+          scene1Gen: (tone, brief) => `[00:00–00:05] الخطاف (${tone}): "${brief}"`,
+          scene2Gen: (icp) => `[00:05–00:20] عرض توضيحي لـ ${icp}: تنظيم المحتوى متعدد القنوات وتوفير الوقت.`,
+          scene3Gen: () => `[00:20–00:30] دعوة لاتخاذ إجراء: جرّب PostCraft Omni أو اشترك في Pro (29€/شهر).`,
           roiTitle: "محاكي العائد ROI",
           roiBadge: "عائد شهري",
           postsPerWeek: "منشورات / أسبوع",
@@ -573,6 +635,358 @@
           maxCharsError: "يجب ألا يتجاوز النص 500 حرف.",
           icpOptions: ["مؤسسو ومديرو SaaS", "وكالات التسويق والاستوديو", "فرق المبيعات والنمو", "الشركات الصغيرة والمستشارون"],
           toneOptions: ["احترافي وموثوق", "مباشر ويركز على التحويل", "تعليمي ومبسّط", "جريء / قيادة فكرية"]
+        },
+        es: {
+          mainTitle: "Crear una campaña multicanal",
+          proBtn: "Pasar a Pro",
+          jumpVideo: "Edición y Guion IA",
+          speakBrief: "Escuchar voz en off",
+          recordVoice: "Grabar voz",
+          videoStudioTitle: "Estudio de Edición y Guion de Video IA (Corte por tiempo)",
+          copyVideoScript: "Copiar edición / subtítulos",
+          playVideoScript: "Reproducir voz en off",
+          scene1Badge: "00:00 – 00:05 • Plano 1 (Gancho)",
+          scene2Badge: "00:05 – 00:20 • Plano 2 (Demostración)",
+          scene3Badge: "00:20 – 00:30 • Plano 3 (CTA)",
+          scene1Default: "Gancho visual rápido + enunciado de la idea principal.",
+          scene2Default: "Montaje dinámico mostrando la solución y el ahorro de tiempo.",
+          scene3Default: "Llamada a la acción clara hacia PostCraft Omni o el plan Pro.",
+          scene1Gen: (tone, brief) => `[00:00–00:05] Gancho (${tone}): "${brief}"`,
+          scene2Gen: (icp) => `[00:05–00:20] Demostración para ${icp}: estructuración multicanal y ahorro de tiempo.`,
+          scene3Gen: () => `[00:20–00:30] Llamada a la acción: prueba PostCraft Omni o pasa a Pro (29€/mes).`,
+          roiTitle: "Simulador de Impacto ROI",
+          roiBadge: "ROI Mensual",
+          postsPerWeek: "Publicaciones / semana",
+          hourlyRate: "Valor por hora estimado (€/h)",
+          roiHours: "Tiempo ahorrado / mes",
+          roiValue: "Valor estimado / mes",
+          roiExplanation: "Estima las horas ahorradas cada mes (25 min × posts/semana × 4,33 ÷ 60) y su valor estimado frente al plan Pro (29 €/mes).",
+          emptyTitle: "Aún no hay contenido generado",
+          emptyDesc: "Selecciona tus plataformas, escribe o dicta un mensaje de menos de 500 caracteres y haz clic en Generar.",
+          emptyBriefError: "Por favor, introduce o graba una idea antes de generar.",
+          maxCharsError: "El texto no debe superar los 500 caracteres.",
+          icpOptions: ["Fundadores y CEO SaaS", "Agencias de Marketing y Estudio", "Equipos de Ventas y Growth", "Pymes y Consultores"],
+          toneOptions: ["Profesional y con Autoridad", "Directo y Enfocado a Conversión", "Educativo y Claro", "Audaz / Liderazgo de Opinión"]
+        },
+        de: {
+          mainTitle: "Multikanal-Kampagne erstellen",
+          proBtn: "Auf Pro upgraden",
+          jumpVideo: "KI-Schnitt & Skript",
+          speakBrief: "Voice-over anhören",
+          recordVoice: "Sprache aufnehmen",
+          videoStudioTitle: "KI-Videoschnitt & Skript-Studio (Zeitstempel-Schnitt)",
+          copyVideoScript: "Schnitt / Untertitel kopieren",
+          playVideoScript: "Voice-over abspielen",
+          scene1Badge: "00:00 – 00:05 • Einstellung 1 (Hook)",
+          scene2Badge: "00:05 – 00:20 • Einstellung 2 (Demo)",
+          scene3Badge: "00:20 – 00:30 • Einstellung 3 (CTA)",
+          scene1Default: "Schneller visueller Hook + Kernaussage.",
+          scene2Default: "Dynamischer Schnitt, der Lösung und Zeitersparnis zeigt.",
+          scene3Default: "Klarer Call-to-Action zu PostCraft Omni oder dem Pro-Tarif.",
+          scene1Gen: (tone, brief) => `[00:00–00:05] Hook (${tone}): "${brief}"`,
+          scene2Gen: (icp) => `[00:05–00:20] Demo für ${icp}: Multikanal-Strukturierung & Zeitersparnis.`,
+          scene3Gen: () => `[00:20–00:30] Call-to-Action: PostCraft Omni testen oder auf Pro (29€/Monat) wechseln.`,
+          roiTitle: "ROI-Auswirkungssimulator",
+          roiBadge: "Monatlicher ROI",
+          postsPerWeek: "Beiträge / Woche",
+          hourlyRate: "Geschätzter Stundensatz (€/h)",
+          roiHours: "Gesparte Zeit / Monat",
+          roiValue: "Geschätzter Wert / Monat",
+          roiExplanation: "Schätzt die monatlich gesparten Stunden (25 Min. × Beiträge/Woche × 4,33 ÷ 60) im Vergleich zum Pro-Tarif (29 €/Monat).",
+          emptyTitle: "Noch keine Inhalte generiert",
+          emptyDesc: "Wählen Sie Ihre Plattformen, geben Sie eine Idee unter 500 Zeichen ein und klicken Sie auf Generieren.",
+          emptyBriefError: "Bitte geben Sie vor dem Generieren eine Idee ein.",
+          maxCharsError: "Der Text darf 500 Zeichen nicht überschreiten.",
+          icpOptions: ["SaaS-Gründer & CEOs", "Marketing- & Kreativagenturen", "Sales- & Growth-Teams", "KMU & Berater"],
+          toneOptions: ["Professionell & Souverän", "Direkt & Conversion-orientiert", "Lehrreich & Verständlich", "Mutig / Thought Leadership"]
+        },
+        it: {
+          mainTitle: "Crea una campagna multicanale",
+          proBtn: "Passa a Pro",
+          jumpVideo: "Montaggio e Script IA",
+          speakBrief: "Ascolta voice-over",
+          recordVoice: "Registra voce",
+          videoStudioTitle: "Studio Montaggio e Script Video IA (Taglio temporizzato)",
+          copyVideoScript: "Copia montaggio / sottotitoli",
+          playVideoScript: "Riproduci voice-over",
+          scene1Badge: "00:00 – 00:05 • Piano 1 (Hook)",
+          scene2Badge: "00:05 – 00:20 • Piano 2 (Demo)",
+          scene3Badge: "00:20 – 00:30 • Piano 3 (CTA)",
+          scene1Default: "Aggancio visivo rapido + presentazione dell'idea chiave.",
+          scene2Default: "Montaggio dinamico che mostra la soluzione e il risparmio di tempo.",
+          scene3Default: "Chiamata all'azione chiara verso PostCraft Omni o il piano Pro.",
+          scene1Gen: (tone, brief) => `[00:00–00:05] Hook (${tone}): "${brief}"`,
+          scene2Gen: (icp) => `[00:05–00:20] Demo per ${icp}: strutturazione multicanale e risparmio di tempo.`,
+          scene3Gen: () => `[00:20–00:30] Call to action: prova PostCraft Omni o passa a Pro (29€/mese).`,
+          roiTitle: "Simulatore di Impatto ROI",
+          roiBadge: "ROI Mensile",
+          postsPerWeek: "Post / settimana",
+          hourlyRate: "Valore orario stimato (€/h)",
+          roiHours: "Tempo risparmiato / mese",
+          roiValue: "Valore stimato / mese",
+          roiExplanation: "Stima le ore risparmiate ogni mese (25 min × post/settimana × 4,33 ÷ 60) rispetto al piano Pro (29 €/mese).",
+          emptyTitle: "Nessun contenuto ancora generato",
+          emptyDesc: "Seleziona le piattaforme, inserisci un messaggio sotto i 500 caratteri e clicca su Genera.",
+          emptyBriefError: "Inserisci o registra un'idea prima di generare.",
+          maxCharsError: "Il testo non deve superare i 500 caratteri.",
+          icpOptions: ["Fondatori e CEO SaaS", "Agenzie Marketing e Studio", "Team Sales e Growth", "PMI e Consulenti"],
+          toneOptions: ["Professionale e Autorevole", "Diretto e Orientato alla Conversione", "Educativo e Chiaro", "Audace / Thought Leadership"]
+        },
+        pt: {
+          mainTitle: "Criar uma campanha multicanal",
+          proBtn: "Assinar Pro",
+          jumpVideo: "Edição e Roteiro IA",
+          speakBrief: "Ouvir narração",
+          recordVoice: "Gravar voz",
+          videoStudioTitle: "Estúdio de Edição e Roteiro de Vídeo IA (Corte cronometrado)",
+          copyVideoScript: "Copiar edição / legendas",
+          playVideoScript: "Reproduzir narração",
+          scene1Badge: "00:00 – 00:05 • Plano 1 (Gancho)",
+          scene2Badge: "00:05 – 00:20 • Plano 2 (Demonstração)",
+          scene3Badge: "00:20 – 00:30 • Plano 3 (CTA)",
+          scene1Default: "Gancho visual rápido + apresentação da ideia principal.",
+          scene2Default: "Edição dinâmica mostrando a solução e o ganho de tempo real.",
+          scene3Default: "Chamada para ação clara para o PostCraft Omni ou plano Pro.",
+          scene1Gen: (tone, brief) => `[00:00–00:05] Gancho (${tone}): "${brief}"`,
+          scene2Gen: (icp) => `[00:05–00:20] Demonstração para ${icp}: estruturação multicanal e economia de tempo.`,
+          scene3Gen: () => `[00:20–00:30] Chamada para ação: experimente o PostCraft Omni ou assine o Pro (29€/mês).`,
+          roiTitle: "Simulador de Impacto ROI",
+          roiBadge: "ROI Mensal",
+          postsPerWeek: "Publicações / semana",
+          hourlyRate: "Valor por hora estimado (€/h)",
+          roiHours: "Tempo economizado / mês",
+          roiValue: "Valor estimado / mês",
+          roiExplanation: "Estima as horas economizadas por mês (25 min × posts/semana × 4,33 ÷ 60) em comparação ao plano Pro (29 €/mês).",
+          emptyTitle: "Nenhum conteúdo gerado ainda",
+          emptyDesc: "Selecione suas plataformas, digite uma ideia com menos de 500 caracteres e clique em Gerar.",
+          emptyBriefError: "Digite ou grave uma ideia antes de gerar.",
+          maxCharsError: "O texto não deve exceder 500 caracteres.",
+          icpOptions: ["Fundadores e CEOs SaaS", "Agências de Marketing e Estúdio", "Equipes de Vendas e Growth", "PMEs e Consultores"],
+          toneOptions: ["Profissional e Autoritário", "Direto e Focado em Conversão", "Educativo e Acessível", "Ousado / Thought Leadership"]
+        },
+        nl: {
+          mainTitle: "Maak een multichannel campagne",
+          proBtn: "Ga Pro",
+          jumpVideo: "AI Montage & Script",
+          speakBrief: "Voice-over beluisteren",
+          recordVoice: "Spraak opnemen",
+          videoStudioTitle: "AI Videomontage & Script Studio (Tijdcode-montage)",
+          copyVideoScript: "Kopieer montage / ondertitels",
+          playVideoScript: "Voice-over afspelen",
+          scene1Badge: "00:00 – 00:05 • Shot 1 (Hook)",
+          scene2Badge: "00:05 – 00:20 • Shot 2 (Demo)",
+          scene3Badge: "00:20 – 00:30 • Shot 3 (CTA)",
+          scene1Default: "Snelle visuele hook + kernboodschap.",
+          scene2Default: "Dynamische montage die de oplossing en tijdwinst toont.",
+          scene3Default: "Duidelijke call-to-action naar PostCraft Omni of Pro.",
+          scene1Gen: (tone, brief) => `[00:00–00:05] Hook (${tone}): "${brief}"`,
+          scene2Gen: (icp) => `[00:05–00:20] Demo voor ${icp}: multichannel structuur & tijdwinst.`,
+          scene3Gen: () => `[00:20–00:30] Call-to-action: probeer PostCraft Omni of upgrade naar Pro (€29/maand).`,
+          roiTitle: "ROI Impact Simulator",
+          roiBadge: "Maandelijkse ROI",
+          postsPerWeek: "Berichten / week",
+          hourlyRate: "Geschat uurtarief (€/u)",
+          roiHours: "Bespaarde tijd / maand",
+          roiValue: "Geschatte waarde / maand",
+          roiExplanation: "Schat de bespaarde uren per maand (25 min × berichten/week × 4,33 ÷ 60) ten opzichte van het Pro-abonnement (€29/maand).",
+          emptyTitle: "Nog geen inhoud gegenereerd",
+          emptyDesc: "Selecteer uw platforms, voer een bericht onder 500 tekens in en klik op Genereren.",
+          emptyBriefError: "Voer eerst een idee in voordat u genereert.",
+          maxCharsError: "Tekst mag niet langer zijn dan 500 tekens.",
+          icpOptions: ["SaaS Oprichters & CEO's", "Marketing- & Creatieve Bureaus", "Sales- & Growth-teams", "MKB & Consultants"],
+          toneOptions: ["Professioneel & Gezaghebbend", "Direct & Conversiegericht", "Educatief & Helder", "Gedurfd / Thought Leadership"]
+        },
+        pl: {
+          mainTitle: "Utwórz kampanię wielokanałową",
+          proBtn: "Przejdź na Pro",
+          jumpVideo: "Montaż i Scenariusz AI",
+          speakBrief: "Odsłuchaj lektora",
+          recordVoice: "Nagraj głos",
+          videoStudioTitle: "Studio Montażu i Scenariusza Wideo AI (Cięcie czasowe)",
+          copyVideoScript: "Kopiuj montaż / napisy",
+          playVideoScript: "Odtwórz lektora",
+          scene1Badge: "00:00 – 00:05 • Ujęcie 1 (Hook)",
+          scene2Badge: "00:05 – 00:20 • Ujęcie 2 (Demo)",
+          scene3Badge: "00:20 – 00:30 • Ujęcie 3 (CTA)",
+          scene1Default: "Szybki wizualny hook + główna myśl.",
+          scene2Default: "Dynamiczny montaż pokazujący rozwiązanie i oszczędność czasu.",
+          scene3Default: "Wyraźne wezwanie do działania w kierunku PostCraft Omni lub planu Pro.",
+          scene1Gen: (tone, brief) => `[00:00–00:05] Hook (${tone}): "${brief}"`,
+          scene2Gen: (icp) => `[00:05–00:20] Demo dla ${icp}: struktura wielokanałowa i oszczędność czasu.`,
+          scene3Gen: () => `[00:20–00:30] Wezwanie do działania: wypróbuj PostCraft Omni lub wybierz Pro (29€/mies.).`,
+          roiTitle: "Symulator Wpływu ROI",
+          roiBadge: "Miesięczne ROI",
+          postsPerWeek: "Publikacje / tydzień",
+          hourlyRate: "Szacowana stawka godzinowa (€/h)",
+          roiHours: "Zaoszczędzony czas / mies.",
+          roiValue: "Szacowana wartość / mies.",
+          roiExplanation: "Szacuje zaoszczędzone godziny miesięcznie (25 min × posty/tydzień × 4,33 ÷ 60) w porównaniu z planem Pro (29 €/mies.).",
+          emptyTitle: "Nie wygenerowano jeszcze treści",
+          emptyDesc: "Wybierz platformy, wpisz wiadomość poniżej 500 znaków i kliknij Generuj.",
+          emptyBriefError: "Wpisz lub nagraj pomysł przed generowaniem.",
+          maxCharsError: "Tekst nie może przekraczać 500 znaków.",
+          icpOptions: ["Założyciele i CEO SaaS", "Agencje Marketingowe i Studia", "Zespoły Sales i Growth", "MŚP i Konsultanci"],
+          toneOptions: ["Profesjonalny i Ekspercki", "Bezpośredni i Nastawiony na Konwersję", "Edukacyjny i Przystępny", "Odważny / Thought Leadership"]
+        },
+        ru: {
+          mainTitle: "Создать мультиканальную кампанию",
+          proBtn: "Перейти на Pro",
+          jumpVideo: "ИИ-Монтаж и Сценарий",
+          speakBrief: "Прослушать озвучку",
+          recordVoice: "Записать голос",
+          videoStudioTitle: "Студия ИИ-Монтажа и Видеосценариев (Таймкоды)",
+          copyVideoScript: "Копировать монтаж / субтитры",
+          playVideoScript: "Озвучить сценарий",
+          scene1Badge: "00:00 – 00:05 • Кадр 1 (Хук)",
+          scene2Badge: "00:05 – 00:20 • Кадр 2 (Демо)",
+          scene3Badge: "00:20 – 00:30 • Кадр 3 (CTA)",
+          scene1Default: "Быстрый визуальный хук + главная идея.",
+          scene2Default: "Динамичный монтаж, показывающий решение и экономию времени.",
+          scene3Default: "Четкий призыв к действию в пользу PostCraft Omni или тарифа Pro.",
+          scene1Gen: (tone, brief) => `[00:00–00:05] Хук (${tone}): «${brief}»`,
+          scene2Gen: (icp) => `[00:05–00:20] Демонстрация для ${icp}: мультиканальность и экономия времени.`,
+          scene3Gen: () => `[00:20–00:30] Призыв к действию: попробуйте PostCraft Omni или перейдите на Pro (29€/мес).`,
+          roiTitle: "Симулятор окупаемости ROI",
+          roiBadge: "Месячный ROI",
+          postsPerWeek: "Публикаций / неделю",
+          hourlyRate: "Стоимость часа (€/ч)",
+          roiHours: "Сэкономлено времени / мес",
+          roiValue: "Оценочная выгода / мес",
+          roiExplanation: "Оценивает экономию часов в месяц (25 мин × посты/неделю × 4,33 ÷ 60) по сравнению с тарифом Pro (29 €/мес).",
+          emptyTitle: "Контент еще не сгенерирован",
+          emptyDesc: "Выберите платформы, введите идею до 500 символов и нажмите «Сгенерировать».",
+          emptyBriefError: "Пожалуйста, введите или запишите идею перед генерацией.",
+          maxCharsError: "Текст не должен превышать 500 символов.",
+          icpOptions: ["Основатели и CEO SaaS", "Маркетинговые агентства и студии", "Команды продаж и роста", "МСБ и консультанты"],
+          toneOptions: ["Профессиональный и экспертный", "Прямой и продающий", "Обучающий и понятный", "Смелый / Лидерство мнений"]
+        },
+        ja: {
+          mainTitle: "マルチチャネルキャンペーンを作成",
+          proBtn: "Proにアップグレード",
+          jumpVideo: "AI編集＆スクリプト",
+          speakBrief: "ナレーションを聞く",
+          recordVoice: "音声を録音",
+          videoStudioTitle: "AI動画編集＆スクリプトスタジオ（タイムライン構成）",
+          copyVideoScript: "編集・字幕をコピー",
+          playVideoScript: "ナレーション再生",
+          scene1Badge: "00:00 – 00:05 • カット1（フック）",
+          scene2Badge: "00:05 – 00:20 • カット2（デモ）",
+          scene3Badge: "00:20 – 00:30 • カット3（CTA）",
+          scene1Default: "素早い視覚的フック＋核となるメッセージの提示。",
+          scene2Default: "解決策と具体的な時間短縮を見せるダイナミックな編集。",
+          scene3Default: "PostCraft OmniまたはProプランへの明確な行動喚起。",
+          scene1Gen: (tone, brief) => `[00:00–00:05] フック（${tone}）：「${brief}」`,
+          scene2Gen: (icp) => `[00:05–00:20] ${icp}向けデモ：マルチチャネル展開と時間短縮。`,
+          scene3Gen: () => `[00:20–00:30] 行動喚起：PostCraft Omniを試すか、Pro（月額29€）へアップグレード。`,
+          roiTitle: "ROIインパクトシミュレーター",
+          roiBadge: "月間ROI",
+          postsPerWeek: "投稿数 / 週",
+          hourlyRate: "想定時間単価 (€/時)",
+          roiHours: "月間節約時間",
+          roiValue: "月間換算価値",
+          roiExplanation: "Proプラン（月額29€）と比較した月間の節約時間（25分×週間投稿数×4.33÷60）と換算価値を算出します。",
+          emptyTitle: "まだコンテンツが生成されていません",
+          emptyDesc: "プラットフォームを選択し、500文字以内でアイデアを入力して生成をクリックしてください。",
+          emptyBriefError: "生成する前にアイデアを入力または録音してください。",
+          maxCharsError: "テキストは500文字以内で入力してください。",
+          icpOptions: ["SaaS創業者・CEO", "マーケティング代理店・スタジオ", "営業・グロースチーム", "中小企業・コンサルタント"],
+          toneOptions: ["プロフェッショナル・権威的", "ダイレクト・成約重視", "教育的・わかりやすい", "大胆・ソートリーダーシップ"]
+        },
+        ko: {
+          mainTitle: "멀티채널 캠페인 만들기",
+          proBtn: "Pro 업그레이드",
+          jumpVideo: "AI 편집 및 스크립트",
+          speakBrief: "보이스오버 듣기",
+          recordVoice: "음성 녹음",
+          videoStudioTitle: "AI 영상 편집 및 스크립트 스튜디오 (타임스탬프 컷)",
+          copyVideoScript: "편집 / 자막 복사",
+          playVideoScript: "보이스오버 재생",
+          scene1Badge: "00:00 – 00:05 • 컷 1 (훅)",
+          scene2Badge: "00:05 – 00:20 • 컷 2 (데모)",
+          scene3Badge: "00:20 – 00:30 • 컷 3 (CTA)",
+          scene1Default: "빠른 시각적 훅 + 핵심 아이디어 전달.",
+          scene2Default: "솔루션과 실질적인 시간 절약을 보여주는 역동적인 편집.",
+          scene3Default: "PostCraft Omni 또는 Pro 플랜으로의 명확한 행동 유도.",
+          scene1Gen: (tone, brief) => `[00:00–00:05] 훅 (${tone}): "${brief}"`,
+          scene2Gen: (icp) => `[00:05–00:20] ${icp} 대상 데모: 멀티채널 구성 및 시간 절약.`,
+          scene3Gen: () => `[00:20–00:30] 행동 유도: PostCraft Omni를 체험하거나 Pro(월 29€)로 업그레이드하세요.`,
+          roiTitle: "ROI 임팩트 시뮬레이터",
+          roiBadge: "월간 ROI",
+          postsPerWeek: "게시물 수 / 주",
+          hourlyRate: "예상 시간당 가치 (€/시간)",
+          roiHours: "월간 절약 시간",
+          roiValue: "월간 예상 가치",
+          roiExplanation: "Pro 플랜(월 29€) 대비 월간 절약 시간(25분 × 주간 게시물 × 4.33 ÷ 60)과 예상 가치를 계산합니다.",
+          emptyTitle: "아직 생성된 콘텐츠가 없습니다",
+          emptyDesc: "플랫폼을 선택하고 500자 이내로 아이디어를 입력한 뒤 생성을 클릭하세요.",
+          emptyBriefError: "생성하기 전에 아이디어를 입력하거나 녹음하세요.",
+          maxCharsError: "텍스트는 500자를 초과할 수 없습니다.",
+          icpOptions: ["SaaS 창업자 및 CEO", "마케팅 에이전시 및 스튜디오", "세일즈 및 그로스 팀", "중소기업 및 컨설턴트"],
+          toneOptions: ["전문적이고 신뢰감 있는 톤", "직설적이고 전환 중심적인 톤", "교육적이고 이해하기 쉬운 톤", "대담한 / 사고 리더십"]
+        },
+        zh: {
+          mainTitle: "创建多渠道营销活动",
+          proBtn: "升级 Pro",
+          jumpVideo: "AI 剪辑与脚本",
+          speakBrief: "试听配音",
+          recordVoice: "语音输入",
+          videoStudioTitle: "AI 视频剪辑与脚本工作室（时间轴分镜）",
+          copyVideoScript: "复制剪辑 / 字幕",
+          playVideoScript: "播放配音",
+          scene1Badge: "00:00 – 00:05 • 镜头 1（开头吸引）",
+          scene2Badge: "00:05 – 00:20 • 镜头 2（核心演示）",
+          scene3Badge: "00:20 – 00:30 • 镜头 3（行动号召）",
+          scene1Default: "快速视觉吸睛 + 点明核心创意。",
+          scene2Default: "动感剪辑展示解决方案与实际节省的时间。",
+          scene3Default: "清晰引导至 PostCraft Omni 或 Pro 订阅方案。",
+          scene1Gen: (tone, brief) => `[00:00–00:05] 开头吸引（${tone}）：“${brief}”`,
+          scene2Gen: (icp) => `[00:05–00:20] 面向 ${icp} 的演示：多渠道内容编排与效率提升。`,
+          scene3Gen: () => `[00:20–00:30] 行动号召：立即体验 PostCraft Omni 或升级 Pro（29€/月）。`,
+          roiTitle: "ROI 投资回报模拟器",
+          roiBadge: "月度 ROI",
+          postsPerWeek: "每周发布数量",
+          hourlyRate: "预估时薪价值 (€/小时)",
+          roiHours: "每月节省时间",
+          roiValue: "每月预估价值",
+          roiExplanation: "对比 Pro 方案（29€/月），估算每月节省的小时数（25分钟 × 每周发布数 × 4.33 ÷ 60）及对应价值。",
+          emptyTitle: "暂未生成任何内容",
+          emptyDesc: "选择目标平台，输入或录制 500 字以内的创意，然后点击生成。",
+          emptyBriefError: "生成前请先输入或录制您的创意。",
+          maxCharsError: "文本长度不能超过 500 个字符。",
+          icpOptions: ["SaaS 创始人与 CEO", "营销机构与创意工作室", "销售与增长团队", "中小企业与顾问"],
+          toneOptions: ["专业且具权威感", "直接且注重转化", "通俗易懂的教学风格", "大胆前卫 / 行业思想领袖"]
+        },
+        tr: {
+          mainTitle: "Çok kanallı kampanya oluştur",
+          proBtn: "Pro'ya Geç",
+          jumpVideo: "YZ Kurgu ve Senaryo",
+          speakBrief: "Seslendirmeyi dinle",
+          recordVoice: "Ses kaydet",
+          videoStudioTitle: "YZ Video Kurgu ve Senaryo Stüdyosu (Zaman Kodlu Kesim)",
+          copyVideoScript: "Kurgu / altyazıları kopyala",
+          playVideoScript: "Seslendirmeyi oynat",
+          scene1Badge: "00:00 – 00:05 • Plan 1 (Kanca)",
+          scene2Badge: "00:05 – 00:20 • Plan 2 (Demo)",
+          scene3Badge: "00:20 – 00:30 • Plan 3 (CTA)",
+          scene1Default: "Hızlı görsel kanca + ana fikrin net sunumu.",
+          scene2Default: "Çözümü ve sağlanan zaman tasarrufunu gösteren dinamik kurgu.",
+          scene3Default: "PostCraft Omni veya Pro plana net eylem çağrısı.",
+          scene1Gen: (tone, brief) => `[00:00–00:05] Kanca (${tone}): "${brief}"`,
+          scene2Gen: (icp) => `[00:05–00:20] ${icp} için demo: çok kanallı yapılandırma ve zaman tasarrufu.`,
+          scene3Gen: () => `[00:20–00:30] Eylem çağrısı: PostCraft Omni'yi deneyin veya Pro'ya (29€/ay) geçin.`,
+          roiTitle: "ROI Etki Simülatörü",
+          roiBadge: "Aylık ROI",
+          postsPerWeek: "Haftalık paylaşım",
+          hourlyRate: "Tahmini saatlik değer (€/sa)",
+          roiHours: "Aylık kazanılan süre",
+          roiValue: "Aylık tahmini değer",
+          roiExplanation: "Pro plan (29 €/ay) ile karşılaştırıldığında aylık kazanılan saati (25 dk × haftalık paylaşım × 4,33 ÷ 60) ve değerini hesaplar.",
+          emptyTitle: "Henüz içerik oluşturulmadı",
+          emptyDesc: "Platformları seçin, 500 karakterin altında bir mesaj girin ve Oluştur'a tıklayın.",
+          emptyBriefError: "Oluşturmadan önce lütfen bir fikir girin veya kaydedin.",
+          maxCharsError: "Metin 500 karakteri geçmemelidir.",
+          icpOptions: ["SaaS Kurucuları ve CEO'lar", "Pazarlama Ajansları ve Stüdyolar", "Satış ve Büyüme Ekipleri", "KOBİ'ler ve Danışmanlar"],
+          toneOptions: ["Profesyonel ve Otoriter", "Doğrudan ve Dönüşüm Odaklı", "Eğitici ve Anlaşılır", "Cesur / Düşünce Liderliği"]
         }
       };
 
@@ -796,8 +1210,41 @@
         document.documentElement.lang = selected.code;
         document.documentElement.dir = selected.rtl ? "rtl" : "ltr";
 
+        // Synchroniser automatiquement la langue de sortie et la langue de voix-off
+        if (languageSelectEl) {
+          languageSelectEl.value = formatLangOptionText(selected);
+        }
+        if (voiceLangSelectEl) {
+          voiceLangSelectEl.value = selected.voice;
+        }
+
         document.getElementById("mainTitle").textContent = dict.mainTitle;
         document.getElementById("proBtnText").textContent = dict.proBtn;
+
+        const jumpVideoLinkSpan = document.querySelector("#jumpVideoStudioLink span");
+        if (jumpVideoLinkSpan) jumpVideoLinkSpan.textContent = dict.jumpVideo;
+
+        const speakBriefSpan = document.querySelector("#speakBriefBtn span");
+        if (speakBriefSpan) speakBriefSpan.textContent = dict.speakBrief;
+
+        if (!isRecording && recordVoiceLabelEl) {
+          recordVoiceLabelEl.textContent = dict.recordVoice;
+        }
+
+        const videoStudioTitleEl = document.getElementById("videoStudioTitle");
+        const copyVideoScriptLabelEl = document.getElementById("copyVideoScriptLabel");
+        const playVideoScriptLabelEl = document.getElementById("playVideoScriptLabel");
+        const scene1BadgeEl = document.getElementById("scene1Badge");
+        const scene2BadgeEl = document.getElementById("scene2Badge");
+        const scene3BadgeEl = document.getElementById("scene3Badge");
+
+        if (videoStudioTitleEl) videoStudioTitleEl.textContent = dict.videoStudioTitle;
+        if (copyVideoScriptLabelEl) copyVideoScriptLabelEl.textContent = dict.copyVideoScript;
+        if (playVideoScriptLabelEl) playVideoScriptLabelEl.textContent = dict.playVideoScript;
+        if (scene1BadgeEl) scene1BadgeEl.textContent = dict.scene1Badge;
+        if (scene2BadgeEl) scene2BadgeEl.textContent = dict.scene2Badge;
+        if (scene3BadgeEl) scene3BadgeEl.textContent = dict.scene3Badge;
+
         document.getElementById("roiTitleText").textContent = dict.roiTitle;
         document.getElementById("roiBadge").textContent = dict.roiBadge;
         document.getElementById("postsPerWeekLabel").textContent = dict.postsPerWeek;
@@ -812,6 +1259,16 @@
         if (emptyDescEl) emptyDescEl.textContent = dict.emptyDesc;
 
         populateIcpAndTone(dict);
+
+        const currentBrief = briefInputEl ? briefInputEl.value.trim() : "";
+        if (currentBrief) {
+          updateVideoTimeline(currentBrief, icpSelectEl.value, toneSelectEl.value, selected.code);
+        } else {
+          if (scene1TextEl) scene1TextEl.textContent = dict.scene1Default;
+          if (scene2TextEl) scene2TextEl.textContent = dict.scene2Default;
+          if (scene3TextEl) scene3TextEl.textContent = dict.scene3Default;
+        }
+
         startCulturalRotation(selected.code, true);
         updateROI();
         validateBrief();
@@ -827,11 +1284,62 @@
           showToast("La synthèse vocale n'est pas disponible sur ce navigateur.", "warning");
           return;
         }
+        const targetLang = langCode || voiceLangSelectEl.value || "fr-FR";
         window.speechSynthesis.cancel();
+
         const utterance = new SpeechSynthesisUtterance(clean);
-        utterance.lang = langCode || voiceLangSelectEl.value || "fr-FR";
+        utterance.lang = targetLang;
+        // Réglages plus naturels pour réduire l'effet "robot"
+        utterance.rate = targetLang.startsWith("ar") ? 0.95 : 1.02;
+        utterance.pitch = 1.0;
+
+        const voices = window.speechSynthesis.getVoices ? window.speechSynthesis.getVoices() : [];
+        if (voices.length > 0) {
+          const baseLang = targetLang.split("-")[0].toLowerCase();
+          const candidates = voices.filter((v) => {
+            const vLang = (v.lang || "").toLowerCase();
+            return vLang === targetLang.toLowerCase() || vLang.startsWith(baseLang + "-") || vLang === baseLang;
+          });
+
+          if (candidates.length > 0) {
+            // Prioriser les voix naturelles / neurales / enhanced / Google / Microsoft quand disponibles
+            const scored = candidates
+              .map((v) => {
+                const name = (v.name || "").toLowerCase();
+                let score = 0;
+                if ((v.lang || "").toLowerCase() === targetLang.toLowerCase()) score += 10;
+                if (name.includes("natural") || name.includes("neural") || name.includes("premium") || name.includes("enhanced")) score += 25;
+                if (name.includes("google") || name.includes("microsoft") || name.includes("siri") || name.includes("apple")) score += 8;
+                if (v.localService) score += 4;
+                return { voice: v, score };
+              })
+              .sort((a, b) => b.score - a.score);
+
+            utterance.voice = scored[0].voice;
+          } else if (baseLang === "ar") {
+            showToast(
+              "Aucune voix arabe n'est installée sur cet appareil/navigateur. Ajoutez une voix arabe (ex. ar-SA / ar-TN / ar-EG) dans les paramètres système ou du navigateur.",
+              "warning"
+            );
+          }
+        }
+
         window.speechSynthesis.speak(utterance);
-        showToast(`Lecture voix-off (${utterance.lang}).`, "info");
+        showToast(`Lecture voix-off (${targetLang}).`, "info");
+      }
+
+      function updateVideoTimeline(brief, icp, tone, langCode) {
+        const dict = getCurrentDict(langCode || (uiLangSelectEl ? uiLangSelectEl.value : "fr"));
+        const clean = (brief || "").trim();
+        if (!clean) {
+          scene1TextEl.textContent = dict.scene1Default;
+          scene2TextEl.textContent = dict.scene2Default;
+          scene3TextEl.textContent = dict.scene3Default;
+          return;
+        }
+        scene1TextEl.textContent = dict.scene1Gen(tone, clean);
+        scene2TextEl.textContent = dict.scene2Gen(icp);
+        scene3TextEl.textContent = dict.scene3Gen();
       }
 
       function toggleVoiceRecording() {
@@ -950,13 +1458,6 @@
         const body = `${clean}\n\nCible : ${icp} • Ton : ${tone} • Langue : ${lang}.\nDéclinaison prête à adapter et publier avec un message clair orienté résultat.`;
         const tags = `#PostCraftOmni #B2B #Automatisation #Growth`;
         return { hooks, body, tags };
-      }
-
-      function updateVideoTimeline(brief, icp, tone) {
-        const clean = (brief || "Votre idée clé").trim();
-        scene1TextEl.textContent = `[00:00–00:05] Accroche (${tone}) : "${clean}"`;
-        scene2TextEl.textContent = `[00:05–00:20] Démonstration pour ${icp} : structuration multi-canal & gain de temps.`;
-        scene3TextEl.textContent = `[00:20–00:30] Appel à l'action : essayez PostCraft Omni ou passez en Pro (29€/mois).`;
       }
 
       function getFullVideoScriptText() {
