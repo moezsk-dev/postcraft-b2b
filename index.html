@@ -13,19 +13,49 @@
     body {
       font-family: 'Inter', sans-serif;
     }
+    .cultural-bg-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.22;
+      background-size: cover;
+      background-position: center;
+      transition: opacity 5s ease-in-out, background-image 5s ease-in-out;
+    }
+    .cultural-bg-layer.hidden-bg {
+      opacity: 0;
+    }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col">
-  <!-- En-tête avec logo plume/création, accès rapide Studio/Agent, 14 langues, crédits & Pro -->
-  <header class="bg-white border-b border-slate-200 sticky top-0 z-30">
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col relative">
+  <!-- Calque d'ambiance culturelle (140 scènes, 10 par langue, fondu enchaîné 5s toutes les 60s) -->
+  <div id="culturalBgLayer" class="cultural-bg-layer" aria-hidden="true"></div>
+
+  <!-- En-tête -->
+  <header class="bg-white/85 backdrop-blur-md border-b border-slate-200 sticky top-0 z-30 relative">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
       <div class="flex items-center gap-3">
-        <div id="brandLogoBox" class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-600 via-blue-600 to-purple-600 flex items-center justify-center text-white shadow-sm">
-          <i data-lucide="feather" class="w-5 h-5" aria-hidden="true"></i>
-        </div>
+        <button
+          id="brandLogoBox"
+          type="button"
+          title="PostCraft Omni"
+          class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-700 via-purple-700 to-teal-500 flex items-center justify-center text-white shadow-sm cursor-pointer"
+        >
+          <svg class="w-6 h-6" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+            <path d="M50 12C33 14 20 26 15 44L11 53L14 54L19 46C35 43 47 31 50 12Z" fill="white" fill-opacity="0.22" stroke="white" stroke-width="2.5" stroke-linejoin="round"/>
+            <path d="M16 47L47 16" stroke="#2dd4bf" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M25 38V29L30 24" stroke="#2dd4bf" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="30" cy="24" r="2.5" fill="#2dd4bf"/>
+            <path d="M33 30H41L45 26" stroke="#2dd4bf" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="45" cy="26" r="2.5" fill="#2dd4bf"/>
+            <circle cx="53" cy="10" r="2" fill="#2dd4bf"/>
+            <circle cx="56" cy="15" r="1.8" fill="#2dd4bf"/>
+          </svg>
+        </button>
         <div>
           <div class="flex items-center gap-2">
-            <span class="font-bold text-lg tracking-tight text-slate-900">PostCraft Omni</span>
+            <span class="font-bold text-lg tracking-tight text-indigo-950">PostCraft <span class="text-teal-500">Omni</span></span>
             <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200">AI Studio</span>
           </div>
           <p class="text-xs text-slate-500 hidden sm:block">Génération multicanale, montage/script IA, voix-off &amp; ROI</p>
@@ -36,11 +66,22 @@
         <a
           id="jumpVideoStudioLink"
           href="#videoStudioSection"
-          class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-purple-50 text-purple-800 hover:bg-purple-100 border border-purple-200 transition"
+          class="hidden xl:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-purple-50 text-purple-800 hover:bg-purple-100 border border-purple-200 transition"
         >
           <i data-lucide="clapperboard" class="w-3.5 h-3.5" aria-hidden="true"></i>
           <span>Montage &amp; Script IA</span>
         </a>
+
+        <button
+          id="ambientBgToggleBtn"
+          type="button"
+          aria-pressed="true"
+          title="Activer ou masquer le fond d'ambiance"
+          class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition cursor-pointer"
+        >
+          <i data-lucide="image" class="w-3.5 h-3.5 text-indigo-600" aria-hidden="true"></i>
+          <span class="hidden md:inline">Fond</span>
+        </button>
 
         <label for="uiLangSelect" class="sr-only">Langue de l'interface</label>
         <select
@@ -62,74 +103,72 @@
           class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 active:scale-[0.99] transition shadow-sm cursor-pointer"
         >
           <i data-lucide="crown" class="w-4 h-4" aria-hidden="true"></i>
-          <span>Passer Pro</span>
+          <span id="proBtnText">Passer Pro</span>
         </button>
       </div>
     </div>
   </header>
 
-  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
       <section class="lg:col-span-8 space-y-6" aria-label="Studio de création et génération IA">
-        <!-- Module 1 & 2 : Brief, Dictée/Voix-off, Cible ICP & Plateformes -->
-        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-6">
+        <!-- Bloc principal -->
+        <div class="bg-white/85 backdrop-blur-md rounded-2xl border border-slate-200 shadow-sm p-6 space-y-6">
           <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 border-b border-slate-100 pb-4">
             <div>
               <h1 id="mainTitle" class="text-xl font-bold text-slate-900">Créer une campagne multicanale</h1>
-              <p class="text-sm text-slate-500">Rédigez ou dictez votre idée, choisissez vos canaux (LinkedIn, X, Facebook, Instagram, TikTok, Newsletter, WhatsApp), la cible, le ton et les 14 langues.</p>
+              <p class="text-sm text-slate-500">Rédigez ou dictez votre idée, choisissez vos canaux, votre cible B2B et la langue.</p>
             </div>
-            <span id="charCounter" class="text-xs font-medium text-slate-500">0 / 500 caractères</span>
+            <div class="flex flex-col sm:items-end gap-1">
+              <span id="charCounter" class="text-xs font-medium text-slate-500">0 / 500</span>
+              <span id="culturalMoodPill" class="text-[11px] font-medium text-indigo-700 bg-indigo-50/90 px-2 py-0.5 rounded-full border border-indigo-100">Ambiance : FR</span>
+            </div>
           </div>
 
-          <!-- Plateformes cibles -->
+          <!-- 7 Plateformes cibles -->
           <div>
             <label class="block text-sm font-semibold text-slate-700 mb-2.5">Plateformes cibles</label>
             <div id="platformGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
               <button type="button" data-platform="LinkedIn" aria-pressed="true" class="platform-btn flex items-center gap-2 p-2.5 rounded-xl border-2 border-indigo-600 bg-indigo-50/70 text-indigo-900 font-medium text-xs sm:text-sm transition cursor-pointer">
-                <i data-lucide="linkedin" class="w-4 h-4 text-indigo-600 shrink-0" aria-hidden="true"></i>
+                <i data-lucide="linkedin" class="w-4 h-4 text-[#0A66C2] shrink-0" aria-hidden="true"></i>
                 <span>LinkedIn</span>
               </button>
               <button type="button" data-platform="X / Twitter" aria-pressed="true" class="platform-btn flex items-center gap-2 p-2.5 rounded-xl border-2 border-indigo-600 bg-indigo-50/70 text-indigo-900 font-medium text-xs sm:text-sm transition cursor-pointer">
-                <i data-lucide="share-2" class="w-4 h-4 text-indigo-600 shrink-0" aria-hidden="true"></i>
+                <i data-lucide="twitter" class="w-4 h-4 text-slate-900 shrink-0" aria-hidden="true"></i>
                 <span>X / Twitter</span>
               </button>
-              <button type="button" data-platform="Facebook" aria-pressed="false" class="platform-btn flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 bg-white hover:border-slate-300 text-slate-700 font-medium text-xs sm:text-sm transition cursor-pointer">
-                <i data-lucide="globe" class="w-4 h-4 text-blue-600 shrink-0" aria-hidden="true"></i>
+              <button type="button" data-platform="Facebook" aria-pressed="false" class="platform-btn flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 bg-white/90 hover:border-slate-300 text-slate-700 font-medium text-xs sm:text-sm transition cursor-pointer">
+                <i data-lucide="facebook" class="w-4 h-4 text-[#1877F2] shrink-0" aria-hidden="true"></i>
                 <span>Facebook</span>
               </button>
-              <button type="button" data-platform="Instagram" aria-pressed="false" class="platform-btn flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 bg-white hover:border-slate-300 text-slate-700 font-medium text-xs sm:text-sm transition cursor-pointer">
-                <i data-lucide="camera" class="w-4 h-4 text-pink-600 shrink-0" aria-hidden="true"></i>
+              <button type="button" data-platform="Instagram" aria-pressed="false" class="platform-btn flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 bg-white/90 hover:border-slate-300 text-slate-700 font-medium text-xs sm:text-sm transition cursor-pointer">
+                <i data-lucide="instagram" class="w-4 h-4 text-[#E4405F] shrink-0" aria-hidden="true"></i>
                 <span>Instagram</span>
               </button>
-              <button type="button" data-platform="TikTok / Reels" aria-pressed="false" class="platform-btn flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 bg-white hover:border-slate-300 text-slate-700 font-medium text-xs sm:text-sm transition cursor-pointer">
+              <button type="button" data-platform="TikTok / Reels" aria-pressed="false" class="platform-btn flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 bg-white/90 hover:border-slate-300 text-slate-700 font-medium text-xs sm:text-sm transition cursor-pointer">
                 <i data-lucide="video" class="w-4 h-4 text-purple-600 shrink-0" aria-hidden="true"></i>
                 <span>TikTok / Reels</span>
               </button>
-              <button type="button" data-platform="Newsletter" aria-pressed="false" class="platform-btn flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 bg-white hover:border-slate-300 text-slate-700 font-medium text-xs sm:text-sm transition cursor-pointer">
+              <button type="button" data-platform="Newsletter" aria-pressed="false" class="platform-btn flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 bg-white/90 hover:border-slate-300 text-slate-700 font-medium text-xs sm:text-sm transition cursor-pointer">
                 <i data-lucide="mail" class="w-4 h-4 text-indigo-500 shrink-0" aria-hidden="true"></i>
                 <span>Newsletter</span>
               </button>
-              <button type="button" data-platform="WhatsApp" aria-pressed="false" class="platform-btn flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 bg-white hover:border-slate-300 text-slate-700 font-medium text-xs sm:text-sm transition cursor-pointer">
-                <i data-lucide="message-circle" class="w-4 h-4 text-emerald-600 shrink-0" aria-hidden="true"></i>
+              <button type="button" data-platform="WhatsApp" aria-pressed="false" class="platform-btn flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 bg-white/90 hover:border-slate-300 text-slate-700 font-medium text-xs sm:text-sm transition cursor-pointer">
+                <i data-lucide="message-circle" class="w-4 h-4 text-[#25D366] shrink-0" aria-hidden="true"></i>
                 <span>WhatsApp</span>
               </button>
             </div>
           </div>
 
-          <!-- Cible B2B (ICP), Ton, Langue sortie & Langue voix-off -->
+          <!-- Cible B2B, Ton, Langue sortie & Langue voix-off -->
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
             <div>
               <label for="icpSelect" class="block text-xs font-semibold text-slate-700 mb-1.5">Cible B2B (ICP)</label>
               <select
                 id="icpSelect"
                 aria-label="Choisir la cible B2B"
-                class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-xs sm:text-sm text-slate-800 focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/20 outline-none transition"
-              >
-                <option value="Fondateurs & CEO SaaS">Fondateurs &amp; CEO SaaS</option>
-                <option value="Agences Marketing & Studio">Agences Marketing &amp; Studio</option>
-                <option value="Équipes Sales & Growth">Équipes Sales &amp; Growth</option>
-                <option value="PME & Consultants">PME &amp; Consultants</option>
-              </select>
+                class="w-full rounded-xl border border-slate-300 bg-white/90 px-3 py-2.5 text-xs sm:text-sm text-slate-800 focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/20 outline-none transition"
+              ></select>
             </div>
 
             <div>
@@ -137,30 +176,25 @@
               <select
                 id="toneSelect"
                 aria-label="Choisir le ton éditorial"
-                class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-xs sm:text-sm text-slate-800 focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/20 outline-none transition"
-              >
-                <option value="Professionnel & Autoritaire">Professionnel &amp; Autoritaire</option>
-                <option value="Direct & Orienté Conversion">Direct &amp; Orienté Conversion</option>
-                <option value="Pédagogique & Accessible">Pédagogique &amp; Accessible</option>
-                <option value="Audacieux / Thought Leadership">Audacieux / Thought Leadership</option>
-              </select>
-            </div>
-
-            <div>
-              <label for="languageSelect" class="block text-xs font-semibold text-slate-700 mb-1.5">Langue de sortie (14)</label>
-              <select
-                id="languageSelect"
-                aria-label="Choisir la langue de sortie"
-                class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-xs sm:text-sm text-slate-800 focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/20 outline-none transition"
+                class="w-full rounded-xl border border-slate-300 bg-white/90 px-3 py-2.5 text-xs sm:text-sm text-slate-800 focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/20 outline-none transition"
               ></select>
             </div>
 
             <div>
-              <label for="voiceLangSelect" class="block text-xs font-semibold text-slate-700 mb-1.5">Langue voix-off (14)</label>
+              <label id="outputLangLabel" for="languageSelect" class="block text-xs font-semibold text-slate-700 mb-1.5">Langue de sortie (14)</label>
+              <select
+                id="languageSelect"
+                aria-label="Choisir la langue de sortie"
+                class="w-full rounded-xl border border-slate-300 bg-white/90 px-3 py-2.5 text-xs sm:text-sm text-slate-800 focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/20 outline-none transition"
+              ></select>
+            </div>
+
+            <div>
+              <label id="voiceLangLabel" for="voiceLangSelect" class="block text-xs font-semibold text-slate-700 mb-1.5">Langue voix-off (14)</label>
               <select
                 id="voiceLangSelect"
                 aria-label="Choisir la langue de voix-off"
-                class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-xs sm:text-sm text-slate-800 focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/20 outline-none transition"
+                class="w-full rounded-xl border border-slate-300 bg-white/90 px-3 py-2.5 text-xs sm:text-sm text-slate-800 focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/20 outline-none transition"
               ></select>
             </div>
           </div>
@@ -199,7 +233,7 @@
               maxlength="500"
               aria-label="Saisir ou enregistrer votre idée ou brief marketing"
               placeholder="Ex. : Automatiser la création de posts, scripts vidéo et déclinaisons B2B en quelques minutes..."
-              class="w-full rounded-xl border border-slate-300 bg-white p-3.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/20 outline-none transition resize-y"
+              class="w-full rounded-xl border border-slate-300 bg-white/90 p-3.5 text-sm text-slate-900 placeholder:text-slate-400 focus:border-indigo-600 focus:ring-2 focus:ring-indigo-600/20 outline-none transition resize-y"
             ></textarea>
             <p id="voiceStatusText" class="mt-1 text-xs text-slate-500 hidden"></p>
             <p id="inputError" class="mt-1.5 text-xs font-medium text-rose-600 hidden" role="alert"></p>
@@ -208,7 +242,7 @@
           <!-- Bouton Générer + Exports (.TXT / .MD / .JSON) + Payload Make.com -->
           <div class="pt-3 border-t border-slate-100 flex flex-col gap-3">
             <div class="flex flex-wrap items-center justify-between gap-3">
-              <span class="text-xs text-slate-500">Coût : <strong>1 crédit</strong> par génération (inclut cartes A/B, montage/script vidéo &amp; export).</span>
+              <span class="text-xs text-slate-500">Coût : <strong>1 crédit</strong> par génération (inclut cartes A/B/C, montage/script vidéo &amp; export).</span>
               <button
                 id="generateBtn"
                 type="button"
@@ -242,8 +276,8 @@
           </div>
         </div>
 
-        <!-- Module 3 : Studio Montage & Script Vidéo IA (découpage horodaté + voix-off) -->
-        <div id="videoStudioSection" class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-4">
+        <!-- Studio Montage & Script Vidéo IA -->
+        <div id="videoStudioSection" class="bg-white/85 backdrop-blur-md rounded-2xl border border-slate-200 shadow-sm p-6 space-y-4">
           <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
             <div class="flex items-center gap-2">
               <i data-lucide="clapperboard" class="w-5 h-5 text-purple-600" aria-hidden="true"></i>
@@ -269,23 +303,23 @@
             </div>
           </div>
 
-          <div id="videoTimelineGrid" class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
-            <div class="rounded-xl bg-purple-50/60 border border-purple-200/80 p-3.5 space-y-1">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+            <div class="rounded-xl bg-purple-50/70 border border-purple-200/80 p-3.5 space-y-1">
               <span class="font-bold text-purple-900 block">00:00 – 00:05 • Plan 1 (Hook)</span>
               <p id="scene1Text" class="text-slate-700 leading-relaxed">Accroche visuelle rapide + énoncé de l'idée principale.</p>
             </div>
-            <div class="rounded-xl bg-indigo-50/60 border border-indigo-200/80 p-3.5 space-y-1">
+            <div class="rounded-xl bg-indigo-50/70 border border-indigo-200/80 p-3.5 space-y-1">
               <span class="font-bold text-indigo-900 block">00:05 – 00:20 • Plan 2 (Démonstration)</span>
               <p id="scene2Text" class="text-slate-700 leading-relaxed">Montage dynamique montrant la solution et le gain de temps concret.</p>
             </div>
-            <div class="rounded-xl bg-slate-50 border border-slate-200 p-3.5 space-y-1">
+            <div class="rounded-xl bg-slate-50/90 border border-slate-200 p-3.5 space-y-1">
               <span class="font-bold text-slate-900 block">00:20 – 00:30 • Plan 3 (CTA)</span>
               <p id="scene3Text" class="text-slate-700 leading-relaxed">Appel à l'action clair vers PostCraft Omni ou l'offre Pro.</p>
             </div>
           </div>
         </div>
 
-        <!-- Module 4 : Cartes de contenu générées avec variantes d'accroches A/B/C -->
+        <!-- Cartes de contenu générées -->
         <div id="resultsSection" class="space-y-4">
           <div class="flex items-center justify-between">
             <h2 class="text-lg font-bold text-slate-900">Cartes de contenu générées (Accroches A / B / C)</h2>
@@ -293,10 +327,10 @@
           </div>
 
           <div id="resultsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="md:col-span-2 bg-white border border-dashed border-slate-300 rounded-2xl p-8 text-center text-slate-500">
+            <div class="md:col-span-2 bg-white/85 backdrop-blur-md border border-dashed border-slate-300 rounded-2xl p-8 text-center text-slate-500">
               <i data-lucide="layers" class="w-8 h-8 mx-auto mb-2 text-slate-400" aria-hidden="true"></i>
-              <p class="font-medium text-slate-700">Aucun contenu généré pour le moment</p>
-              <p class="text-sm mt-1">Sélectionnez vos plateformes, entrez ou dictez un message de moins de 500 caractères et cliquez sur <strong>Générer</strong>.</p>
+              <p id="emptyResultsTitle" class="font-medium text-slate-700">Aucun contenu généré pour le moment</p>
+              <p id="emptyResultsDesc" class="text-sm mt-1">Sélectionnez vos plateformes, entrez ou dictez un message de moins de 500 caractères et cliquez sur Générer.</p>
             </div>
           </div>
         </div>
@@ -304,19 +338,19 @@
 
       <!-- Colonne droite : Simulateur d'Impact ROI & Accès Pro -->
       <aside class="lg:col-span-4 space-y-6" aria-label="Simulateur d'impact ROI et abonnement Pro">
-        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-5">
+        <div class="bg-white/85 backdrop-blur-md rounded-2xl border border-slate-200 shadow-sm p-6 space-y-5">
           <div class="flex items-center justify-between">
             <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
               <i data-lucide="trending-up" class="w-4 h-4 text-indigo-600" aria-hidden="true"></i>
-              <span>Simulateur d'Impact ROI</span>
+              <span id="roiTitleText">Simulateur d'Impact ROI</span>
             </h2>
-            <span class="text-xs font-semibold px-2 py-0.5 rounded bg-emerald-50 text-emerald-700">ROI Mensuel</span>
+            <span id="roiBadge" class="text-xs font-semibold px-2 py-0.5 rounded bg-emerald-50 text-emerald-700">ROI Mensuel</span>
           </div>
 
           <div class="space-y-4">
             <div>
               <div class="flex justify-between text-xs font-medium text-slate-600 mb-1">
-                <label for="postsPerWeekRange">Publications / semaine</label>
+                <label id="postsPerWeekLabel" for="postsPerWeekRange">Publications / semaine</label>
                 <span id="postsPerWeekVal" class="font-bold text-slate-900">10 posts</span>
               </div>
               <input id="postsPerWeekRange" type="range" min="2" max="35" value="10" class="w-full accent-indigo-600 cursor-pointer" />
@@ -324,7 +358,7 @@
 
             <div>
               <div class="flex justify-between text-xs font-medium text-slate-600 mb-1">
-                <label for="hourlyRateRange">Valeur horaire estimée (€/h)</label>
+                <label id="hourlyRateLabel" for="hourlyRateRange">Valeur horaire estimée (€/h)</label>
                 <span id="hourlyRateVal" class="font-bold text-slate-900">45 €/h</span>
               </div>
               <input id="hourlyRateRange" type="range" min="15" max="150" step="5" value="45" class="w-full accent-indigo-600 cursor-pointer" />
@@ -332,18 +366,18 @@
           </div>
 
           <div class="grid grid-cols-2 gap-3 pt-2 border-t border-slate-100">
-            <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80">
-              <p class="text-xs text-slate-500">Temps économisé / mois</p>
+            <div class="p-3.5 rounded-xl bg-slate-50/90 border border-slate-200/80">
+              <p id="roiHoursLabel" class="text-xs text-slate-500">Temps économisé / mois</p>
               <p id="roiHours" class="text-xl font-extrabold text-slate-900 mt-0.5">18.1 h</p>
             </div>
-            <div class="p-3.5 rounded-xl bg-indigo-50/70 border border-indigo-200/80">
-              <p class="text-xs text-indigo-700">Valeur estimée / mois</p>
+            <div class="p-3.5 rounded-xl bg-indigo-50/80 border border-indigo-200/80">
+              <p id="roiValueLabel" class="text-xs text-indigo-700">Valeur estimée / mois</p>
               <p id="roiValue" class="text-xl font-extrabold text-indigo-700 mt-0.5">812 €</p>
             </div>
           </div>
 
-          <p class="text-xs text-slate-500 bg-slate-50 rounded-lg p-3 border border-slate-100 leading-relaxed">
-            <strong>À quoi ça sert :</strong> Estime les heures récupérées chaque mois (base <strong>25 min</strong> × posts/semaine × 4,33 ÷ 60) et leur équivalent financier (<strong>Heures × €/h</strong>) pour comparer le gain à l'abonnement Pro (29 €/mois).
+          <p id="roiExplanationText" class="text-xs text-slate-600 bg-slate-50/90 rounded-lg p-3 border border-slate-100 leading-relaxed">
+            Estime les heures récupérées chaque mois (base 25 min × posts/semaine × 4,33 ÷ 60) et leur valeur estimée (€/h) face à l'offre Pro (29 €/mois).
           </p>
         </div>
 
@@ -428,6 +462,39 @@
     </div>
   </div>
 
+  <!-- Modale Admin / Illimité (5 clics rapides sur le logo) -->
+  <div
+    id="adminModal"
+    class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 backdrop-blur-xs p-4"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="adminModalTitle"
+  >
+    <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-xl border border-slate-200 space-y-4">
+      <div class="flex items-center justify-between">
+        <h2 id="adminModalTitle" class="text-lg font-bold text-slate-900">Accès Admin / Illimité</h2>
+        <button id="closeAdminModalBtn" type="button" aria-label="Fermer" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 cursor-pointer">
+          <i data-lucide="x" class="w-5 h-5" aria-hidden="true"></i>
+        </button>
+      </div>
+      <p class="text-xs text-slate-600">Entrez le code admin pour débloquer les crédits illimités sur cette session.</p>
+      <input
+        id="adminPasswordInput"
+        type="password"
+        placeholder="Mot de passe admin"
+        class="w-full rounded-xl border border-slate-300 px-3 py-2 text-sm outline-none focus:border-indigo-600"
+      />
+      <p id="adminErrorText" class="text-xs text-rose-600 hidden">Code invalide.</p>
+      <button
+        id="unlockAdminBtn"
+        type="button"
+        class="w-full py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm transition cursor-pointer"
+      >
+        Débloquer le mode Illimité
+      </button>
+    </div>
+  </div>
+
   <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none" aria-live="polite"></div>
 
   <script>
@@ -438,30 +505,93 @@
       const WEEKS_PER_MONTH = 4.33;
       const DODO_CHECKOUT_URL = "https://checkout.dodopayments.com/buy/pdt_0NsMQrCHPQaa7UPki5KLS?quantity=1";
 
-      // Format demandé : code avant le nom, drapeau du pays symbole après le nom
       const LANGUAGES_14 = [
-        { code: "fr", abbr: "FR", name: "Français", flag: "🇫🇷", voice: "fr-FR", rtl: false },
-        { code: "en", abbr: "EN", name: "English", flag: "🇬🇧", voice: "en-US", rtl: false },
-        { code: "ar", abbr: "AR", name: "العربية", flag: "🇸🇦", voice: "ar-SA", rtl: true },
-        { code: "es", abbr: "ES", name: "Español", flag: "🇪🇸", voice: "es-ES", rtl: false },
-        { code: "de", abbr: "DE", name: "Deutsch", flag: "🇩🇪", voice: "de-DE", rtl: false },
-        { code: "it", abbr: "IT", name: "Italiano", flag: "🇮🇹", voice: "it-IT", rtl: false },
-        { code: "pt", abbr: "PT", name: "Português", flag: "🇵🇹", voice: "pt-PT", rtl: false },
-        { code: "nl", abbr: "NL", name: "Nederlands", flag: "🇳🇱", voice: "nl-NL", rtl: false },
-        { code: "pl", abbr: "PL", name: "Polski", flag: "🇵🇱", voice: "pl-PL", rtl: false },
-        { code: "ru", abbr: "RU", name: "Русский", flag: "🇷🇺", voice: "ru-RU", rtl: false },
-        { code: "ja", abbr: "JA", name: "日本語", flag: "🇯🇵", voice: "ja-JP", rtl: false },
-        { code: "ko", abbr: "KO", name: "한국어", flag: "🇰🇷", voice: "ko-KR", rtl: false },
-        { code: "zh", abbr: "ZH", name: "中文", flag: "🇨🇳", voice: "zh-CN", rtl: false },
-        { code: "tr", abbr: "TR", name: "Türkçe", flag: "🇹🇷", voice: "tr-TR", rtl: false }
+        { code: "fr", abbr: "FR", name: "Français", voice: "fr-FR", rtl: false },
+        { code: "en", abbr: "EN", name: "English", voice: "en-US", rtl: false },
+        { code: "ar", abbr: "AR", name: "العربية", voice: "ar-SA", rtl: true },
+        { code: "es", abbr: "ES", name: "Español", voice: "es-ES", rtl: false },
+        { code: "de", abbr: "DE", name: "Deutsch", voice: "de-DE", rtl: false },
+        { code: "it", abbr: "IT", name: "Italiano", voice: "it-IT", rtl: false },
+        { code: "pt", abbr: "PT", name: "Português", voice: "pt-PT", rtl: false },
+        { code: "nl", abbr: "NL", name: "Nederlands", voice: "nl-NL", rtl: false },
+        { code: "pl", abbr: "PL", name: "Polski", voice: "pl-PL", rtl: false },
+        { code: "ru", abbr: "RU", name: "Русский", voice: "ru-RU", rtl: false },
+        { code: "ja", abbr: "JA", name: "日本語", voice: "ja-JP", rtl: false },
+        { code: "ko", abbr: "KO", name: "한국어", voice: "ko-KR", rtl: false },
+        { code: "zh", abbr: "ZH", name: "中文", voice: "zh-CN", rtl: false },
+        { code: "tr", abbr: "TR", name: "Türkçe", voice: "tr-TR", rtl: false }
       ];
 
+      const UI_I18N = {
+        fr: {
+          mainTitle: "Créer une campagne multicanale",
+          proBtn: "Passer Pro",
+          roiTitle: "Simulateur d'Impact ROI",
+          roiBadge: "ROI Mensuel",
+          postsPerWeek: "Publications / semaine",
+          hourlyRate: "Valeur horaire estimée (€/h)",
+          roiHours: "Temps économisé / mois",
+          roiValue: "Valeur estimée / mois",
+          roiExplanation: "Estime les heures récupérées chaque mois (base 25 min × posts/semaine × 4,33 ÷ 60) et leur valeur estimée (€/h) face à l'offre Pro (29 €/mois).",
+          emptyTitle: "Aucun contenu généré pour le moment",
+          emptyDesc: "Sélectionnez vos plateformes, entrez ou dictez un message de moins de 500 caractères et cliquez sur Générer.",
+          emptyBriefError: "Veuillez saisir ou enregistrer une idée avant de générer.",
+          maxCharsError: "Le texte ne doit pas dépasser 500 caractères.",
+          icpOptions: ["Fondateurs & CEO SaaS", "Agences Marketing & Studio", "Équipes Sales & Growth", "PME & Consultants"],
+          toneOptions: ["Professionnel & Autoritaire", "Direct & Orienté Conversion", "Pédagogique & Accessible", "Audacieux / Thought Leadership"]
+        },
+        en: {
+          mainTitle: "Create a multi-channel campaign",
+          proBtn: "Go Pro",
+          roiTitle: "ROI Impact Simulator",
+          roiBadge: "Monthly ROI",
+          postsPerWeek: "Posts / week",
+          hourlyRate: "Estimated hourly value (€/h)",
+          roiHours: "Time saved / month",
+          roiValue: "Estimated value / month",
+          roiExplanation: "Estimates hours saved per month (25 min × posts/week × 4.33 ÷ 60) and estimated value (€/h) compared to the Pro plan (€29/month).",
+          emptyTitle: "No content generated yet",
+          emptyDesc: "Select your platforms, enter or dictate a message under 500 characters and click Generate.",
+          emptyBriefError: "Please enter or record an idea before generating.",
+          maxCharsError: "Text must not exceed 500 characters.",
+          icpOptions: ["SaaS Founders & CEOs", "Marketing & Creative Agencies", "Sales & Growth Teams", "SMBs & Consultants"],
+          toneOptions: ["Professional & Authoritative", "Direct & Conversion-Focused", "Educational & Clear", "Bold / Thought Leadership"]
+        },
+        ar: {
+          mainTitle: "إنشاء حملة متعددة القنوات",
+          proBtn: "الترقية إلى Pro",
+          roiTitle: "محاكي العائد ROI",
+          roiBadge: "عائد شهري",
+          postsPerWeek: "منشورات / أسبوع",
+          hourlyRate: "القيمة التقديرية للساعة (€/س)",
+          roiHours: "الوقت الموفر / شهر",
+          roiValue: "القيمة التقديرية / شهر",
+          roiExplanation: "يقدّر الساعات الموفرة شهرياً (25 دقيقة × منشورات/أسبوع × 4.33 ÷ 60) والقيمة المالية المقابلة مقارنة بباقة Pro (29€/شهر).",
+          emptyTitle: "لا يوجد محتوى مولّد حتى الآن",
+          emptyDesc: "اختر المنصات، اكتب أو سجّل فكرة أقل من 500 حرف ثم اضغط على توليد.",
+          emptyBriefError: "يرجى إدخال أو تسجيل فكرة قبل التوليد.",
+          maxCharsError: "يجب ألا يتجاوز النص 500 حرف.",
+          icpOptions: ["مؤسسو ومديرو SaaS", "وكالات التسويق والاستوديو", "فرق المبيعات والنمو", "الشركات الصغيرة والمستشارون"],
+          toneOptions: ["احترافي وموثوق", "مباشر ويركز على التحويل", "تعليمي ومبسّط", "جريء / قيادة فكرية"]
+        }
+      };
+
       let credits = MAX_CREDITS;
+      let isUnlimited = false;
+      let logoClickCount = 0;
+      let logoClickTimer = null;
       let isGenerating = false;
       let isRecording = false;
       let recognition = null;
       let latestGeneratedCards = [];
+      let culturalBgEnabled = true;
+      let culturalIntervalId = null;
+      let culturalSceneIndex = 0;
 
+      const brandLogoBoxEl = document.getElementById("brandLogoBox");
+      const culturalBgLayerEl = document.getElementById("culturalBgLayer");
+      const ambientBgToggleBtnEl = document.getElementById("ambientBgToggleBtn");
+      const culturalMoodPillEl = document.getElementById("culturalMoodPill");
       const uiLangSelectEl = document.getElementById("uiLangSelect");
       const creditsCountEl = document.getElementById("creditsCount");
       const charCounterEl = document.getElementById("charCounter");
@@ -495,6 +625,12 @@
       const closeProModalBtn = document.getElementById("closeProModalBtn");
       const resetDemoCreditsBtn = document.getElementById("resetDemoCreditsBtn");
 
+      const adminModalEl = document.getElementById("adminModal");
+      const closeAdminModalBtn = document.getElementById("closeAdminModalBtn");
+      const adminPasswordInput = document.getElementById("adminPasswordInput");
+      const adminErrorText = document.getElementById("adminErrorText");
+      const unlockAdminBtn = document.getElementById("unlockAdminBtn");
+
       const postsPerWeekRangeEl = document.getElementById("postsPerWeekRange");
       const hourlyRateRangeEl = document.getElementById("hourlyRateRange");
       const postsPerWeekValEl = document.getElementById("postsPerWeekVal");
@@ -503,32 +639,103 @@
       const roiValueEl = document.getElementById("roiValue");
       const toastContainerEl = document.getElementById("toastContainer");
 
-      function formatLangLabel(lang) {
-        return `${lang.abbr} ${lang.name} ${lang.flag}`;
+      function createCulturalSvgDataUrl(label, accentHex, secondaryHex) {
+        const safeLabel = String(label).replace(/[<>&"]/g, "");
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="${accentHex}" stop-opacity="0.28"/><stop offset="100%" stop-color="${secondaryHex}" stop-opacity="0.24"/></linearGradient><pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse"><circle cx="40" cy="40" r="2" fill="${accentHex}" fill-opacity="0.35"/><path d="M0 40 H80 M40 0 V80" stroke="${secondaryHex}" stroke-opacity="0.14" stroke-width="1"/></pattern></defs><rect width="1200" height="800" fill="url(#g)"/><rect width="1200" height="800" fill="url(#grid)"/><circle cx="960" cy="180" r="140" fill="${accentHex}" fill-opacity="0.14"/><circle cx="240" cy="620" r="180" fill="${secondaryHex}" fill-opacity="0.14"/><text x="60" y="740" font-family="Inter, sans-serif" font-size="28" font-weight="700" fill="#1e293b" fill-opacity="0.55">${safeLabel}</text></svg>`;
+        return `url("data:image/svg+xml;utf8,${encodeURIComponent(svg)}")`;
+      }
+
+      const CULTURAL_SCENES_140 = LANGUAGES_14.flatMap((lang) => {
+        const themes = [
+          "Panorama urbain & architecture",
+          "Avenue emblématique & lumière",
+          "Horizon & paysages naturels",
+          "Place historique & culture",
+          "Quartier créatif & design",
+          "Côte & rivage lumineux",
+          "Pont & perspective citadine",
+          "Jardin & patrimoine local",
+          "Café & ambiance quotidienne",
+          "Crépuscule & reflets"
+        ];
+        const palettes = [
+          ["#4f46e5", "#06b6d4"],
+          ["#7c3aed", "#ec4899"],
+          ["#0284c7", "#10b981"]
+        ];
+        return themes.map((theme, idx) => {
+          const pal = palettes[idx % palettes.length];
+          const title = `${lang.abbr} — ${theme} #${idx + 1}`;
+          return {
+            langCode: lang.code,
+            title,
+            bgImage: createCulturalSvgDataUrl(title, pal[0], pal[1])
+          };
+        });
+      });
+
+      function getScenesForLang(langCode) {
+        const list = CULTURAL_SCENES_140.filter((s) => s.langCode === langCode);
+        return list.length === 10 ? list : CULTURAL_SCENES_140.slice(0, 10);
+      }
+
+      function applyCulturalScene(langCode, stepIncrement = 0) {
+        if (!culturalBgLayerEl) return;
+        if (!culturalBgEnabled) {
+          culturalBgLayerEl.classList.add("hidden-bg");
+          if (culturalMoodPillEl) culturalMoodPillEl.textContent = "Fond : Désactivé";
+          return;
+        }
+        const scenes = getScenesForLang(langCode);
+        culturalSceneIndex = (culturalSceneIndex + stepIncrement + scenes.length) % scenes.length;
+        const current = scenes[culturalSceneIndex];
+        culturalBgLayerEl.style.backgroundImage = current.bgImage;
+        culturalBgLayerEl.classList.remove("hidden-bg");
+        if (culturalMoodPillEl) culturalMoodPillEl.textContent = `Ambiance : ${current.title}`;
+      }
+
+      function startCulturalRotation(langCode, resetIndex = false) {
+        if (culturalIntervalId) {
+          clearInterval(culturalIntervalId);
+          culturalIntervalId = null;
+        }
+        if (resetIndex) culturalSceneIndex = 0;
+        applyCulturalScene(langCode, 0);
+        culturalIntervalId = setInterval(() => {
+          applyCulturalScene(uiLangSelectEl ? uiLangSelectEl.value : langCode, 1);
+        }, 60000);
+      }
+
+      function formatLangOptionText(lang) {
+        return `${lang.abbr} ${lang.name}`;
       }
 
       function populate14Languages() {
+        uiLangSelectEl.innerHTML = "";
+        languageSelectEl.innerHTML = "";
+        voiceLangSelectEl.innerHTML = "";
+
         LANGUAGES_14.forEach((lang) => {
-          const formatted = formatLangLabel(lang);
+          const label = formatLangOptionText(lang);
 
           const uiOpt = document.createElement("option");
           uiOpt.value = lang.code;
-          uiOpt.textContent = formatted;
+          uiOpt.textContent = label;
           uiLangSelectEl.appendChild(uiOpt);
 
           const outOpt = document.createElement("option");
-          outOpt.value = formatted;
-          outOpt.textContent = formatted;
+          outOpt.value = label;
+          outOpt.textContent = label;
           languageSelectEl.appendChild(outOpt);
 
           const voiceOpt = document.createElement("option");
           voiceOpt.value = lang.voice;
-          voiceOpt.textContent = `${formatted} (${lang.voice})`;
+          voiceOpt.textContent = `${label} (${lang.voice})`;
           voiceLangSelectEl.appendChild(voiceOpt);
         });
 
         uiLangSelectEl.value = "fr";
-        languageSelectEl.value = formatLangLabel(LANGUAGES_14[0]);
+        languageSelectEl.value = formatLangOptionText(LANGUAGES_14[0]);
         voiceLangSelectEl.value = LANGUAGES_14[0].voice;
       }
 
@@ -555,10 +762,59 @@
         }, 3200);
       }
 
+      function getCurrentDict(code) {
+        return UI_I18N[code] || UI_I18N.fr;
+      }
+
+      function populateIcpAndTone(dict) {
+        const prevIcpIdx = Math.max(0, icpSelectEl.selectedIndex);
+        const prevToneIdx = Math.max(0, toneSelectEl.selectedIndex);
+
+        icpSelectEl.innerHTML = "";
+        dict.icpOptions.forEach((optText) => {
+          const o = document.createElement("option");
+          o.value = optText;
+          o.textContent = optText;
+          icpSelectEl.appendChild(o);
+        });
+        icpSelectEl.selectedIndex = Math.min(prevIcpIdx, icpSelectEl.options.length - 1);
+
+        toneSelectEl.innerHTML = "";
+        dict.toneOptions.forEach((optText) => {
+          const o = document.createElement("option");
+          o.value = optText;
+          o.textContent = optText;
+          toneSelectEl.appendChild(o);
+        });
+        toneSelectEl.selectedIndex = Math.min(prevToneIdx, toneSelectEl.options.length - 1);
+      }
+
       function applyUILanguage(code) {
         const selected = LANGUAGES_14.find((l) => l.code === code) || LANGUAGES_14[0];
+        const dict = getCurrentDict(selected.code);
+
         document.documentElement.lang = selected.code;
         document.documentElement.dir = selected.rtl ? "rtl" : "ltr";
+
+        document.getElementById("mainTitle").textContent = dict.mainTitle;
+        document.getElementById("proBtnText").textContent = dict.proBtn;
+        document.getElementById("roiTitleText").textContent = dict.roiTitle;
+        document.getElementById("roiBadge").textContent = dict.roiBadge;
+        document.getElementById("postsPerWeekLabel").textContent = dict.postsPerWeek;
+        document.getElementById("hourlyRateLabel").textContent = dict.hourlyRate;
+        document.getElementById("roiHoursLabel").textContent = dict.roiHours;
+        document.getElementById("roiValueLabel").textContent = dict.roiValue;
+        document.getElementById("roiExplanationText").textContent = dict.roiExplanation;
+
+        const emptyTitleEl = document.getElementById("emptyResultsTitle");
+        const emptyDescEl = document.getElementById("emptyResultsDesc");
+        if (emptyTitleEl) emptyTitleEl.textContent = dict.emptyTitle;
+        if (emptyDescEl) emptyDescEl.textContent = dict.emptyDesc;
+
+        populateIcpAndTone(dict);
+        startCulturalRotation(selected.code, true);
+        updateROI();
+        validateBrief();
       }
 
       function speakText(text, langCode) {
@@ -625,7 +881,14 @@
       }
 
       function updateCreditsUI() {
+        if (isUnlimited) {
+          creditsCountEl.textContent = "∞";
+          creditsCountEl.classList.remove("text-rose-600", "text-slate-900");
+          creditsCountEl.classList.add("text-emerald-600");
+          return;
+        }
         creditsCountEl.textContent = `${credits}/${MAX_CREDITS}`;
+        creditsCountEl.classList.remove("text-emerald-600");
         if (credits === 0) {
           creditsCountEl.classList.remove("text-slate-900");
           creditsCountEl.classList.add("text-rose-600");
@@ -657,17 +920,18 @@
       }
 
       function validateBrief() {
+        const dict = getCurrentDict(uiLangSelectEl.value);
         const raw = briefInputEl.value;
         const trimmed = raw.trim();
-        charCounterEl.textContent = `${raw.length} / ${MAX_CHARS} caractères`;
+        charCounterEl.textContent = `${raw.length} / ${MAX_CHARS}`;
 
         if (raw.length > MAX_CHARS) {
-          inputErrorEl.textContent = `Le texte ne doit pas dépasser ${MAX_CHARS} caractères.`;
+          inputErrorEl.textContent = dict.maxCharsError;
           inputErrorEl.classList.remove("hidden");
           return false;
         }
         if (!trimmed) {
-          inputErrorEl.textContent = "Veuillez saisir ou enregistrer une idée avant de générer.";
+          inputErrorEl.textContent = dict.emptyBriefError;
           inputErrorEl.classList.remove("hidden");
           return false;
         }
@@ -719,7 +983,7 @@
           latestGeneratedCards.push(cardEntry);
 
           const card = document.createElement("article");
-          card.className = "bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex flex-col justify-between gap-4";
+          card.className = "bg-white/85 backdrop-blur-md rounded-2xl border border-slate-200 shadow-sm p-5 flex flex-col justify-between gap-4";
 
           const topRow = document.createElement("div");
           topRow.className = "space-y-2.5";
@@ -915,7 +1179,7 @@
           showToast("Vérifiez votre texte avant de lancer la génération.", "warning");
           return;
         }
-        if (credits <= 0) {
+        if (!isUnlimited && credits <= 0) {
           showToast("Limite de crédits gratuits atteinte (0/5).", "error");
           openProModal(
             `Vos crédits gratuits sont épuisés (<strong>0/5</strong>). Passez au plan Pro à <strong>29€/mois</strong> pour continuer sans interruption.`
@@ -932,19 +1196,24 @@
 
         await new Promise((resolve) => setTimeout(resolve, 600));
 
-        credits = Math.max(0, credits - 1);
-        updateCreditsUI();
+        if (!isUnlimited) {
+          credits = Math.max(0, credits - 1);
+          updateCreditsUI();
+        }
         renderResultCards(platforms, brief, icp, tone, lang);
         setLoadingState(false);
 
-        showToast(`1 crédit utilisé. Il reste ${credits}/${MAX_CREDITS} crédits.`, "success");
-
-        if (credits === 0) {
-          setTimeout(() => {
-            openProModal(
-              `Vous venez d'utiliser votre dernier crédit (<strong>0/5</strong>). Débloquez l'accès illimité avec le plan Pro à <strong>29€/mois</strong>.`
-            );
-          }, 400);
+        if (isUnlimited) {
+          showToast("Génération effectuée (Mode Illimité).", "success");
+        } else {
+          showToast(`1 crédit utilisé. Il reste ${credits}/${MAX_CREDITS} crédits.`, "success");
+          if (credits === 0) {
+            setTimeout(() => {
+              openProModal(
+                `Vous venez d'utiliser votre dernier crédit (<strong>0/5</strong>). Débloquez l'accès illimité avec le plan Pro à <strong>29€/mois</strong>.`
+              );
+            }, 400);
+          }
         }
       }
 
@@ -964,6 +1233,8 @@
         const requiredIds = [
           "brandLogoBox",
           "jumpVideoStudioLink",
+          "ambientBgToggleBtn",
+          "culturalMoodPill",
           "uiLangSelect",
           "creditsCount",
           "openProModalBtn",
@@ -988,50 +1259,108 @@
           "hourlyRateRange",
           "roiHours",
           "roiValue",
-          "proModal"
+          "roiExplanationText",
+          "proModal",
+          "adminModal"
         ];
         const missing = requiredIds.filter((id) => !document.getElementById(id));
         const langsCountOk =
           uiLangSelectEl.options.length === 14 &&
           languageSelectEl.options.length === 14 &&
           voiceLangSelectEl.options.length === 14;
+        const scenesCountOk = CULTURAL_SCENES_140.length === 140;
         const platformsCountOk = platformButtons.length === 7;
         const checkoutOk = Array.from(document.querySelectorAll('a[href*="checkout.dodopayments.com"]')).length > 0;
-        if (missing.length > 0 || !langsCountOk || !platformsCountOk || !checkoutOk) {
-          console.warn("PostCraft Omni Self-Check warning:", { missing, langsCountOk, platformsCountOk, checkoutOk });
+        if (missing.length > 0 || !langsCountOk || !scenesCountOk || !platformsCountOk || !checkoutOk) {
+          console.warn("PostCraft Omni Self-Check warning:", { missing, langsCountOk, scenesCountOk, platformsCountOk, checkoutOk });
         }
       }
 
-      populate14Languages();
-      uiLangSelectEl.addEventListener("change", () => applyUILanguage(uiLangSelectEl.value));
-      recordVoiceBtnEl.addEventListener("click", toggleVoiceRecording);
-      speakBriefBtnEl.addEventListener("click", () => speakText(briefInputEl.value, voiceLangSelectEl.value));
-      playVideoScriptBtnEl.addEventListener("click", () => speakText(getFullVideoScriptText(), voiceLangSelectEl.value));
-      copyVideoScriptBtnEl.addEventListener("click", async () => {
-        try {
-          await navigator.clipboard.writeText(getFullVideoScriptText());
-          showToast("Script de montage & sous-titres copiés.", "success");
-        } catch {
-          showToast("Copie automatique indisponible.", "warning");
-        }
-      });
+      // Événements
+      if (brandLogoBoxEl && adminModalEl) {
+        brandLogoBoxEl.addEventListener("click", () => {
+          logoClickCount += 1;
+          clearTimeout(logoClickTimer);
+          logoClickTimer = setTimeout(() => {
+            logoClickCount = 0;
+          }, 1500);
+          if (logoClickCount >= 5) {
+            logoClickCount = 0;
+            adminModalEl.classList.remove("hidden");
+            adminModalEl.classList.add("flex");
+            if (adminErrorText) adminErrorText.classList.add("hidden");
+            if (adminPasswordInput) adminPasswordInput.value = "";
+            refreshIcons();
+          }
+        });
+      }
+
+      if (closeAdminModalBtn && adminModalEl) {
+        closeAdminModalBtn.addEventListener("click", () => {
+          adminModalEl.classList.add("hidden");
+          adminModalEl.classList.remove("flex");
+        });
+      }
+
+      if (unlockAdminBtn && adminPasswordInput && adminModalEl) {
+        unlockAdminBtn.addEventListener("click", () => {
+          const val = (adminPasswordInput.value || "").trim();
+          if (val === "admin" || val === "omni2026" || val === "postcraft") {
+            isUnlimited = true;
+            updateCreditsUI();
+            adminModalEl.classList.add("hidden");
+            adminModalEl.classList.remove("flex");
+            showToast("Mode Illimité activé !", "success");
+          } else if (adminErrorText) {
+            adminErrorText.classList.remove("hidden");
+          }
+        });
+      }
+
+      if (uiLangSelectEl) uiLangSelectEl.addEventListener("change", () => applyUILanguage(uiLangSelectEl.value));
+      if (ambientBgToggleBtnEl) {
+        ambientBgToggleBtnEl.addEventListener("click", () => {
+          culturalBgEnabled = !culturalBgEnabled;
+          ambientBgToggleBtnEl.setAttribute("aria-pressed", String(culturalBgEnabled));
+          startCulturalRotation(uiLangSelectEl ? uiLangSelectEl.value : "fr", true);
+        });
+      }
+      if (recordVoiceBtnEl) recordVoiceBtnEl.addEventListener("click", toggleVoiceRecording);
+      if (speakBriefBtnEl && briefInputEl && voiceLangSelectEl) {
+        speakBriefBtnEl.addEventListener("click", () => speakText(briefInputEl.value, voiceLangSelectEl.value));
+      }
+      if (playVideoScriptBtnEl && voiceLangSelectEl) {
+        playVideoScriptBtnEl.addEventListener("click", () => speakText(getFullVideoScriptText(), voiceLangSelectEl.value));
+      }
+      if (copyVideoScriptBtnEl) {
+        copyVideoScriptBtnEl.addEventListener("click", async () => {
+          try {
+            await navigator.clipboard.writeText(getFullVideoScriptText());
+            showToast("Script de montage & sous-titres copiés.", "success");
+          } catch {
+            showToast("Copie automatique indisponible.", "warning");
+          }
+        });
+      }
 
       exportButtons.forEach((btn) => {
         btn.addEventListener("click", () => exportCampaignFile(btn.dataset.exportFormat));
       });
 
-      copyMakePayloadBtnEl.addEventListener("click", async () => {
-        if (!briefInputEl.value.trim()) {
-          showToast("Saisissez ou enregistrez d'abord une idée pour générer le payload.", "warning");
-          return;
-        }
-        try {
-          await navigator.clipboard.writeText(JSON.stringify(buildExportPayload(), null, 2));
-          showToast("Payload JSON prêt pour Make.com copié.", "success");
-        } catch {
-          showToast("Copie automatique indisponible.", "warning");
-        }
-      });
+      if (copyMakePayloadBtnEl && briefInputEl) {
+        copyMakePayloadBtnEl.addEventListener("click", async () => {
+          if (!briefInputEl.value.trim()) {
+            showToast("Saisissez ou enregistrez d'abord une idée pour générer le payload.", "warning");
+            return;
+          }
+          try {
+            await navigator.clipboard.writeText(JSON.stringify(buildExportPayload(), null, 2));
+            showToast("Payload JSON prêt pour Make.com copié.", "success");
+          } catch {
+            showToast("Copie automatique indisponible.", "warning");
+          }
+        });
+      }
 
       platformButtons.forEach((btn) => {
         btn.addEventListener("click", () => {
@@ -1040,32 +1369,38 @@
           btn.setAttribute("aria-pressed", String(nextState));
           btn.className = nextState
             ? "platform-btn flex items-center gap-2 p-2.5 rounded-xl border-2 border-indigo-600 bg-indigo-50/70 text-indigo-900 font-medium text-xs sm:text-sm transition cursor-pointer"
-            : "platform-btn flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 bg-white hover:border-slate-300 text-slate-700 font-medium text-xs sm:text-sm transition cursor-pointer";
+            : "platform-btn flex items-center gap-2 p-2.5 rounded-xl border border-slate-200 bg-white/90 hover:border-slate-300 text-slate-700 font-medium text-xs sm:text-sm transition cursor-pointer";
         });
       });
 
-      briefInputEl.addEventListener("input", validateBrief);
-      generateBtnEl.addEventListener("click", handleGenerateClick);
+      if (briefInputEl) briefInputEl.addEventListener("input", validateBrief);
+      if (generateBtnEl) generateBtnEl.addEventListener("click", handleGenerateClick);
 
-      openProModalBtn.addEventListener("click", () => openProModal());
-      closeProModalBtn.addEventListener("click", closeProModal);
-      proModalEl.addEventListener("click", (e) => {
-        if (e.target === proModalEl) closeProModal();
-      });
+      if (openProModalBtn) openProModalBtn.addEventListener("click", () => openProModal());
+      if (closeProModalBtn) closeProModalBtn.addEventListener("click", closeProModal);
+      if (proModalEl) {
+        proModalEl.addEventListener("click", (e) => {
+          if (e.target === proModalEl) closeProModal();
+        });
+      }
 
-      resetDemoCreditsBtn.addEventListener("click", () => {
-        credits = MAX_CREDITS;
-        updateCreditsUI();
-        closeProModal();
-        showToast("Crédits de démonstration réinitialisés à 5/5.", "info");
-      });
+      if (resetDemoCreditsBtn) {
+        resetDemoCreditsBtn.addEventListener("click", () => {
+          isUnlimited = false;
+          credits = MAX_CREDITS;
+          updateCreditsUI();
+          closeProModal();
+          showToast("Crédits de démonstration réinitialisés à 5/5.", "info");
+        });
+      }
 
-      postsPerWeekRangeEl.addEventListener("input", updateROI);
-      hourlyRateRangeEl.addEventListener("input", updateROI);
+      if (postsPerWeekRangeEl) postsPerWeekRangeEl.addEventListener("input", updateROI);
+      if (hourlyRateRangeEl) hourlyRateRangeEl.addEventListener("input", updateROI);
 
+      // Initialisation & vérification automatique
+      populate14Languages();
       applyUILanguage("fr");
       updateCreditsUI();
-      validateBrief();
       updateROI();
       refreshIcons();
       runSelfCheck();
