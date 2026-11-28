@@ -471,10 +471,6 @@
           <span>S'abonner maintenant (29€/mois)</span>
           <i data-lucide="external-link" class="w-4 h-4" aria-hidden="true"></i>
         </a>
-
-        <button id="resetDemoCreditsBtn" type="button" class="py-3 px-4 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100 border border-slate-200 transition cursor-pointer">
-          Recharger démo (5/5)
-        </button>
       </div>
     </div>
   </div>
@@ -1037,7 +1033,6 @@
       const proModalReasonEl = document.getElementById("proModalReason");
       const openProModalBtn = document.getElementById("openProModalBtn");
       const closeProModalBtn = document.getElementById("closeProModalBtn");
-      const resetDemoCreditsBtn = document.getElementById("resetDemoCreditsBtn");
 
       const adminModalEl = document.getElementById("adminModal");
       const closeAdminModalBtn = document.getElementById("closeAdminModalBtn");
@@ -1053,37 +1048,221 @@
       const roiValueEl = document.getElementById("roiValue");
       const toastContainerEl = document.getElementById("toastContainer");
 
-      function createCulturalSvgDataUrl(label, accentHex, secondaryHex) {
+      // Scènes culturelles spécifiques à chacune des 14 langues (10 scènes par langue = 140, sans contenu religieux)
+      const CULTURAL_THEMES_BY_LANG = {
+        fr: [
+          { title: "Tour Eiffel & Trocadéro", p: ["#1d4ed8", "#ef4444", "#f8fafc"], motif: "tower" },
+          { title: "Champs-Élysées & Arc de Triomphe", p: ["#2563eb", "#f59e0b", "#1e293b"], motif: "arch" },
+          { title: "Mont-Saint-Michel & Marée", p: ["#0284c7", "#38bdf8", "#0f172a"], motif: "coast" },
+          { title: "Châteaux de la Loire", p: ["#4f46e5", "#10b981", "#fef3c7"], motif: "palace" },
+          { title: "Lavande de Provence", p: ["#7c3aed", "#a855f7", "#fde047"], motif: "hills" },
+          { title: "Côte d'Azur & Promenade", p: ["#0ea5e9", "#06b6d4", "#f97316"], motif: "coast" },
+          { title: "Pont Alexandre III & Seine", p: ["#3b82f6", "#eab308", "#1e1b4b"], motif: "bridge" },
+          { title: "Alpes & Mont-Blanc", p: ["#0369a1", "#e2e8f0", "#334155"], motif: "mountains" },
+          { title: "Bordeaux & Vignobles", p: ["#9f1239", "#d97706", "#fef2f2"], motif: "hills" },
+          { title: "Louvre & Pyramide de Verre", p: ["#4338ca", "#06b6d4", "#f8fafc"], motif: "pyramid" }
+        ],
+        en: [
+          { title: "Big Ben & Tamise", p: ["#1e3a8a", "#dc2626", "#f8fafc"], motif: "tower" },
+          { title: "Tower Bridge Londres", p: ["#1d4ed8", "#0284c7", "#e2e8f0"], motif: "bridge" },
+          { title: "Skyline Manhattan", p: ["#0f172a", "#3b82f6", "#38bdf8"], motif: "skyline" },
+          { title: "Golden Gate Bridge", p: ["#ea580c", "#dc2626", "#bae6fd"], motif: "bridge" },
+          { title: "Falaises de Douvres", p: ["#0284c7", "#f1f5f9", "#10b981"], motif: "coast" },
+          { title: "Highlands d'Écosse", p: ["#065f46", "#0284c7", "#a7f3d0"], motif: "mountains" },
+          { title: "Opéra de Sydney", p: ["#0369a1", "#06b6d4", "#f8fafc"], motif: "coast" },
+          { title: "Hyde Park & Automne", p: ["#15803d", "#d97706", "#fef3c7"], motif: "hills" },
+          { title: "Piccadilly & Bus Rouge", p: ["#dc2626", "#1e293b", "#f8fafc"], motif: "arch" },
+          { title: "Grand Canyon Horizon", p: ["#c2410c", "#f59e0b", "#fed7aa"], motif: "mountains" }
+        ],
+        ar: [
+          { title: "Burj Khalifa & Horizon", p: ["#0284c7", "#f59e0b", "#f8fafc"], motif: "tower" },
+          { title: "Désert Doré & Gazelle", p: ["#d97706", "#f59e0b", "#fef3c7"], motif: "desert" },
+          { title: "Burj Al Arab & Golfe", p: ["#0ea5e9", "#06b6d4", "#f8fafc"], motif: "coast" },
+          { title: "Dunes du Sahara au Crépuscule", p: ["#ea580c", "#b45309", "#fde68a"], motif: "desert" },
+          { title: "Oasis & Palmiers", p: ["#059669", "#d97706", "#ecfdf5"], motif: "oasis" },
+          { title: "Sidi Bou Saïd & Méditerranée", p: ["#2563eb", "#38bdf8", "#ffffff"], motif: "coast" },
+          { title: "Canyon de Petra", p: ["#be123c", "#ea580c", "#ffedd5"], motif: "mountains" },
+          { title: "Corniche & Marina Moderne", p: ["#0369a1", "#14b8a6", "#e0f2fe"], motif: "skyline" },
+          { title: "Caravane des Dunes", p: ["#b45309", "#f97316", "#fef9c3"], motif: "desert" },
+          { title: "Jardins Andaloux & Fontaines", p: ["#047857", "#0284c7", "#d1fae5"], motif: "palace" }
+        ],
+        es: [
+          { title: "Barcelone & Parc Güell", p: ["#ea580c", "#eab308", "#0284c7"], motif: "hills" },
+          { title: "Gran Vía Madrid", p: ["#dc2626", "#f59e0b", "#fef2f2"], motif: "skyline" },
+          { title: "Arènes & Taureaux d'Andalousie", p: ["#b91c1c", "#d97706", "#fef3c7"], motif: "arch" },
+          { title: "Plaza de España Séville", p: ["#ea580c", "#0284c7", "#fef9c3"], motif: "palace" },
+          { title: "Costa Brava & Criques", p: ["#0284c7", "#06b6d4", "#10b981"], motif: "coast" },
+          { title: "Alhambra & Jardins de Grenade", p: ["#be123c", "#059669", "#fde68a"], motif: "palace" },
+          { title: "Cité des Arts Valence", p: ["#0ea5e9", "#38bdf8", "#f8fafc"], motif: "bridge" },
+          { title: "Îles Baléares & Horizon", p: ["#0369a1", "#14b8a6", "#ccfbf1"], motif: "coast" },
+          { title: "Tolède & Pont Historique", p: ["#b45309", "#d97706", "#fef3c7"], motif: "bridge" },
+          { title: "Pyrénées & Sommets", p: ["#1d4ed8", "#10b981", "#e0f2fe"], motif: "mountains" }
+        ],
+        de: [
+          { title: "Porte de Brandebourg Berlin", p: ["#1e293b", "#dc2626", "#eab308"], motif: "arch" },
+          { title: "Château de Neuschwanstein", p: ["#1d4ed8", "#10b981", "#f8fafc"], motif: "palace" },
+          { title: "Vallée du Rhin & Vignes", p: ["#0284c7", "#15803d", "#fef08a"], motif: "hills" },
+          { title: "Forêt-Noire & Sapins", p: ["#064e3b", "#047857", "#d1fae5"], motif: "mountains" },
+          { title: "Port de Hambourg & Elbe", p: ["#0369a1", "#3b82f6", "#e0f2fe"], motif: "coast" },
+          { title: "Alpes Bavaroises", p: ["#0284c7", "#e2e8f0", "#0f172a"], motif: "mountains" },
+          { title: "Skyline Francfort", p: ["#1e3a8a", "#0ea5e9", "#f1f5f9"], motif: "skyline" },
+          { title: "Pont de Dresde & Elbe", p: ["#b45309", "#0284c7", "#fef3c7"], motif: "bridge" },
+          { title: "Lac de Constance", p: ["#0ea5e9", "#10b981", "#ecfeff"], motif: "coast" },
+          { title: "Munich & Jardins Anglais", p: ["#15803d", "#3b82f6", "#fef9c3"], motif: "hills" }
+        ],
+        it: [
+          { title: "Colisée de Rome", p: ["#b45309", "#dc2626", "#fef3c7"], motif: "arch" },
+          { title: "Grand Canal de Venise", p: ["#0284c7", "#06b6d4", "#f8fafc"], motif: "bridge" },
+          { title: "Collines de Toscane", p: ["#15803d", "#eab308", "#fef9c3"], motif: "hills" },
+          { title: "Côte Amalfitaine", p: ["#0369a1", "#f97316", "#e0f2fe"], motif: "coast" },
+          { title: "Duomo de Florence", p: ["#c2410c", "#d97706", "#ffedd5"], motif: "palace" },
+          { title: "Lac de Côme & Villas", p: ["#1d4ed8", "#10b981", "#dbeafe"], motif: "mountains" },
+          { title: "Cinque Terre & Falaises", p: ["#ea580c", "#0284c7", "#fef08a"], motif: "coast" },
+          { title: "Dolomites Italiennes", p: ["#0369a1", "#e2e8f0", "#334155"], motif: "mountains" },
+          { title: "Piazza Navona & Fontaines", p: ["#b45309", "#0ea5e9", "#fef3c7"], motif: "palace" },
+          { title: "Baie de Naples & Vésuve", p: ["#1e40af", "#f59e0b", "#e0f2fe"], motif: "coast" }
+        ],
+        pt: [
+          { title: "Tramway & Collines de Lisbonne", p: ["#eab308", "#dc2626", "#0284c7"], motif: "hills" },
+          { title: "Tour de Belém & Tage", p: ["#0284c7", "#d97706", "#f8fafc"], motif: "tower" },
+          { title: "Pont Dom-Luís Porto", p: ["#1d4ed8", "#0ea5e9", "#fef3c7"], motif: "bridge" },
+          { title: "Vallée du Douro", p: ["#15803d", "#ca8a04", "#ecfccb"], motif: "hills" },
+          { title: "Falaises de l'Algarve", p: ["#0369a1", "#f59e0b", "#fef9c3"], motif: "coast" },
+          { title: "Palais de Pena Sintra", p: ["#dc2626", "#eab308", "#10b981"], motif: "palace" },
+          { title: "Baie de Rio & Pain de Sucre", p: ["#0284c7", "#10b981", "#fde047"], motif: "mountains" },
+          { title: "Copacabana & Océan", p: ["#0ea5e9", "#06b6d4", "#fef9c3"], motif: "coast" },
+          { title: "Archipel de Madère", p: ["#047857", "#0284c7", "#d1fae5"], motif: "mountains" },
+          { title: "Avenida da Liberdade", p: ["#1e3a8a", "#10b981", "#f8fafc"], motif: "skyline" }
+        ],
+        nl: [
+          { title: "Canaux d'Amsterdam", p: ["#ea580c", "#0284c7", "#f8fafc"], motif: "bridge" },
+          { title: "Moulins de Kinderdijk", p: ["#0369a1", "#10b981", "#fef3c7"], motif: "tower" },
+          { title: "Champs de Tulipes Keukenhof", p: ["#dc2626", "#eab308", "#ec4899"], motif: "hills" },
+          { title: "Pont Érasme Rotterdam", p: ["#0284c7", "#38bdf8", "#f1f5f9"], motif: "bridge" },
+          { title: "Dunes de la Mer du Nord", p: ["#0ea5e9", "#f59e0b", "#e0f2fe"], motif: "coast" },
+          { title: "Village de Giethoorn", p: ["#059669", "#0284c7", "#d1fae5"], motif: "coast" },
+          { title: "Place du Dam & Architecture", p: ["#b45309", "#1d4ed8", "#fef3c7"], motif: "palace" },
+          { title: "Polders & Horizon", p: ["#15803d", "#38bdf8", "#ecfccb"], motif: "hills" },
+          { title: "Port de Rotterdam", p: ["#1e3a8a", "#ea580c", "#e2e8f0"], motif: "skyline" },
+          { title: "Delft & Ponts Historiques", p: ["#1d4ed8", "#06b6d4", "#f8fafc"], motif: "bridge" }
+        ],
+        pl: [
+          { title: "Vieille Ville de Varsovie", p: ["#dc2626", "#f8fafc", "#b45309"], motif: "palace" },
+          { title: "Place du Marché Cracovie", p: ["#b91c1c", "#d97706", "#fef2f2"], motif: "tower" },
+          { title: "Monts Tatras & Zakopane", p: ["#0369a1", "#10b981", "#f8fafc"], motif: "mountains" },
+          { title: "Port de Gdańsk & Baltique", p: ["#0284c7", "#ea580c", "#e0f2fe"], motif: "coast" },
+          { title: "Château de Malbork", p: ["#991b1b", "#d97706", "#fef3c7"], motif: "palace" },
+          { title: "Lacs de Mazurie", p: ["#0ea5e9", "#059669", "#d1fae5"], motif: "coast" },
+          { title: "Ponts de Wrocław", p: ["#1d4ed8", "#f59e0b", "#dbeafe"], motif: "bridge" },
+          { title: "Forêt de Białowieża", p: ["#065f46", "#15803d", "#ecfdf5"], motif: "hills" },
+          { title: "Skyline Moderne Varsovie", p: ["#1e3a8a", "#3b82f6", "#f1f5f9"], motif: "skyline" },
+          { title: "Dunes de Słowiński", p: ["#0284c7", "#eab308", "#fef9c3"], motif: "desert" }
+        ],
+        ru: [
+          { title: "Place Rouge & Remparts", p: ["#dc2626", "#eab308", "#1e293b"], motif: "palace" },
+          { title: "Ponts Levants Saint-Pétersbourg", p: ["#1d4ed8", "#38bdf8", "#f8fafc"], motif: "bridge" },
+          { title: "Lac Baïkal & Glaces Bleues", p: ["#0284c7", "#06b6d4", "#e0f2fe"], motif: "coast" },
+          { title: "Perspective Nevski", p: ["#1e3a8a", "#d97706", "#fef3c7"], motif: "skyline" },
+          { title: "Mont Elbrouz & Caucase", p: ["#0369a1", "#e2e8f0", "#334155"], motif: "mountains" },
+          { title: "Jardins de Peterhof", p: ["#059669", "#eab308", "#dbeafe"], motif: "palace" },
+          { title: "Volcans du Kamtchatka", p: ["#b91c1c", "#0284c7", "#f1f5f9"], motif: "mountains" },
+          { title: "Moscow City Skyline", p: ["#1e40af", "#0ea5e9", "#e2e8f0"], motif: "skyline" },
+          { title: "Rives de la Volga", p: ["#0284c7", "#10b981", "#ecfdf5"], motif: "coast" },
+          { title: "Transsibérien & Taïga", p: ["#065f46", "#d97706", "#fef3c7"], motif: "hills" }
+        ],
+        ja: [
+          { title: "Mont Fuji & Cerisiers Sakura", p: ["#ec4899", "#0284c7", "#f8fafc"], motif: "mountains" },
+          { title: "Carrefour Shibuya Tokyo", p: ["#4f46e5", "#06b6d4", "#f43f5e"], motif: "skyline" },
+          { title: "Forêt de Bambous Arashiyama", p: ["#059669", "#10b981", "#ecfdf5"], motif: "hills" },
+          { title: "Château d'Osaka & Jardins", p: ["#0284c7", "#10b981", "#fef3c7"], motif: "palace" },
+          { title: "Pont Togetsukyo Kyoto", p: ["#b45309", "#dc2626", "#ffedd5"], motif: "bridge" },
+          { title: "Tokyo Tower & Crépuscule", p: ["#dc2626", "#f97316", "#1e1b4b"], motif: "tower" },
+          { title: "Jardins Zen & Érables Rouges", p: ["#b91c1c", "#15803d", "#fef2f2"], motif: "hills" },
+          { title: "Baie d'Akashi & Grand Pont", p: ["#0369a1", "#38bdf8", "#f8fafc"], motif: "bridge" },
+          { title: "Château d'Himeji", p: ["#1e3a8a", "#e2e8f0", "#f8fafc"], motif: "palace" },
+          { title: "Littoral d'Okinawa", p: ["#0ea5e9", "#14b8a6", "#ccfbf1"], motif: "coast" }
+        ],
+        ko: [
+          { title: "Tour N Seoul & Mont Namsan", p: ["#4f46e5", "#ec4899", "#f8fafc"], motif: "tower" },
+          { title: "Palais Gyeongbokgung", p: ["#0284c7", "#dc2626", "#10b981"], motif: "palace" },
+          { title: "Pont Banpo & Rivière Han", p: ["#1d4ed8", "#06b6d4", "#e0f2fe"], motif: "bridge" },
+          { title: "Île de Jeju & Falaises", p: ["#0ea5e9", "#10b981", "#fef9c3"], motif: "coast" },
+          { title: "Village Hanok de Bukchon", p: ["#b45309", "#334155", "#fef3c7"], motif: "hills" },
+          { title: "Plage Haeundae Busan", p: ["#0284c7", "#38bdf8", "#f8fafc"], motif: "coast" },
+          { title: "Skyline Gangnam Séoul", p: ["#312e81", "#0ea5e9", "#e2e8f0"], motif: "skyline" },
+          { title: "Monts Seoraksan", p: ["#047857", "#ea580c", "#ecfdf5"], motif: "mountains" },
+          { title: "Pont Gwangan Busan", p: ["#1e40af", "#06b6d4", "#dbeafe"], motif: "bridge" },
+          { title: "Champs de Thé de Boseong", p: ["#15803d", "#10b981", "#ecfccb"], motif: "hills" }
+        ],
+        zh: [
+          { title: "Grande Muraille & Montagnes", p: ["#b45309", "#15803d", "#fef3c7"], motif: "mountains" },
+          { title: "Skyline Pudong Shanghai", p: ["#1d4ed8", "#06b6d4", "#f43f5e"], motif: "skyline" },
+          { title: "Lac de l'Ouest Hangzhou", p: ["#0284c7", "#10b981", "#ecfdf5"], motif: "bridge" },
+          { title: "Pics de Zhangjiajie", p: ["#047857", "#0284c7", "#e0f2fe"], motif: "mountains" },
+          { title: "Rivière Li & Guilin", p: ["#0ea5e9", "#10b981", "#d1fae5"], motif: "hills" },
+          { title: "Cité Interdite & Pavillons", p: ["#dc2626", "#eab308", "#fef2f2"], motif: "palace" },
+          { title: "Baie Victoria Hong Kong", p: ["#1e3a8a", "#06b6d4", "#f8fafc"], motif: "skyline" },
+          { title: "Pont Hong Kong-Zhuhai", p: ["#0369a1", "#38bdf8", "#e0f2fe"], motif: "bridge" },
+          { title: "Rizières en Terrasses Longji", p: ["#15803d", "#eab308", "#ecfccb"], motif: "hills" },
+          { title: "Littoral de Sanya", p: ["#0ea5e9", "#14b8a6", "#fef9c3"], motif: "coast" }
+        ],
+        tr: [
+          { title: "Pont du Bosphore Istanbul", p: ["#dc2626", "#0284c7", "#f8fafc"], motif: "bridge" },
+          { title: "Montgolfières de Cappadoce", p: ["#ea580c", "#f59e0b", "#0284c7"], motif: "hills" },
+          { title: "Travertins de Pamukkale", p: ["#0ea5e9", "#f8fafc", "#bae6fd"], motif: "coast" },
+          { title: "Tour de Galata & Corne d'Or", p: ["#b91c1c", "#0369a1", "#fef3c7"], motif: "tower" },
+          { title: "Côte Turquoise d'Antalya", p: ["#0284c7", "#14b8a6", "#ccfbf1"], motif: "coast" },
+          { title: "Palais de Topkapi & Jardins", p: ["#047857", "#d97706", "#fef3c7"], motif: "palace" },
+          { title: "Tour de Léandre & Bosphore", p: ["#1d4ed8", "#f97316", "#e0f2fe"], motif: "tower" },
+          { title: "Mont Ararat & Sommets", p: ["#0369a1", "#e2e8f0", "#334155"], motif: "mountains" },
+          { title: "Rives d'Izmir & Mer Égée", p: ["#0ea5e9", "#3b82f6", "#f8fafc"], motif: "coast" },
+          { title: "Vallée des Papillons Fethiye", p: ["#059669", "#0284c7", "#fef9c3"], motif: "mountains" }
+        ]
+      };
+
+      function buildCulturalSilhouetteSvg(motif, c1, c2) {
+        switch (motif) {
+          case "tower":
+            return `<path d="M560 720 L585 430 L595 220 L600 140 L605 220 L615 430 L640 720 Z" fill="${c1}" fill-opacity="0.24"/><path d="M550 560 H650 M570 430 H630" stroke="${c2}" stroke-width="6" stroke-opacity="0.3"/>`;
+          case "arch":
+            return `<path d="M440 720 V360 H760 V720 H660 V500 A60 60 0 0 0 540 500 V720 Z" fill="${c1}" fill-opacity="0.22"/><rect x="420" y="330" width="360" height="30" rx="6" fill="${c2}" fill-opacity="0.26"/>`;
+          case "bridge":
+            return `<path d="M80 560 Q600 420 1120 560" stroke="${c1}" stroke-width="14" fill="none" stroke-opacity="0.28"/><path d="M320 720 V340 M880 720 V340" stroke="${c2}" stroke-width="16" stroke-opacity="0.25"/><path d="M320 360 Q600 520 880 360" stroke="${c1}" stroke-width="6" fill="none" stroke-opacity="0.24"/>`;
+          case "desert":
+            return `<path d="M0 580 Q320 470 640 570 T1200 540 V800 H0 Z" fill="${c1}" fill-opacity="0.24"/><path d="M0 650 Q420 560 820 640 T1200 610 V800 H0 Z" fill="${c2}" fill-opacity="0.22"/><path d="M860 525 L872 495 L884 525 M872 495 L886 476 M876 476 L882 456 M884 476 L892 458" stroke="${c1}" stroke-width="4" stroke-linecap="round" fill="none" stroke-opacity="0.38"/>`;
+          case "skyline":
+            return `<rect x="220" y="340" width="90" height="380" fill="${c1}" fill-opacity="0.22"/><rect x="340" y="240" width="110" height="480" fill="${c2}" fill-opacity="0.22"/><rect x="480" y="180" width="95" height="540" fill="${c1}" fill-opacity="0.25"/><rect x="610" y="280" width="120" height="440" fill="${c2}" fill-opacity="0.2"/><rect x="760" y="360" width="100" height="360" fill="${c1}" fill-opacity="0.22"/>`;
+          case "mountains":
+            return `<polygon points="120,720 420,280 720,720" fill="${c1}" fill-opacity="0.22"/><polygon points="460,720 780,240 1100,720" fill="${c2}" fill-opacity="0.22"/>`;
+          case "palace":
+            return `<rect x="300" y="420" width="600" height="300" rx="12" fill="${c1}" fill-opacity="0.2"/><polygon points="280,420 600,260 920,420" fill="${c2}" fill-opacity="0.22"/>`;
+          case "pyramid":
+            return `<polygon points="360,720 600,320 840,720" fill="${c1}" fill-opacity="0.22"/><line x1="600" y1="320" x2="500" y2="720" stroke="${c2}" stroke-width="3" stroke-opacity="0.28"/><line x1="600" y1="320" x2="700" y2="720" stroke="${c2}" stroke-width="3" stroke-opacity="0.28"/>`;
+          case "oasis":
+            return `<ellipse cx="600" cy="660" rx="280" ry="55" fill="${c2}" fill-opacity="0.24"/><path d="M440 640 Q430 480 410 400 M410 400 Q350 380 320 420 M410 400 Q460 360 490 405" stroke="${c1}" stroke-width="8" fill="none" stroke-linecap="round" stroke-opacity="0.28"/>`;
+          case "coast":
+            return `<path d="M0 540 Q300 490 600 540 T1200 530 V800 H0 Z" fill="${c1}" fill-opacity="0.22"/><path d="M0 620 Q300 580 600 620 T1200 610 V800 H0 Z" fill="${c2}" fill-opacity="0.22"/>`;
+          default:
+            return `<path d="M0 560 Q300 430 600 540 T1200 500 V800 H0 Z" fill="${c1}" fill-opacity="0.22"/><path d="M0 640 Q400 540 800 620 T1200 590 V800 H0 Z" fill="${c2}" fill-opacity="0.2"/>`;
+        }
+      }
+
+      function createCulturalSvgDataUrl(label, palette, motif) {
         const safeLabel = String(label).replace(/[<>&"]/g, "");
-        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="${accentHex}" stop-opacity="0.28"/><stop offset="100%" stop-color="${secondaryHex}" stop-opacity="0.24"/></linearGradient><pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse"><circle cx="40" cy="40" r="2" fill="${accentHex}" fill-opacity="0.35"/><path d="M0 40 H80 M40 0 V80" stroke="${secondaryHex}" stroke-opacity="0.14" stroke-width="1"/></pattern></defs><rect width="1200" height="800" fill="url(#g)"/><rect width="1200" height="800" fill="url(#grid)"/><circle cx="960" cy="180" r="140" fill="${accentHex}" fill-opacity="0.14"/><circle cx="240" cy="620" r="180" fill="${secondaryHex}" fill-opacity="0.14"/><text x="60" y="740" font-family="Inter, sans-serif" font-size="28" font-weight="700" fill="#1e293b" fill-opacity="0.55">${safeLabel}</text></svg>`;
+        const [c1, c2, c3] = palette;
+        const silhouette = buildCulturalSilhouetteSvg(motif, c1, c2);
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="${c1}" stop-opacity="0.26"/><stop offset="55%" stop-color="${c2}" stop-opacity="0.20"/><stop offset="100%" stop-color="${c3}" stop-opacity="0.24"/></linearGradient></defs><rect width="1200" height="800" fill="url(#g)"/><circle cx="950" cy="170" r="110" fill="${c2}" fill-opacity="0.18"/>${silhouette}<text x="56" y="748" font-family="Inter, sans-serif" font-size="26" font-weight="700" fill="#1e293b" fill-opacity="0.58">${safeLabel}</text></svg>`;
         return `url("data:image/svg+xml;utf8,${encodeURIComponent(svg)}")`;
       }
 
       const CULTURAL_SCENES_140 = LANGUAGES_14.flatMap((lang) => {
-        const themes = [
-          "Panorama urbain & architecture",
-          "Avenue emblématique & lumière",
-          "Horizon & paysages naturels",
-          "Place historique & culture",
-          "Quartier créatif & design",
-          "Côte & rivage lumineux",
-          "Pont & perspective citadine",
-          "Jardin & patrimoine local",
-          "Café & ambiance quotidienne",
-          "Crépuscule & reflets"
-        ];
-        const palettes = [
-          ["#4f46e5", "#06b6d4"],
-          ["#7c3aed", "#ec4899"],
-          ["#0284c7", "#10b981"]
-        ];
-        return themes.map((theme, idx) => {
-          const pal = palettes[idx % palettes.length];
-          const title = `${lang.abbr} — ${theme} #${idx + 1}`;
+        const themes = CULTURAL_THEMES_BY_LANG[lang.code] || CULTURAL_THEMES_BY_LANG.fr;
+        return themes.map((item, idx) => {
+          const title = `${lang.abbr} — ${item.title} (${idx + 1}/10)`;
           return {
             langCode: lang.code,
             title,
-            bgImage: createCulturalSvgDataUrl(title, pal[0], pal[1])
+            bgImage: createCulturalSvgDataUrl(title, item.p, item.motif)
           };
         });
       });
@@ -1389,10 +1568,12 @@
       }
 
       function updateCreditsUI() {
+        const proBtnTextEl = document.getElementById("proBtnText");
         if (isUnlimited) {
           creditsCountEl.textContent = "∞";
           creditsCountEl.classList.remove("text-rose-600", "text-slate-900");
           creditsCountEl.classList.add("text-emerald-600");
+          if (proBtnTextEl) proBtnTextEl.textContent = "Pro actif (∞)";
           return;
         }
         creditsCountEl.textContent = `${credits}/${MAX_CREDITS}`;
@@ -1876,22 +2057,11 @@
 
       if (briefInputEl) briefInputEl.addEventListener("input", validateBrief);
       if (generateBtnEl) generateBtnEl.addEventListener("click", handleGenerateClick);
-
       if (openProModalBtn) openProModalBtn.addEventListener("click", () => openProModal());
       if (closeProModalBtn) closeProModalBtn.addEventListener("click", closeProModal);
       if (proModalEl) {
         proModalEl.addEventListener("click", (e) => {
           if (e.target === proModalEl) closeProModal();
-        });
-      }
-
-      if (resetDemoCreditsBtn) {
-        resetDemoCreditsBtn.addEventListener("click", () => {
-          isUnlimited = false;
-          credits = MAX_CREDITS;
-          updateCreditsUI();
-          closeProModal();
-          showToast("Crédits de démonstration réinitialisés à 5/5.", "info");
         });
       }
 
